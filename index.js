@@ -99,6 +99,7 @@ setTimeout(() => {
     // Attach listeners ONCE
     python.stdout.on('data', async (data) => {
         const lines = data.toString().split('\n');
+        console.log(data)
         for (const line of lines) {
             if (line.trim()) {
                 const [predictedMemory, isAnomaly] = line.trim().split(',');
