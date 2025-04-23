@@ -33,7 +33,7 @@ function runShellCommand(cmd) {
 
 async function isPodCrashLooping(podName) {
     const res = await axios.get(`http://localhost:8001/api/v1/namespaces/default/pods/${podName}`);
-    const podData = await res.json();
+    const podData = res.data;
     const status = podData?.status?.containerStatuses?.[0]?.state;
     return status?.waiting?.reason === 'CrashLoopBackOff';
 }
@@ -55,21 +55,38 @@ async function queryPrometheus(query, timestamp = null) {
 
 const podName = "finalpod-77c649c5fc-tzvnb"
 let isRunning = false;
-const memoryUsage = [];
+let memoryUsage = [];
+// for(let i=0;i<=10;i++){
+//     memoryUsage.push(1e6);
+// }
+
+async function getMaxLimit() {
+    const result = await axios.get(`http://localhost:8001/api/v1/namespaces/default/pods/${podName}`);
+    const podData = result.data;
+    const limit = podData?.spec?.containers?.[0].resources?.limits?.memory;
+    return parseInt(limit.split("M")[0])
+}
+
+let maxLimit = await getMaxLimit()
 
 const firstInterval = setInterval(async () => {
     if (isRunning) return;
     isRunning = true;
     if (memoryUsage.length < 10) {
-        const pod_status = await queryPrometheus(`kube_pod_status_phase(pod="${podName}")`);
+        // const pod_status = await queryPrometheus(`kube_pod_status_phase(pod="${podName}")`);
         const memory = await queryPrometheus(`container_memory_usage_bytes{pod="${podName}"}`) || 0;
         memoryUsage.push(memory);
-        console.log(memoryUsage.length, memoryUsage);
     }
 
     if (memoryUsage.length === 10) {
         clearInterval(firstInterval);
         console.log("cleared");
+        memoryUsage = memoryUsage.map((mem)=>{
+            mem/=(1024*1024);
+            mem/=(maxLimit);
+            return mem;
+        })
+        console.log(memoryUsage)
     }
     isRunning = false;
 }, 1000);
@@ -87,16 +104,19 @@ setTimeout(() => {
                 const [predictedMemory, isAnomaly] = line.trim().split(',');
                 console.log(`Predicted Memory js: ${predictedMemory}`);
                 console.log(`Is Anomaly js: ${isAnomaly}`);
-                if (isAnamoly === "true") {
+
+                if ( typeof isAnamoly!=="undefined" && isAnamoly == 1 ) {
                     const critical = await isPodCrashLooping(podName);
 
                     if (critical) {
                         console.log(`⚠️ CRITICAL: Pod ${podName} is leaking memory. Notify cluster administrator.`);
                     } else {
-                        const prompt = `The pod ${podName} is leaking memory, and here is the predicted memory usage: ${predictedMemory}. Suggest a shell command to rectify the issue.`;
+                        const prompt = `The pod ${podName} is leaking memory, and here is the predicted memory usage: ${predictedMemory}. Suggest a shell command to rectify the issue. Here is the maximum alloted memory usage limit ${maxLimit}`;
                         const shellCommand = await sendToLLM(prompt);
                         console.log(`🧠 LLM suggests: ${shellCommand}`);
-                        runShellCommand(shellCommand);
+                        /// runShellCommand(shellCommand);
+                        maxLimit = await getMaxLimit();
+                        
                     }
                 } else {
                     console.log(`✅ Healthy. Predicted Memory: ${predictedMemory}`);
@@ -106,18 +126,22 @@ setTimeout(() => {
     }
     );
 
-    python.stderr.on('data', (data) => {
-        console.error("Python STDERR:", data.toString());
-    });
+    // python.stderr.on('data', (data) => {
+    //     console.error("Python STDERR:", data.toString());
+    // });
 
-    python.stderr.on('error', (error) => {
-        console.error("Python error:", error);
-    });
+    // python.stderr.on('error', (error) => {
+    //     console.error("Python error:", error);
+    // });
 
     setInterval(async () => {
-        const memory = await queryPrometheus(`container_memory_usage_bytes{pod="${podName}"}`) || 0;
+        let memory = await queryPrometheus(`container_memory_usage_bytes{pod="${podName}"}`) || 0;
+        memory/= (1024*1024);
+        memory/=maxLimit;
         memoryUsage.shift();
+       // console.log(memoryUsage,"shifted")
         memoryUsage.push(memory);
+        console.log(memoryUsage,"updated mem")
 
         python.stdin.write(JSON.stringify({ podName: podName, memoryUsage: memoryUsage }) + '\n');
     }, 1000);
