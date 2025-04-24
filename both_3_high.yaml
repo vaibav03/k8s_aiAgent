@@ -1,0 +1,21 @@
+apiVersion: chaos-mesh.org/v1alpha1
+kind: StressChaos
+metadata:
+  name: cpu-memory-stress
+  namespace: default
+spec:
+  mode: all
+  duration: "3m"
+  selector:
+    namespaces:
+      - default
+    labelSelectors:
+      app: test
+  stressors:
+    cpu:
+      workers: 16
+      load: 100
+    memory:
+      workers: 24
+      oomScoreAdj: 1000
+      size: "1500MB"

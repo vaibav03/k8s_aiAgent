@@ -1,25 +1,34 @@
 import express from "express";
 import axios from "axios";
 import { spawn, exec } from 'node:child_process';
+import {processAnomaly,} from './llm.js'
+
 import { Worker } from 'node:worker_threads'
 import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
+import { systemPrompt } from './prompt.js';
 
+import 'dotenv/config'
 
+// async function sendToLLM(prompt) {
+//     const chat = new ChatGoogleGenerativeAI({
+//         apiKey: process.env.GOOGLE_API_KEY,
+//         model: "gemini-1.5-pro",
+//         temperature: 0,
+//         maxRetries: 2,
+//     });
 
-async function sendToLLM(prompt) {
-    const chat = new ChatGoogleGenerativeAI({
-        model: "gemini-1.5-pro",
-        temperature: 0,
-        maxRetries: 2,
-    });
-
-    const res = await chat.invoke([
-        { role: "system", content: "You're a Kubernetes DevOps assistant. Given a problem, respond ONLY with a shell command to fix it." },
-        { role: "user", content: prompt }
-    ]);
-    console.log(res.content);
-    return res.content;
-}
+//     try {
+//         const res = await chat.invoke([
+//             { role: "system", content: systemPrompt },
+//             { role: "user", content: prompt }
+//         ]);
+//         console.log(res.content);
+//         return res.content;
+//     } catch (error) {
+//         console.log("API error",error.message);
+//         throw error;
+//     }
+// }
 
 function runShellCommand(cmd) {
     exec(cmd, (err, stdout, stderr) => {
@@ -102,38 +111,44 @@ setTimeout(() => {
         console.log(data)
         for (const line of lines) {
             if (line.trim()) {
-                const [predictedMemory, isAnomaly] = line.trim().split(',');
+                const [predictedMemory, isAnomaly_from_python] = line.trim().split(',');
+                const isAnamoly =  parseInt(isAnomaly_from_python)
                 console.log(`Predicted Memory js: ${predictedMemory}`);
-                console.log(`Is Anomaly js: ${isAnomaly}`);
+                console.log(`Is Anomaly js: ${isAnamoly} and type ${typeof isAnamoly}`);
 
-                if ( typeof isAnamoly!=="undefined" && isAnamoly == 1 ) {
+                if ( typeof isAnamoly !=="undefined" && isAnamoly == 1 ) {
                     const critical = await isPodCrashLooping(podName);
 
                     if (critical) {
                         console.log(`⚠️ CRITICAL: Pod ${podName} is leaking memory. Notify cluster administrator.`);
                     } else {
-                        const prompt = `The pod ${podName} is leaking memory, and here is the predicted memory usage: ${predictedMemory}. Suggest a shell command to rectify the issue. Here is the maximum alloted memory usage limit ${maxLimit}`;
-                        const shellCommand = await sendToLLM(prompt);
-                        console.log(`🧠 LLM suggests: ${shellCommand}`);
+                        // const prompt = `The pod ${podName} is leaking memory, and here is the predicted memory usage: ${predictedMemory}. Suggest a shell command to rectify the issue. Here is the maximum alloted memory usage limit ${maxLimit}`;
+                        // const shellCommand = await sendToLLM(prompt);
+                        // console.log(`🧠 LLM suggests: ${shellCommand}`);
                         /// runShellCommand(shellCommand);
-                        maxLimit = await getMaxLimit();
                         
+                        try {
+                            const recommendation_from_llm = await processAnomaly(podName,predictedMemory,maxLimit)
+                            console.log("recommendation_from_llm",recommendation_from_llm)
+                            if (recommendation_from_llm) {
+                                // await runShellCommand(recommendation_from_llm.command.command)
+                                console.log(recommendation_from_llm.command.command)
+                            }
+                        } catch(error) {
+                            console.log("Error while calling llm",error.message)
+                        }
+
+                        maxLimit = await getMaxLimit();
                     }
-                } else {
+                } 
+                
+                else {
                     console.log(`✅ Healthy. Predicted Memory: ${predictedMemory}`);
                 }
             }
         }
     }
     );
-
-    // python.stderr.on('data', (data) => {
-    //     console.error("Python STDERR:", data.toString());
-    // });
-
-    // python.stderr.on('error', (error) => {
-    //     console.error("Python error:", error);
-    // });
 
     setInterval(async () => {
         let memory = await queryPrometheus(`container_memory_usage_bytes{pod="${podName}"}`) || 0;
