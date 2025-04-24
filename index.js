@@ -56,6 +56,9 @@ async function queryPrometheus(query, timestamp = null) {
 const podName = "finalpod-64ff6f79c5-vdtgt"
 let isRunning = false;
 let memoryUsage = [];
+// for(let i=0;i<=10;i++){
+//     memoryUsage.push(1e6);
+// }
 
 async function getMaxLimit() {
     const result = await axios.get(`http://localhost:8001/api/v1/namespaces/default/pods/${podName}`);
@@ -96,12 +99,13 @@ setTimeout(() => {
     // Attach listeners ONCE
     python.stdout.on('data', async (data) => {
         const lines = data.toString().split('\n');
+        console.log(data)
         for (const line of lines) {
             if (line.trim()) {
                 const [predictedMemory, isAnomaly] = line.trim().split(',');
                 console.log(`Predicted Memory js: ${predictedMemory}`);
                 console.log(`Is Anomaly js: ${isAnomaly}`);
-                console.log(typeof isAnamoly)
+
                 if ( typeof isAnamoly!=="undefined" && isAnamoly == 1 ) {
                     const critical = await isPodCrashLooping(podName);
 
@@ -136,7 +140,7 @@ setTimeout(() => {
         memory/= (1024*1024);
         memory/=maxLimit;
         memoryUsage.shift();
-        console.log(memoryUsage,"shifted")
+       // console.log(memoryUsage,"shifted")
         memoryUsage.push(memory);
         console.log(memoryUsage,"updated mem")
 

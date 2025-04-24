@@ -26,14 +26,13 @@ while True:
     line = json.loads(line)
     if len(line['memoryUsage']) == 10:
         try:
-            X_input = [int(x) for x in line['memoryUsage']]
+            X_input = [float(x) for x in line['memoryUsage']]
             X_input = np.array(X_input).reshape((1, 10, 1))
             predicted_memory = lstm_model.predict(X_input)[0][0]
             anomaly = gbm_model.predict([[predicted_memory]])[0]
             print(f"{predicted_memory},{int(anomaly)}", flush=True)
         except Exception as e:
             print(f"Error: {e}", file=sys.stderr, flush=True)
-
 
 
 
