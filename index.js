@@ -59,6 +59,7 @@ let memoryUsage = [];
 // for(let i=0;i<=10;i++){
 //     memoryUsage.push(1e6);
 // }
+//
 
 async function getMaxLimit() {
     const result = await axios.get(`http://localhost:8001/api/v1/namespaces/default/pods/${podName}`);
