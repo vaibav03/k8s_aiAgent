@@ -1,2 +1,17 @@
-.vscode
+# Editor
+.vscode/
+
+# Environment variables
 .env
+.env.*
+
+# Dependencies
+node_modules/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# OS
+.DS_Store
