@@ -1,0 +1,94 @@
+# KubeAI agent. Build + load the image first, e.g.:
+#   docker build -t kubeai-agent:latest . && minikube image load kubeai-agent:latest
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kubeai-agent-config
+  namespace: kubeai
+data:
+  # kube-prometheus-stack default; adjust to your Prometheus service
+  PROMETHEUS_URL: "http://prometheus-operated.monitoring.svc:9090"
+  KUBE_API: "https://kubernetes.default.svc"
+  NAMESPACE: "default"
+  POD_SELECTOR: "app=server"
+  ML_URL: "http://kubeai-ml.kubeai.svc:8000"
+  ML_BATCH_MAX: "500"
+  POLL_MS: "15000"
+  WINDOW: "40"
+  ALERT_K: "2"
+  ALERT_N: "3"
+  COOLDOWN_MS: "300000"
+  GEMINI_MODEL: "gemini-2.5-flash"
+  ALLOW_EXEC: "false"
+  MAX_MEMORY_LIMIT: "4Gi"
+  MAX_REPLICAS: "10"
+  PORT: "3001"
+---
+# The LLM key Secret is NOT part of this directory, so re-running
+# `kubectl apply -f k8s/` can never reset it. Create it once, out of band:
+#   kubectl -n kubeai create secret generic kubeai-agent-secrets \
+#     --from-literal=GOOGLE_API_KEY=...
+# The secretRef below is optional: without the Secret the agent starts with the
+# LLM step disabled (recommendation "none").
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kubeai-agent
+  namespace: kubeai
+  labels: {app.kubernetes.io/name: kubeai-agent, app.kubernetes.io/part-of: kubeai}
+spec:
+  replicas: 1 # single writer: alert/cooldown state is in memory
+  strategy: {type: Recreate}
+  selector:
+    matchLabels: {app.kubernetes.io/name: kubeai-agent}
+  template:
+    metadata:
+      labels: {app.kubernetes.io/name: kubeai-agent, app.kubernetes.io/part-of: kubeai}
+    spec:
+      serviceAccountName: kubeai-agent
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+      containers:
+        - name: agent
+          image: kubeai-agent:latest
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef: {name: kubeai-agent-config}
+            - secretRef: {name: kubeai-agent-secrets, optional: true}
+          env:
+            # trust the cluster CA for https://kubernetes.default.svc (fetch + kubectl)
+            - {name: NODE_EXTRA_CA_CERTS, value: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt}
+          ports:
+            - {name: http, containerPort: 3001}
+          readinessProbe:
+            httpGet: {path: /healthz, port: http}
+            periodSeconds: 10
+          livenessProbe:
+            httpGet: {path: /healthz, port: http}
+            initialDelaySeconds: 10
+            periodSeconds: 20
+          resources:
+            requests: {cpu: 50m, memory: 96Mi}
+            limits: {cpu: 500m, memory: 256Mi}
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: {drop: ["ALL"]}
+          volumeMounts:
+            - {name: tmp, mountPath: /tmp}
+            - {name: kube-cache, mountPath: /home/node/.kube}
+      volumes:
+        - {name: tmp, emptyDir: {}}
+        - {name: kube-cache, emptyDir: {}}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kubeai-agent
+  namespace: kubeai
+  labels: {app.kubernetes.io/name: kubeai-agent, app.kubernetes.io/part-of: kubeai}
+spec:
+  selector: {app.kubernetes.io/name: kubeai-agent}
+  ports:
+    - {name: http, port: 3001, targetPort: http}

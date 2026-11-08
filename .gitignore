@@ -15,3 +15,11 @@ pnpm-debug.log*
 
 # OS
 .DS_Store
+
+# Keep the documented template
+!.env.example
+
+# Python / ML artifacts produced locally
+__pycache__/
+*.pyc
+.venv/

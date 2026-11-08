@@ -1,0 +1,44 @@
+# Least-privilege identity for the agent.
+# The Role lives in the WATCHED namespace (default) and is bound to the
+# agent's ServiceAccount in the kubeai namespace. Change both `namespace:
+# default` lines if you watch a different namespace (and NAMESPACE in
+# agent.yaml).
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: kubeai-agent
+  namespace: kubeai
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: kubeai-agent
+  namespace: default
+rules:
+  # discovery: list pods by label selector, read limits/restarts/status
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get", "list", "watch"]
+  # remediation (always --dry-run=server unless ALLOW_EXEC=true):
+  # kubectl set resources / rollout restart -> get + patch deployments
+  - apiGroups: ["apps"]
+    resources: ["deployments"]
+    verbs: ["get", "patch"]
+  # kubectl scale -> deployments/scale subresource
+  - apiGroups: ["apps"]
+    resources: ["deployments/scale"]
+    verbs: ["get", "patch", "update"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: kubeai-agent
+  namespace: default
+subjects:
+  - kind: ServiceAccount
+    name: kubeai-agent
+    namespace: kubeai
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: kubeai-agent

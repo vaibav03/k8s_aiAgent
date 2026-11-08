@@ -1,0 +1,10 @@
+# Training, evaluation and tests.
+-r requirements.txt
+pandas==3.1.1
+scikit-learn==1.9.1
+pytest==9.2.0
+httpx==0.28.1
+# Optional: only to score the legacy LSTM+LightGBM pair as a baseline
+# (python -m kubeai_ml.train --no-old-agent skips it).
+# tensorflow==2.21.0
+# joblib==1.6.0

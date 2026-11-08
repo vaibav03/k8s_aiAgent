@@ -1,0 +1,53 @@
+# ML service (ml_service/). Build + load the image first, e.g.:
+#   docker build -t kubeai-ml:latest ml_service && minikube image load kubeai-ml:latest
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kubeai-ml
+  namespace: kubeai
+  labels: {app.kubernetes.io/name: kubeai-ml, app.kubernetes.io/part-of: kubeai}
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app.kubernetes.io/name: kubeai-ml}
+  template:
+    metadata:
+      labels: {app.kubernetes.io/name: kubeai-ml, app.kubernetes.io/part-of: kubeai}
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+      containers:
+        - name: ml
+          image: kubeai-ml:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - {name: http, containerPort: 8000}
+          readinessProbe:
+            httpGet: {path: /readyz, port: http}
+            initialDelaySeconds: 3
+            periodSeconds: 5
+            failureThreshold: 3
+          livenessProbe:
+            httpGet: {path: /healthz, port: http}
+            initialDelaySeconds: 10
+            periodSeconds: 15
+            failureThreshold: 3
+          resources:
+            requests: {cpu: 100m, memory: 256Mi}
+            limits: {cpu: "1", memory: 1Gi}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities: {drop: ["ALL"]}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kubeai-ml
+  namespace: kubeai
+  labels: {app.kubernetes.io/name: kubeai-ml, app.kubernetes.io/part-of: kubeai}
+spec:
+  selector: {app.kubernetes.io/name: kubeai-ml}
+  ports:
+    - {name: http, port: 8000, targetPort: http}
