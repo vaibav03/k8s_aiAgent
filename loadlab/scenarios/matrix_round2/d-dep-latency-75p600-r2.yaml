@@ -1,0 +1,22 @@
+# generated from scenarios/matrix.yaml by runner/matrix.py - edit matrix.yaml instead
+id: d-dep-latency-75p600-r2
+group: D
+heavy: false
+duration_s: 540
+traffic:
+  shape: steady
+  base_load_pods: 1.0
+scaling:
+  policy: hpa_cpu
+  min: 1
+  max: 6
+  target_cpu: 70
+  initial: 3
+faults:
+- type: dep_latency
+  start_s: 150
+  end_s: 390
+  target: all
+  params:
+    dep_latency_ms: 600
+    dep_fraction: 0.75

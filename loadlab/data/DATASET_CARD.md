@@ -2,6 +2,8 @@
 
 Labelled Kubernetes autoscaling and remediation telemetry from the loadlab (see `../README.md`).
 
+> **Round 2 added (2026-11-08 09:36–11:36 MST):** 20 more runs, so there are now **44 runs, 5,368 deploy rows and 16,608 pod rows**, and a `round` column. The round-1 description below is unchanged. See [Round 2](#round-2) at the end.
+
 **Collection:** 2026-11-08, 07:04–09:22 MST, on minikube profile `kubeai-lab` (6 CPU / 6 GiB, one node).
 All 24 runs in `../scenarios/matrix.yaml` passed on the first attempt.
 
@@ -264,3 +266,88 @@ $PY runner/build_dataset.py                                  # -> data/*.csv.gz,
 `matrix.py` skips scenarios already marked `ok` in `runs/_matrix/state.json`. Delete that file, or
 pass `--only <ids>`, to collect again. Prometheus keeps 24 h, so a run can be re-exported with
 `$PY runner/promexport.py runs/<run_id>`.
+
+---
+
+## Round 2
+
+**Collection:** 2026-11-08, 09:36–11:36 MST, on the same cluster, image and calibration.
+
+* The source is `../scenarios/matrix_round2.yaml`, run with
+  `runner/matrix.py --matrix scenarios/matrix_round2.yaml` (2 lanes). The solo capacity run followed with `--lanes 1`.
+* All 20 runs passed matrix validation on the first attempt.
+* State is in `../runs/_matrix/state_matrix_round2.json`.
+
+**Why:** round 1 had a single injection of error_rate, cpu_hog, bad_deploy and crashloop, which made leave-run-out evaluation impossible. It also had no HPA scale-in, and an open question about the capacity knee. Every round-2 run uses parameters, seeds, target pods or replica counts that differ from round 1.
+
+### Combined totals
+
+| | round 1 | round 2 | total |
+|---|---|---|---|
+| runs | 24 | 20 | **44** |
+| `dataset_deploy` rows | 2,914 | 2,454 | **5,368** |
+| `dataset_pods` rows | 9,175 | 7,433 | **16,608** |
+| `faults_index` rows | 11 | 16 | 27 |
+| SLO-violating deploy rows | 426 | 352 | 778 |
+| `qa_flag` ok / post_fault_tail / node_glitch | 2,842 / 66 / 6 | 2,358 / 96 / 0 | 5,200 / 162 / 6 |
+
+### New column
+
+| column | file | meaning |
+|---|---|---|
+| `round` | both (and `runs_index.csv`, `faults_index.csv`) | collection round, 1 or 2. It is the **last** column, so every earlier column keeps its position. Round-1 rows are identical to the previous build. |
+
+### Round 2 scenarios
+
+All runs use the 2-lane cap of 4 pods unless marked solo.
+
+* "Rows" is the number of deploy rows.
+* "Viol" is the number of SLO-violating rows.
+
+| scenario | policy | traffic | fault | rows | max p95 | viol |
+|---|---|---|---|---|---|---|
+| a-cap-fixed2-solo-r2 | fixed 2, **alone on the node** | step ramp 16→44 RPS, 2-RPS steps of 40 s (8→22 RPS/pod) | – | 124 | 10 s | 39 |
+| b-hpa-diurnal-sd30-s41-r2 | HPA, **scaleDown window 30 s** | diurnal 1.2 pods, period 360 s, amplitude 0.65, seed 41 | – | 159 | 0.11 s | 0 |
+| b-hpa-diurnal-sd30-s59-r2 | HPA, window 30 s | diurnal 0.9 pods, period 300 s, amplitude 0.55, seed 59 | – | 159 | 0.09 s | 0 |
+| b-hpa-saw-sd30-b12-r2 | HPA, window 30 s | sawtooth 8.6→38.9 RPS, period 240 s | – | 146 | 0.58 s | 3 |
+| b-hpa-spike-sd30-b06-r2 | HPA, window 30 s | 4× spike at 150 s for 150 s (10.8→43 RPS) | – | 122 | 6.9 s | 15 |
+| c-under-fixed1-flash-r2 | fixed 1 | flash crowd 10.8→27 RPS at 150 s | – | 100 | 10 s | 69 |
+| c-over-fixed4-diurnal-r2 | fixed 4 | low diurnal 3.6–10.8 RPS | – | 122 | 0.03 s | 0 |
+| d-error10-hpa-diurnal-r2 | HPA, start 3 | diurnal 0.9 pods | error_rate 0.10, all pods, 240–450 s | 122 | 0.05 s | 45 |
+| d-error30-fixed3-r2 | fixed 3 | steady 15 RPS | error_rate 0.30, all pods, 180–360 s | 111 | 0.03 s | 39 |
+| d-cpu-hog-fixed3-p0-r2 | fixed 3 | steady 13 RPS | cpu_hog 350m, pod 0, 180–390 s | 110 | 0.12 s | 0 |
+| d-cpu-hog-fixed3-p2-r2 | fixed 3 | steady 16 RPS | cpu_hog 480m, pod 2, 150–360 s | 111 | 0.25 s | 0 |
+| d-bad-deploy-x2-hpa-r2 | HPA, start 3 | steady 16 RPS | bad_deploy 25→50 ms/request, 200–420 s | 123 | 0.20 s | 0 |
+| d-bad-deploy-x3-fixed3-r2 | fixed 3 | steady 15 RPS | bad_deploy 25→75 ms/request (v3-bad), 180–400 s | 123 | 1.03 s | 44 |
+| d-crashloop-fixed3-r2 | fixed 3 | steady 14 RPS | crashloop rollout, 150–390 s | 110 | 0.03 s | 0 |
+| d-dep-latency-25p300-r2 | fixed 3 | steady 15 RPS | dep_latency +300 ms on 25 %, 180–390 s | 111 | 0.34 s | 44 |
+| d-dep-latency-75p600-r2 | HPA, start 3 | steady 18 RPS | dep_latency +600 ms on 75 %, 150–390 s | 111 | 1.69 s | 50 |
+| d-leak-fast-oom-r2 | fixed 3 | steady 15 RPS | memory_leak 2,048 KB/s, pod 1, 120–450 s, freed at end | 111 | 1.74 s | 4 |
+| d-leak-medium-r2 | HPA, start 2 | diurnal 0.8 pods | memory_leak 560 KB/s, pod 0, 120–630 s, retained | 146 | 0.04 s | 0 |
+| d-pod-kill-fixed2-r2 | fixed 2 | steady 16 RPS | pod_kill at 150 s (pod 0) and 330 s (pod 1) | 110 | 0.03 s | 0 |
+| d-pod-kill-hpa-r2 | HPA, start 3 | steady 16.2 RPS | pod_kill at 140 / 290 / 440 s (pods 2 / 0 / 1) | 123 | 0.03 s | 0 |
+
+### Ground truth per fault class (both rounds)
+
+| fault type | injections r1 + r2 | runs r1 / r2 | deploy rows r1 + r2 |
+|---|---|---|---|
+| memory_leak | 3 + 2 | 3 / 2 | 282 + 168 = 450 |
+| dep_latency | 2 + 2 | 2 / 2 | 98 + 90 = 188 |
+| bad_deploy | 1 + 2 | 1 / 2 | 44 + 88 = 132 |
+| cpu_hog | 1 + 2 | 1 / 2 | 44 + 86 = 130 |
+| error_rate | 1 + 2 | 1 / 2 | 44 + 78 = 122 |
+| crashloop | 1 + 1 | 1 / 1 | 44 + 48 = 92 |
+| pod_kill | 2 + 5 | 1 / 2 | 12 + 30 = 42 |
+| none | – | 24 / 20 | 2,346 + 1,866 = 4,212 |
+
+Load-state counts for `none` rows (a heuristic proxy for scale_up, scale_down and healthy) are in `QA_REPORT.md` → Round 2.
+
+### Round 2 caveats
+
+1. **The capacity knee depends on replicas, confirmed solo.** With the node to itself, 2 replicas keep the SLO at 17 RPS/pod (p95 284 ms) and break it at 18 RPS/pod. One replica breaks at 20. Learn capacity per replica count.
+2. **Scale-in exists.** The 4 HPA runs with `scale_down_window_s: 30` scale from 4 to 2 replicas (11 step-downs). Round-1 HPA runs use the default 300 s window and never scale in. `scale_down_window_s` is recorded in each run's `scenario.json` scaling spec.
+3. **pod_kill under HPA (`d-pod-kill-hpa-r2`) is invisible at deployment level.** The replacement pod was ready within one 5 s step, so `replicas_ready` never dips. It is visible only as pod churn in `dataset_pods`. The fixed-2 run shows the dip (2 → 1).
+4. **The fast leak under-delivers** (measured 1.49 MB/s against 2 MB/s injected), and it raises p95 to about 1.7 s for about 20 s just before each OOMKill (memory pressure). The medium leak matches its injected rate (554 vs 560 KB/s), and p95 stays flat.
+5. **The HPA scales out during dep_latency** (`d-dep-latency-75p600-r2`, 3 → 4 at 203 s) without any p95 benefit. This is a labelled example of scaling that does not help.
+6. **NaN in `mem_growth_bytes_per_s`** is 22–24 % in the bad_deploy runs (two rollouts, so pods are younger than 90 s). Over all rows it is 9.2 %.
+7. The lane cap still applies: HPA `max` 6 was clipped to 4.

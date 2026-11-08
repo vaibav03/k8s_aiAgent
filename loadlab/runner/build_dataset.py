@@ -1,6 +1,9 @@
 """Consolidate matrix runs into data/dataset_deploy.csv.gz + data/dataset_pods.csv.gz (+ data/summary.json).
 
-    python runner/build_dataset.py            # uses runs/_matrix/state.json (status ok runs only)
+    python runner/build_dataset.py            # status-ok runs from every round's matrix state file
+
+Rounds (STATE_FILES): round 1 = runs/_matrix/state.json (scenarios/matrix.yaml),
+round 2 = runs/_matrix/state_matrix_round2.json (scenarios/matrix_round2.yaml).
 
 Added columns (both files):
   run_id, scenario, group, policy, shape, base_rps, seconds_since_start (ts - t0, t0 = k6 pod Running),
@@ -16,6 +19,8 @@ both files (QA pass): qa_flag  'ok' | 'node_glitch' (known unlabelled node-wide 
                      'post_fault_tail' (labelled none, <=30 s after a fault label ends; signals still trail)
 deploy file (QA pass): goodput_rps = rps * (1 - error_rate); pods_not_ready = pods present but not ready
 pods file (QA pass): mem_ws / mem_frac_limit == 0 (cAdvisor before first refresh) -> NaN
+both files (round 2): round  1 | 2 -- collection round; appended as the LAST column so every earlier
+                     column keeps its position (backward compatible)
 
 Fault windows: chaos faults [start_ts, end_ts] (actual apply/reset times); bad_deploy / crashloop
 [start_ts, end_ts] (rollout start -> rollback start); pod_kill is instantaneous and is labelled for
@@ -38,6 +43,9 @@ POST_FAULT_TAIL_S = 30.0
 # Known node-wide interference that hit both lanes at once (DATASET_CARD caveat 2; found by
 # runner/qa_dataset.py): unix-ts ranges, inclusive. Rows inside get qa_flag = node_glitch.
 NODE_GLITCH_WINDOWS = [(1794151443, 1794151457)]  # 2026-11-08 08:24:03-08:24:17 MST (3 rows per lane)
+# collection round -> matrix state file (runner/matrix.py writes one per matrix yaml)
+STATE_FILES = {1: ROOT / "runs" / "_matrix" / "state.json",
+               2: ROOT / "runs" / "_matrix" / "state_matrix_round2.json"}
 
 
 def clean_pods(p: pd.DataFrame) -> pd.DataFrame:
@@ -135,10 +143,13 @@ def label_pods(df: pd.DataFrame, faults: list[dict]) -> pd.DataFrame:
 
 
 def main():
-    state = json.loads((ROOT / "runs" / "_matrix" / "state.json").read_text())
+    entries = []
+    for rnd, sf in STATE_FILES.items():
+        if sf.exists():
+            entries += [(rnd, sid, st) for sid, st in json.loads(sf.read_text()).items()]
     OUT.mkdir(exist_ok=True)
     deps, pods, runs, fault_rows = [], [], [], []
-    for sid, st in state.items():
+    for rnd, sid, st in entries:
         if st.get("status") != "ok":
             print("skip", sid, st.get("status"), file=sys.stderr)
             continue
@@ -159,10 +170,11 @@ def main():
             df.insert(len(common), "seconds_since_start", (df["ts"] - t0).round(1))
         d, p = label_deploy(d, faults), label_pods(p, faults)
         d["qa_flag"], p["qa_flag"] = qa_flags(d, faults), qa_flags(p, faults)
+        d["round"], p["round"] = rnd, rnd
         deps.append(d)
         pods.append(p)
         for r in faults:
-            fault_rows.append({"run_id": st["run_id"], "scenario": sc["id"], "fault_id": r["fault_id"],
+            fault_rows.append({"run_id": st["run_id"], "scenario": sc["id"], "round": rnd, "fault_id": r["fault_id"],
                                "type": r["type"], "target": target_str(r), "start_rel_s": r["start_rel_s"],
                                "end_rel_s": r.get("end_rel_s"),
                                "duration_s": round(r.get("end_ts", r["start_ts"]) - r["start_ts"], 2),
@@ -176,7 +188,7 @@ def main():
                   "k6_failed_rate": m.get("http_req_failed", {}).get("values", {}).get("rate"),
                   "k6_p95_ms": m.get("http_req_duration", {}).get("values", {}).get("p(95)"),
                   "k6_dropped": m.get("dropped_iterations", {}).get("values", {}).get("count", 0)}
-        runs.append({**common, "duration_s": sc["duration_s"], "lane_cap": sc["scaling"].get("_lane_cap"),
+        runs.append({**common, "round": rnd, "duration_s": sc["duration_s"], "lane_cap": sc["scaling"].get("_lane_cap"),
                      "scaling": json.dumps({k: v for k, v in sc["scaling"].items()}),
                      "deploy_rows": len(d), "pod_rows": len(p), "faults": len(faults),
                      "max_replicas_ready": float(d["replicas_ready"].max()),
@@ -200,6 +212,12 @@ def main():
                "deploy_columns": list(D.columns), "pod_columns": list(P.columns),
                "fault_totals": ft, "deploy_rows_by_active_fault": rows_by_fault,
                "deploy_rows_by_group": D["group"].value_counts().to_dict(),
+               "runs_by_round": R["round"].value_counts().sort_index().to_dict(),
+               "deploy_rows_by_round": D["round"].value_counts().sort_index().to_dict(),
+               "deploy_rows_by_active_fault_and_round": {f"{k[0]}|r{k[1]}": int(v) for k, v in
+                                                         D.groupby(["active_fault", "round"]).size().items()},
+               "fault_injections_by_type_and_round": {f"{k[0]}|r{k[1]}": int(v) for k, v in
+                                                      F.groupby(["type", "round"]).size().items()},
                "nan_share_deploy": {c: round(float(D[c].isna().mean()), 4) for c in D.columns if D[c].isna().any()},
                "nan_share_pods": {c: round(float(P[c].isna().mean()), 4) for c in P.columns if P[c].isna().any()},
                "deploy_rows_by_qa_flag": D["qa_flag"].value_counts().to_dict(),

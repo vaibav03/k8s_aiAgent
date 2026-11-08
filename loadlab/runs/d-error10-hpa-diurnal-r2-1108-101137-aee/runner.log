@@ -1,0 +1,9 @@
+10:11:37 [d-error10-hpa-diurnal-r2-1108-101137-aee] scenario d-error10-hpa-diurnal-r2 -> namespace lab-d-error10-hpa-diurnal-r2-1108-101137-aee
+10:11:47 [d-error10-hpa-diurnal-r2-1108-101137-aee] app ready: 3 replica(s), policy hpa_cpu
+10:12:11 [d-error10-hpa-diurnal-r2-1108-101137-aee] HPA has metrics: {'averageUtilization': 1, 'averageValue': '4m'}
+10:12:23 [d-error10-hpa-diurnal-r2-1108-101137-aee] k6 started: diurnal base_rps 16.2 pod k6-q8hsb
+10:16:23 [d-error10-hpa-diurnal-r2-1108-101137-aee] FAULT START f0 error_rate target=all pods=['loadlab-5965489b55-7ltfw', 'loadlab-5965489b55-jx5p4', 'loadlab-5965489b55-lhm69'] params={'error_rate': 0.1}
+10:19:53 [d-error10-hpa-diurnal-r2-1108-101137-aee] FAULT END   f0 error_rate
+10:22:29 [d-error10-hpa-diurnal-r2-1108-101137-aee] load finished: succeeded
+10:22:49 [d-error10-hpa-diurnal-r2-1108-101137-aee] exported deploy.csv (122 rows) pods.csv (366 rows) -> /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/d-error10-hpa-diurnal-r2-1108-101137-aee
+10:22:49 [d-error10-hpa-diurnal-r2-1108-101137-aee] namespace deleted

@@ -1,0 +1,15 @@
+# generated from scenarios/matrix.yaml by runner/matrix.py - edit matrix.yaml instead
+id: d-crashloop-fixed3-r2
+group: D
+heavy: false
+duration_s: 540
+traffic:
+  shape: steady
+  base_rps: 14
+scaling:
+  policy: fixed
+  replicas: 3
+faults:
+- type: crashloop
+  start_s: 150
+  end_s: 390

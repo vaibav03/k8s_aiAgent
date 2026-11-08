@@ -1,0 +1,16 @@
+# generated from scenarios/matrix.yaml by runner/matrix.py - edit matrix.yaml instead
+id: c-under-fixed1-flash-r2
+group: C
+heavy: true
+duration_s: 480
+traffic:
+  shape: flash_crowd
+  base_load_pods: 0.6
+  params:
+    at_s: 150
+    mult: 2.5
+    ramp_s: 5
+scaling:
+  policy: fixed
+  replicas: 1
+faults: []

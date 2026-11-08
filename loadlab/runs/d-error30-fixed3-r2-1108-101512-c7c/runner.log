@@ -1,0 +1,8 @@
+10:15:12 [d-error30-fixed3-r2-1108-101512-c7c] scenario d-error30-fixed3-r2 -> namespace lab-d-error30-fixed3-r2-1108-101512-c7c
+10:15:16 [d-error30-fixed3-r2-1108-101512-c7c] app ready: 3 replica(s), policy fixed
+10:15:33 [d-error30-fixed3-r2-1108-101512-c7c] k6 started: steady base_rps 15 pod k6-tj2hm
+10:18:33 [d-error30-fixed3-r2-1108-101512-c7c] FAULT START f0 error_rate target=all pods=['loadlab-5965489b55-bhrk8', 'loadlab-5965489b55-c5dt4', 'loadlab-5965489b55-jw89d'] params={'error_rate': 0.3}
+10:21:33 [d-error30-fixed3-r2-1108-101512-c7c] FAULT END   f0 error_rate
+10:24:38 [d-error30-fixed3-r2-1108-101512-c7c] load finished: succeeded
+10:24:58 [d-error30-fixed3-r2-1108-101512-c7c] exported deploy.csv (111 rows) pods.csv (333 rows) -> /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/d-error30-fixed3-r2-1108-101512-c7c
+10:24:58 [d-error30-fixed3-r2-1108-101512-c7c] namespace deleted

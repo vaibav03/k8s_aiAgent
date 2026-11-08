@@ -1,0 +1,18 @@
+# generated from scenarios/matrix.yaml by runner/matrix.py - edit matrix.yaml instead
+id: a-cap-fixed2-solo-r2
+group: A
+heavy: true
+solo: true
+duration_s: 600
+traffic:
+  shape: step_ramp
+  base_rps: 16
+  params:
+    start_rps: 16
+    step_rps: 2
+    step_s: 40
+    ramp_s: 3
+scaling:
+  policy: fixed
+  replicas: 2
+faults: []

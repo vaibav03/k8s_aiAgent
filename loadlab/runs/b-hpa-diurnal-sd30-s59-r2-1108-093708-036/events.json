@@ -1,0 +1,2412 @@
+{
+    "apiVersion": "v1",
+    "items": [
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:37:49Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "kind": "Pod",
+                "name": "k6-tddmf",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "22769",
+                "uid": "359dab2a-fe83-4385-ad7a-6de7d72461d7"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:37:49Z",
+            "message": "Successfully assigned lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036/k6-tddmf to kubeai-lab",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:37:49Z",
+                "name": "k6-tddmf.18e61f41eafbd21b",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "22773",
+                "uid": "a6624a7f-ac74-4c2d-b434-72895b00c85a"
+            },
+            "reason": "Scheduled",
+            "reportingComponent": "default-scheduler",
+            "reportingInstance": "",
+            "source": {
+                "component": "default-scheduler"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:37:49Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{k6}",
+                "kind": "Pod",
+                "name": "k6-tddmf",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "22772",
+                "uid": "359dab2a-fe83-4385-ad7a-6de7d72461d7"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:37:49Z",
+            "message": "Container image \"grafana/k6:0.54.0\" already present on machine",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:37:49Z",
+                "name": "k6-tddmf.18e61f42037a7097",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "22778",
+                "uid": "d0ee8e7c-a155-4680-b966-6459d8464dc8"
+            },
+            "reason": "Pulled",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "kubeai-lab",
+            "source": {
+                "component": "kubelet",
+                "host": "kubeai-lab"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:37:49Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{k6}",
+                "kind": "Pod",
+                "name": "k6-tddmf",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "22772",
+                "uid": "359dab2a-fe83-4385-ad7a-6de7d72461d7"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:37:49Z",
+            "message": "Created container: k6",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:37:49Z",
+                "name": "k6-tddmf.18e61f4204bdfce1",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "22779",
+                "uid": "ab0b4f92-2dc9-4760-a34f-25efb162236d"
+            },
+            "reason": "Created",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "kubeai-lab",
+            "source": {
+                "component": "kubelet",
+                "host": "kubeai-lab"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:37:50Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{k6}",
+                "kind": "Pod",
+                "name": "k6-tddmf",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "22772",
+                "uid": "359dab2a-fe83-4385-ad7a-6de7d72461d7"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:37:50Z",
+            "message": "Started container k6",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:37:50Z",
+                "name": "k6-tddmf.18e61f4207f79edb",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "22780",
+                "uid": "afe28c5b-7412-4ca0-82bf-370bc7ba03eb"
+            },
+            "reason": "Started",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "kubeai-lab",
+            "source": {
+                "component": "kubelet",
+                "host": "kubeai-lab"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:37:49Z",
+            "involvedObject": {
+                "apiVersion": "batch/v1",
+                "kind": "Job",
+                "name": "k6",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "22768",
+                "uid": "64e4e859-525d-4392-bf62-3bfce6830855"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:37:49Z",
+            "message": "Created pod: k6-tddmf",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:37:49Z",
+                "name": "k6.18e61f41eab50d92",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "22770",
+                "uid": "0859899e-fc84-4e1b-8c0f-4862e504a665"
+            },
+            "reason": "SuccessfulCreate",
+            "reportingComponent": "job-controller",
+            "reportingInstance": "",
+            "source": {
+                "component": "job-controller"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:50:53Z",
+            "involvedObject": {
+                "apiVersion": "batch/v1",
+                "kind": "Job",
+                "name": "k6",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23967",
+                "uid": "64e4e859-525d-4392-bf62-3bfce6830855"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:50:53Z",
+            "message": "Job completed",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:50:53Z",
+                "name": "k6.18e61ff8719a2886",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23970",
+                "uid": "6b30d63d-af87-415b-9efb-cdc93482077f"
+            },
+            "reason": "Completed",
+            "reportingComponent": "job-controller",
+            "reportingInstance": "",
+            "source": {
+                "component": "job-controller"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:44:54Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "kind": "Pod",
+                "name": "loadlab-5965489b55-47xtr",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23447",
+                "uid": "d658c1db-95ed-4b1c-8d6d-13d26dafa892"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:44:54Z",
+            "message": "Successfully assigned lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036/loadlab-5965489b55-47xtr to kubeai-lab",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:44:54Z",
+                "name": "loadlab-5965489b55-47xtr.18e61fa4f7c5d604",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23452",
+                "uid": "150b97d2-614e-4c8c-aca5-a91fee2a6096"
+            },
+            "reason": "Scheduled",
+            "reportingComponent": "default-scheduler",
+            "reportingInstance": "",
+            "source": {
+                "component": "default-scheduler"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:44:55Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{app}",
+                "kind": "Pod",
+                "name": "loadlab-5965489b55-47xtr",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23449",
+                "uid": "d658c1db-95ed-4b1c-8d6d-13d26dafa892"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:44:55Z",
+            "message": "Container image \"loadlab:v1\" already present on machine",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:44:55Z",
+                "name": "loadlab-5965489b55-47xtr.18e61fa52d2b8114",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23457",
+                "uid": "69ce8dea-29dc-42f8-bde9-33c961443899"
+            },
+            "reason": "Pulled",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "kubeai-lab",
+            "source": {
+                "component": "kubelet",
+                "host": "kubeai-lab"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:44:55Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{app}",
+                "kind": "Pod",
+                "name": "loadlab-5965489b55-47xtr",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23449",
+                "uid": "d658c1db-95ed-4b1c-8d6d-13d26dafa892"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:44:55Z",
+            "message": "Created container: app",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:44:56Z",
+                "name": "loadlab-5965489b55-47xtr.18e61fa5368c853c",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23458",
+                "uid": "7f4db197-1c9a-4787-adea-00e8db1e71c1"
+            },
+            "reason": "Created",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "kubeai-lab",
+            "source": {
+                "component": "kubelet",
+                "host": "kubeai-lab"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:44:56Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{app}",
+                "kind": "Pod",
+                "name": "loadlab-5965489b55-47xtr",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23449",
+                "uid": "d658c1db-95ed-4b1c-8d6d-13d26dafa892"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:44:56Z",
+            "message": "Started container app",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:44:56Z",
+                "name": "loadlab-5965489b55-47xtr.18e61fa545894ed8",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23460",
+                "uid": "0745213f-3f00-4cf7-a8bb-0bcc6cd89240"
+            },
+            "reason": "Started",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "kubeai-lab",
+            "source": {
+                "component": "kubelet",
+                "host": "kubeai-lab"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 3,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:44:56Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{app}",
+                "kind": "Pod",
+                "name": "loadlab-5965489b55-47xtr",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23449",
+                "uid": "d658c1db-95ed-4b1c-8d6d-13d26dafa892"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:44:58Z",
+            "message": "Readiness probe failed: Get \"http://10.244.0.219:8080/readyz\": dial tcp 10.244.0.219:8080: connect: connection refused",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:44:56Z",
+                "name": "loadlab-5965489b55-47xtr.18e61fa562464da2",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23467",
+                "uid": "60114c82-6038-41a5-bdac-98f033c5204b"
+            },
+            "reason": "Unhealthy",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "kubeai-lab",
+            "source": {
+                "component": "kubelet",
+                "host": "kubeai-lab"
+            },
+            "type": "Warning"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:46:55Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{app}",
+                "kind": "Pod",
+                "name": "loadlab-5965489b55-47xtr",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23449",
+                "uid": "d658c1db-95ed-4b1c-8d6d-13d26dafa892"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:46:55Z",
+            "message": "Stopping container app",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:46:55Z",
+                "name": "loadlab-5965489b55-47xtr.18e61fc1003559a5",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23619",
+                "uid": "6d41bbcf-56e7-4424-a1d0-5f54d3d9e8f6"
+            },
+            "reason": "Killing",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "kubeai-lab",
+            "source": {
+                "component": "kubelet",
+                "host": "kubeai-lab"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:37:09Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "kind": "Pod",
+                "name": "loadlab-5965489b55-6cj25",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "22673",
+                "uid": "7eb3c3c1-80ab-4b1a-9cfc-f879ac53da88"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:37:09Z",
+            "message": "Successfully assigned lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036/loadlab-5965489b55-6cj25 to kubeai-lab",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:37:09Z",
+                "name": "loadlab-5965489b55-6cj25.18e61f387d960248",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "22681",
+                "uid": "97939a7f-f184-4fe1-902c-78f2c6f140e3"
+            },
+            "reason": "Scheduled",
+            "reportingComponent": "default-scheduler",
+            "reportingInstance": "",
+            "source": {
+                "component": "default-scheduler"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:37:09Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{app}",
+                "kind": "Pod",
+                "name": "loadlab-5965489b55-6cj25",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "22676",
+                "uid": "7eb3c3c1-80ab-4b1a-9cfc-f879ac53da88"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:37:09Z",
+            "message": "Container image \"loadlab:v1\" already present on machine",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:37:09Z",
+                "name": "loadlab-5965489b55-6cj25.18e61f389675c953",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "22689",
+                "uid": "27ee2b33-64b4-4bd6-9bbc-cdc9ebb4ad42"
+            },
+            "reason": "Pulled",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "kubeai-lab",
+            "source": {
+                "component": "kubelet",
+                "host": "kubeai-lab"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:37:09Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{app}",
+                "kind": "Pod",
+                "name": "loadlab-5965489b55-6cj25",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "22676",
+                "uid": "7eb3c3c1-80ab-4b1a-9cfc-f879ac53da88"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:37:09Z",
+            "message": "Created container: app",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:37:09Z",
+                "name": "loadlab-5965489b55-6cj25.18e61f3897d32c5c",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "22690",
+                "uid": "f0d033c2-1ad5-4102-b809-145b314f4ce3"
+            },
+            "reason": "Created",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "kubeai-lab",
+            "source": {
+                "component": "kubelet",
+                "host": "kubeai-lab"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:37:09Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{app}",
+                "kind": "Pod",
+                "name": "loadlab-5965489b55-6cj25",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "22676",
+                "uid": "7eb3c3c1-80ab-4b1a-9cfc-f879ac53da88"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:37:09Z",
+            "message": "Started container app",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:37:09Z",
+                "name": "loadlab-5965489b55-6cj25.18e61f389a2218e4",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "22691",
+                "uid": "ba53fa36-1ac8-477c-92ee-f993d6627bc5"
+            },
+            "reason": "Started",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "kubeai-lab",
+            "source": {
+                "component": "kubelet",
+                "host": "kubeai-lab"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:37:09Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{app}",
+                "kind": "Pod",
+                "name": "loadlab-5965489b55-6cj25",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "22676",
+                "uid": "7eb3c3c1-80ab-4b1a-9cfc-f879ac53da88"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:37:09Z",
+            "message": "Readiness probe failed: Get \"http://10.244.0.208:8080/readyz\": dial tcp 10.244.0.208:8080: connect: connection refused",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:37:09Z",
+                "name": "loadlab-5965489b55-6cj25.18e61f38aba4bdb1",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "22692",
+                "uid": "2f3e7865-f09e-4261-821b-0779a239b63c"
+            },
+            "reason": "Unhealthy",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "kubeai-lab",
+            "source": {
+                "component": "kubelet",
+                "host": "kubeai-lab"
+            },
+            "type": "Warning"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:39:24Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "kind": "Pod",
+                "name": "loadlab-5965489b55-74sdg",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "22963",
+                "uid": "c564022a-a64b-436a-922e-0a62de77bf12"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:39:24Z",
+            "message": "Successfully assigned lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036/loadlab-5965489b55-74sdg to kubeai-lab",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:39:24Z",
+                "name": "loadlab-5965489b55-74sdg.18e61f57f65af0fa",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "22968",
+                "uid": "56821d24-9e3e-4e67-bf97-fc016a0a59ef"
+            },
+            "reason": "Scheduled",
+            "reportingComponent": "default-scheduler",
+            "reportingInstance": "",
+            "source": {
+                "component": "default-scheduler"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:39:24Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{app}",
+                "kind": "Pod",
+                "name": "loadlab-5965489b55-74sdg",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "22967",
+                "uid": "c564022a-a64b-436a-922e-0a62de77bf12"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:39:24Z",
+            "message": "Container image \"loadlab:v1\" already present on machine",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:39:24Z",
+                "name": "loadlab-5965489b55-74sdg.18e61f582248f907",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "22972",
+                "uid": "865e197c-674b-4e5a-959f-6685ee30c554"
+            },
+            "reason": "Pulled",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "kubeai-lab",
+            "source": {
+                "component": "kubelet",
+                "host": "kubeai-lab"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:39:24Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{app}",
+                "kind": "Pod",
+                "name": "loadlab-5965489b55-74sdg",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "22967",
+                "uid": "c564022a-a64b-436a-922e-0a62de77bf12"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:39:24Z",
+            "message": "Created container: app",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:39:24Z",
+                "name": "loadlab-5965489b55-74sdg.18e61f5823aa736c",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "22973",
+                "uid": "98e37a45-cf74-40fa-aa19-f681a84e5143"
+            },
+            "reason": "Created",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "kubeai-lab",
+            "source": {
+                "component": "kubelet",
+                "host": "kubeai-lab"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:39:25Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{app}",
+                "kind": "Pod",
+                "name": "loadlab-5965489b55-74sdg",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "22967",
+                "uid": "c564022a-a64b-436a-922e-0a62de77bf12"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:39:25Z",
+            "message": "Started container app",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:39:25Z",
+                "name": "loadlab-5965489b55-74sdg.18e61f5827324fc5",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "22974",
+                "uid": "4ead3f4a-4619-416f-a27f-ad365af3f645"
+            },
+            "reason": "Started",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "kubeai-lab",
+            "source": {
+                "component": "kubelet",
+                "host": "kubeai-lab"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:39:25Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{app}",
+                "kind": "Pod",
+                "name": "loadlab-5965489b55-74sdg",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "22967",
+                "uid": "c564022a-a64b-436a-922e-0a62de77bf12"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:39:25Z",
+            "message": "Readiness probe failed: Get \"http://10.244.0.215:8080/readyz\": dial tcp 10.244.0.215:8080: connect: connection refused",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:39:25Z",
+                "name": "loadlab-5965489b55-74sdg.18e61f584da683a8",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "22976",
+                "uid": "f8e7dee4-2d81-493b-b7df-fea994766973"
+            },
+            "reason": "Unhealthy",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "kubeai-lab",
+            "source": {
+                "component": "kubelet",
+                "host": "kubeai-lab"
+            },
+            "type": "Warning"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:38:24Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "kind": "Pod",
+                "name": "loadlab-5965489b55-789zl",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "22829",
+                "uid": "aa398390-774b-4d06-9fbc-9ceb2ecbdb41"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:38:24Z",
+            "message": "Successfully assigned lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036/loadlab-5965489b55-789zl to kubeai-lab",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:38:24Z",
+                "name": "loadlab-5965489b55-789zl.18e61f49fb5323ab",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "22834",
+                "uid": "8fa8d7ce-ee81-484b-985f-2dc75ff2f2b6"
+            },
+            "reason": "Scheduled",
+            "reportingComponent": "default-scheduler",
+            "reportingInstance": "",
+            "source": {
+                "component": "default-scheduler"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:38:24Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{app}",
+                "kind": "Pod",
+                "name": "loadlab-5965489b55-789zl",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "22832",
+                "uid": "aa398390-774b-4d06-9fbc-9ceb2ecbdb41"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:38:24Z",
+            "message": "Container image \"loadlab:v1\" already present on machine",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:38:24Z",
+                "name": "loadlab-5965489b55-789zl.18e61f4a160a068d",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "22838",
+                "uid": "f3b4f1e8-d214-4cb9-b388-3173adbd5308"
+            },
+            "reason": "Pulled",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "kubeai-lab",
+            "source": {
+                "component": "kubelet",
+                "host": "kubeai-lab"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:38:24Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{app}",
+                "kind": "Pod",
+                "name": "loadlab-5965489b55-789zl",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "22832",
+                "uid": "aa398390-774b-4d06-9fbc-9ceb2ecbdb41"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:38:24Z",
+            "message": "Created container: app",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:38:24Z",
+                "name": "loadlab-5965489b55-789zl.18e61f4a18108eda",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "22839",
+                "uid": "93d93caa-f65d-4fe1-9f8d-86b6af427968"
+            },
+            "reason": "Created",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "kubeai-lab",
+            "source": {
+                "component": "kubelet",
+                "host": "kubeai-lab"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:38:24Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{app}",
+                "kind": "Pod",
+                "name": "loadlab-5965489b55-789zl",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "22832",
+                "uid": "aa398390-774b-4d06-9fbc-9ceb2ecbdb41"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:38:24Z",
+            "message": "Started container app",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:38:24Z",
+                "name": "loadlab-5965489b55-789zl.18e61f4a1b793dc1",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "22840",
+                "uid": "3f824434-3613-48af-9dbd-85cde4a432a1"
+            },
+            "reason": "Started",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "kubeai-lab",
+            "source": {
+                "component": "kubelet",
+                "host": "kubeai-lab"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:38:25Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{app}",
+                "kind": "Pod",
+                "name": "loadlab-5965489b55-789zl",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "22832",
+                "uid": "aa398390-774b-4d06-9fbc-9ceb2ecbdb41"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:38:25Z",
+            "message": "Readiness probe failed: Get \"http://10.244.0.212:8080/readyz\": dial tcp 10.244.0.212:8080: connect: connection refused",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:38:25Z",
+                "name": "loadlab-5965489b55-789zl.18e61f4a3e5c1bad",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "22841",
+                "uid": "3212bf8c-1d51-4ea4-b20d-bc7dc1465cb5"
+            },
+            "reason": "Unhealthy",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "kubeai-lab",
+            "source": {
+                "component": "kubelet",
+                "host": "kubeai-lab"
+            },
+            "type": "Warning"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:42:24Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{app}",
+                "kind": "Pod",
+                "name": "loadlab-5965489b55-789zl",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "22832",
+                "uid": "aa398390-774b-4d06-9fbc-9ceb2ecbdb41"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:42:24Z",
+            "message": "Stopping container app",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:42:24Z",
+                "name": "loadlab-5965489b55-789zl.18e61f81f21f297d",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23206",
+                "uid": "eb6eea5c-c07c-43da-91ea-cb25cab083be"
+            },
+            "reason": "Killing",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "kubeai-lab",
+            "source": {
+                "component": "kubelet",
+                "host": "kubeai-lab"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:44:09Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "kind": "Pod",
+                "name": "loadlab-5965489b55-hwt8k",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23349",
+                "uid": "59a5486e-685d-4679-93c3-63cd403c93fc"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:44:09Z",
+            "message": "Successfully assigned lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036/loadlab-5965489b55-hwt8k to kubeai-lab",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:44:09Z",
+                "name": "loadlab-5965489b55-hwt8k.18e61f9a760f2030",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23354",
+                "uid": "4b19e0dd-316c-4a1c-bed7-db6f0fd40471"
+            },
+            "reason": "Scheduled",
+            "reportingComponent": "default-scheduler",
+            "reportingInstance": "",
+            "source": {
+                "component": "default-scheduler"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:44:10Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{app}",
+                "kind": "Pod",
+                "name": "loadlab-5965489b55-hwt8k",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23352",
+                "uid": "59a5486e-685d-4679-93c3-63cd403c93fc"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:44:10Z",
+            "message": "Container image \"loadlab:v1\" already present on machine",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:44:10Z",
+                "name": "loadlab-5965489b55-hwt8k.18e61f9aac95d781",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23358",
+                "uid": "bae1c956-3eec-4fbf-949a-ce62f6215f20"
+            },
+            "reason": "Pulled",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "kubeai-lab",
+            "source": {
+                "component": "kubelet",
+                "host": "kubeai-lab"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:44:10Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{app}",
+                "kind": "Pod",
+                "name": "loadlab-5965489b55-hwt8k",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23352",
+                "uid": "59a5486e-685d-4679-93c3-63cd403c93fc"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:44:10Z",
+            "message": "Created container: app",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:44:10Z",
+                "name": "loadlab-5965489b55-hwt8k.18e61f9ab2cc36c3",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23359",
+                "uid": "be0b54de-f08e-4a56-8e9f-2cf10b36f7b2"
+            },
+            "reason": "Created",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "kubeai-lab",
+            "source": {
+                "component": "kubelet",
+                "host": "kubeai-lab"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:44:11Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{app}",
+                "kind": "Pod",
+                "name": "loadlab-5965489b55-hwt8k",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23352",
+                "uid": "59a5486e-685d-4679-93c3-63cd403c93fc"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:44:11Z",
+            "message": "Started container app",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:44:11Z",
+                "name": "loadlab-5965489b55-hwt8k.18e61f9abeb09894",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23360",
+                "uid": "f0b08117-eb74-4350-b883-0bfec14c0c55"
+            },
+            "reason": "Started",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "kubeai-lab",
+            "source": {
+                "component": "kubelet",
+                "host": "kubeai-lab"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 3,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:44:11Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{app}",
+                "kind": "Pod",
+                "name": "loadlab-5965489b55-hwt8k",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23352",
+                "uid": "59a5486e-685d-4679-93c3-63cd403c93fc"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:44:17Z",
+            "message": "Readiness probe failed: Get \"http://10.244.0.217:8080/readyz\": dial tcp 10.244.0.217:8080: connect: connection refused",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:44:11Z",
+                "name": "loadlab-5965489b55-hwt8k.18e61f9ac866e7b2",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23372",
+                "uid": "75ad08e3-f667-45a4-ba58-14d720808892"
+            },
+            "reason": "Unhealthy",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "kubeai-lab",
+            "source": {
+                "component": "kubelet",
+                "host": "kubeai-lab"
+            },
+            "type": "Warning"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:47:25Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{app}",
+                "kind": "Pod",
+                "name": "loadlab-5965489b55-hwt8k",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23352",
+                "uid": "59a5486e-685d-4679-93c3-63cd403c93fc"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:47:25Z",
+            "message": "Stopping container app",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:47:25Z",
+                "name": "loadlab-5965489b55-hwt8k.18e61fc800416c58",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23664",
+                "uid": "1c35b15d-d482-4939-8509-7206a59eb5c7"
+            },
+            "reason": "Killing",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "kubeai-lab",
+            "source": {
+                "component": "kubelet",
+                "host": "kubeai-lab"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:40:09Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "kind": "Pod",
+                "name": "loadlab-5965489b55-lzwxt",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23031",
+                "uid": "7ba69d55-1b90-4e37-8b9f-97e6b5af246e"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:40:09Z",
+            "message": "Successfully assigned lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036/loadlab-5965489b55-lzwxt to kubeai-lab",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:40:09Z",
+                "name": "loadlab-5965489b55-lzwxt.18e61f6273356f0d",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23036",
+                "uid": "7eda5f60-8bc6-42d4-88cb-7a017351bd13"
+            },
+            "reason": "Scheduled",
+            "reportingComponent": "default-scheduler",
+            "reportingInstance": "",
+            "source": {
+                "component": "default-scheduler"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:40:09Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{app}",
+                "kind": "Pod",
+                "name": "loadlab-5965489b55-lzwxt",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23034",
+                "uid": "7ba69d55-1b90-4e37-8b9f-97e6b5af246e"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:40:09Z",
+            "message": "Container image \"loadlab:v1\" already present on machine",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:40:09Z",
+                "name": "loadlab-5965489b55-lzwxt.18e61f628f7cd7a1",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23041",
+                "uid": "28060108-0881-497e-aee2-358d6dff4b6a"
+            },
+            "reason": "Pulled",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "kubeai-lab",
+            "source": {
+                "component": "kubelet",
+                "host": "kubeai-lab"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:40:09Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{app}",
+                "kind": "Pod",
+                "name": "loadlab-5965489b55-lzwxt",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23034",
+                "uid": "7ba69d55-1b90-4e37-8b9f-97e6b5af246e"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:40:09Z",
+            "message": "Created container: app",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:40:09Z",
+                "name": "loadlab-5965489b55-lzwxt.18e61f62919b1c44",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23042",
+                "uid": "cf9a5deb-0f1a-4790-a8c4-5563e09744cb"
+            },
+            "reason": "Created",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "kubeai-lab",
+            "source": {
+                "component": "kubelet",
+                "host": "kubeai-lab"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:40:09Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{app}",
+                "kind": "Pod",
+                "name": "loadlab-5965489b55-lzwxt",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23034",
+                "uid": "7ba69d55-1b90-4e37-8b9f-97e6b5af246e"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:40:09Z",
+            "message": "Started container app",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:40:09Z",
+                "name": "loadlab-5965489b55-lzwxt.18e61f6295f30d01",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23043",
+                "uid": "86be6e52-f7ca-4d96-abb9-bf9921910c0a"
+            },
+            "reason": "Started",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "kubeai-lab",
+            "source": {
+                "component": "kubelet",
+                "host": "kubeai-lab"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 2,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:40:09Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{app}",
+                "kind": "Pod",
+                "name": "loadlab-5965489b55-lzwxt",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23034",
+                "uid": "7ba69d55-1b90-4e37-8b9f-97e6b5af246e"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:40:10Z",
+            "message": "Readiness probe failed: Get \"http://10.244.0.216:8080/readyz\": dial tcp 10.244.0.216:8080: connect: connection refused",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:40:09Z",
+                "name": "loadlab-5965489b55-lzwxt.18e61f629df49146",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23048",
+                "uid": "b0158d58-912d-402e-9b7b-f595dfd5d0f9"
+            },
+            "reason": "Unhealthy",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "kubeai-lab",
+            "source": {
+                "component": "kubelet",
+                "host": "kubeai-lab"
+            },
+            "type": "Warning"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:41:54Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{app}",
+                "kind": "Pod",
+                "name": "loadlab-5965489b55-lzwxt",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23034",
+                "uid": "7ba69d55-1b90-4e37-8b9f-97e6b5af246e"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:41:54Z",
+            "message": "Stopping container app",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:41:54Z",
+                "name": "loadlab-5965489b55-lzwxt.18e61f7af17a2647",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23159",
+                "uid": "5d7cdc42-31d5-4e44-9c51-223709ab6f13"
+            },
+            "reason": "Killing",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "kubeai-lab",
+            "source": {
+                "component": "kubelet",
+                "host": "kubeai-lab"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:49:40Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "kind": "Pod",
+                "name": "loadlab-5965489b55-p5r9s",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23865",
+                "uid": "ad862ba1-dc62-46ab-9ece-94ceeda13be2"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:49:40Z",
+            "message": "Successfully assigned lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036/loadlab-5965489b55-p5r9s to kubeai-lab",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:49:40Z",
+                "name": "loadlab-5965489b55-p5r9s.18e61fe786ac5939",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23870",
+                "uid": "575af4f0-0261-4ffa-8518-5d92fd474e72"
+            },
+            "reason": "Scheduled",
+            "reportingComponent": "default-scheduler",
+            "reportingInstance": "",
+            "source": {
+                "component": "default-scheduler"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:49:41Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{app}",
+                "kind": "Pod",
+                "name": "loadlab-5965489b55-p5r9s",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23868",
+                "uid": "ad862ba1-dc62-46ab-9ece-94ceeda13be2"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:49:41Z",
+            "message": "Container image \"loadlab:v1\" already present on machine",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:49:41Z",
+                "name": "loadlab-5965489b55-p5r9s.18e61fe7c202c63f",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23877",
+                "uid": "fa7fd5eb-c530-4aa8-9e5b-349b36ca5996"
+            },
+            "reason": "Pulled",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "kubeai-lab",
+            "source": {
+                "component": "kubelet",
+                "host": "kubeai-lab"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:49:41Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{app}",
+                "kind": "Pod",
+                "name": "loadlab-5965489b55-p5r9s",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23868",
+                "uid": "ad862ba1-dc62-46ab-9ece-94ceeda13be2"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:49:41Z",
+            "message": "Created container: app",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:49:41Z",
+                "name": "loadlab-5965489b55-p5r9s.18e61fe7c8a3af6d",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23878",
+                "uid": "1f922aa6-1395-47d5-a653-be448598c995"
+            },
+            "reason": "Created",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "kubeai-lab",
+            "source": {
+                "component": "kubelet",
+                "host": "kubeai-lab"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:49:42Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{app}",
+                "kind": "Pod",
+                "name": "loadlab-5965489b55-p5r9s",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23868",
+                "uid": "ad862ba1-dc62-46ab-9ece-94ceeda13be2"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:49:42Z",
+            "message": "Started container app",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:49:42Z",
+                "name": "loadlab-5965489b55-p5r9s.18e61fe7d5c4183d",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23879",
+                "uid": "07474c5c-1bf3-41e4-a767-082f854f5303"
+            },
+            "reason": "Started",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "kubeai-lab",
+            "source": {
+                "component": "kubelet",
+                "host": "kubeai-lab"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 3,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:49:42Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{app}",
+                "kind": "Pod",
+                "name": "loadlab-5965489b55-p5r9s",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23868",
+                "uid": "ad862ba1-dc62-46ab-9ece-94ceeda13be2"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:49:44Z",
+            "message": "Readiness probe failed: Get \"http://10.244.0.222:8080/readyz\": dial tcp 10.244.0.222:8080: connect: connection refused",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:49:42Z",
+                "name": "loadlab-5965489b55-p5r9s.18e61fe7ffc31a61",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23887",
+                "uid": "85312810-56b4-4225-8357-0b4bc4a9a120"
+            },
+            "reason": "Unhealthy",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "kubeai-lab",
+            "source": {
+                "component": "kubelet",
+                "host": "kubeai-lab"
+            },
+            "type": "Warning"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:49:10Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "kind": "Pod",
+                "name": "loadlab-5965489b55-sw5zq",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23794",
+                "uid": "853a455b-8238-431d-9f80-5d1119c2f31b"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:49:10Z",
+            "message": "Successfully assigned lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036/loadlab-5965489b55-sw5zq to kubeai-lab",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:49:10Z",
+                "name": "loadlab-5965489b55-sw5zq.18e61fe0853aca15",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23799",
+                "uid": "f5268889-ab79-4e6c-b182-e4413a8ab8f4"
+            },
+            "reason": "Scheduled",
+            "reportingComponent": "default-scheduler",
+            "reportingInstance": "",
+            "source": {
+                "component": "default-scheduler"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:49:11Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{app}",
+                "kind": "Pod",
+                "name": "loadlab-5965489b55-sw5zq",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23798",
+                "uid": "853a455b-8238-431d-9f80-5d1119c2f31b"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:49:11Z",
+            "message": "Container image \"loadlab:v1\" already present on machine",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:49:11Z",
+                "name": "loadlab-5965489b55-sw5zq.18e61fe0bdabb3a2",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23803",
+                "uid": "4f873039-455b-430f-a2cf-5e4128a13f09"
+            },
+            "reason": "Pulled",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "kubeai-lab",
+            "source": {
+                "component": "kubelet",
+                "host": "kubeai-lab"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:49:11Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{app}",
+                "kind": "Pod",
+                "name": "loadlab-5965489b55-sw5zq",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23798",
+                "uid": "853a455b-8238-431d-9f80-5d1119c2f31b"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:49:11Z",
+            "message": "Created container: app",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:49:11Z",
+                "name": "loadlab-5965489b55-sw5zq.18e61fe0c45a0d91",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23804",
+                "uid": "440262f9-b057-4b7a-8c3e-465adbd34b05"
+            },
+            "reason": "Created",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "kubeai-lab",
+            "source": {
+                "component": "kubelet",
+                "host": "kubeai-lab"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:49:12Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{app}",
+                "kind": "Pod",
+                "name": "loadlab-5965489b55-sw5zq",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23798",
+                "uid": "853a455b-8238-431d-9f80-5d1119c2f31b"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:49:12Z",
+            "message": "Started container app",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:49:12Z",
+                "name": "loadlab-5965489b55-sw5zq.18e61fe0d610551f",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23805",
+                "uid": "deb90002-6801-406e-80ab-92db446a0aa7"
+            },
+            "reason": "Started",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "kubeai-lab",
+            "source": {
+                "component": "kubelet",
+                "host": "kubeai-lab"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 3,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:49:12Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{app}",
+                "kind": "Pod",
+                "name": "loadlab-5965489b55-sw5zq",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23798",
+                "uid": "853a455b-8238-431d-9f80-5d1119c2f31b"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:49:14Z",
+            "message": "Readiness probe failed: Get \"http://10.244.0.221:8080/readyz\": dial tcp 10.244.0.221:8080: connect: connection refused",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:49:12Z",
+                "name": "loadlab-5965489b55-sw5zq.18e61fe0f2cb2798",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23813",
+                "uid": "01c932be-e793-45f8-b328-3018bb332c0e"
+            },
+            "reason": "Unhealthy",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "kubeai-lab",
+            "source": {
+                "component": "kubelet",
+                "host": "kubeai-lab"
+            },
+            "type": "Warning"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:37:09Z",
+            "involvedObject": {
+                "apiVersion": "apps/v1",
+                "kind": "ReplicaSet",
+                "name": "loadlab-5965489b55",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "22669",
+                "uid": "a382d5fe-33e5-4590-8599-0e8031dfac81"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:37:09Z",
+            "message": "Created pod: loadlab-5965489b55-6cj25",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:37:09Z",
+                "name": "loadlab-5965489b55.18e61f387d4916e0",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "22675",
+                "uid": "93c19aef-7757-4ca5-a043-2bf91fee92ac"
+            },
+            "reason": "SuccessfulCreate",
+            "reportingComponent": "replicaset-controller",
+            "reportingInstance": "",
+            "source": {
+                "component": "replicaset-controller"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:38:24Z",
+            "involvedObject": {
+                "apiVersion": "apps/v1",
+                "kind": "ReplicaSet",
+                "name": "loadlab-5965489b55",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "22826",
+                "uid": "a382d5fe-33e5-4590-8599-0e8031dfac81"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:38:24Z",
+            "message": "Created pod: loadlab-5965489b55-789zl",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:38:24Z",
+                "name": "loadlab-5965489b55.18e61f49fb183cba",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "22830",
+                "uid": "526d6904-1b50-4f65-bc4e-274f86e39f4e"
+            },
+            "reason": "SuccessfulCreate",
+            "reportingComponent": "replicaset-controller",
+            "reportingInstance": "",
+            "source": {
+                "component": "replicaset-controller"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:39:24Z",
+            "involvedObject": {
+                "apiVersion": "apps/v1",
+                "kind": "ReplicaSet",
+                "name": "loadlab-5965489b55",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "22960",
+                "uid": "a382d5fe-33e5-4590-8599-0e8031dfac81"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:39:24Z",
+            "message": "Created pod: loadlab-5965489b55-74sdg",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:39:24Z",
+                "name": "loadlab-5965489b55.18e61f57f60a8569",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "22965",
+                "uid": "1ddaea60-2637-4e9d-8181-3d6cbe174979"
+            },
+            "reason": "SuccessfulCreate",
+            "reportingComponent": "replicaset-controller",
+            "reportingInstance": "",
+            "source": {
+                "component": "replicaset-controller"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:40:09Z",
+            "involvedObject": {
+                "apiVersion": "apps/v1",
+                "kind": "ReplicaSet",
+                "name": "loadlab-5965489b55",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23028",
+                "uid": "a382d5fe-33e5-4590-8599-0e8031dfac81"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:40:09Z",
+            "message": "Created pod: loadlab-5965489b55-lzwxt",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:40:09Z",
+                "name": "loadlab-5965489b55.18e61f6272d0e1d7",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23032",
+                "uid": "09ec2e10-dff3-4c53-836f-1e04fae4d15e"
+            },
+            "reason": "SuccessfulCreate",
+            "reportingComponent": "replicaset-controller",
+            "reportingInstance": "",
+            "source": {
+                "component": "replicaset-controller"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:41:54Z",
+            "involvedObject": {
+                "apiVersion": "apps/v1",
+                "kind": "ReplicaSet",
+                "name": "loadlab-5965489b55",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23154",
+                "uid": "a382d5fe-33e5-4590-8599-0e8031dfac81"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:41:54Z",
+            "message": "Deleted pod: loadlab-5965489b55-lzwxt",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:41:54Z",
+                "name": "loadlab-5965489b55.18e61f7af138eae6",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23158",
+                "uid": "3cfa97fc-93be-4a38-86ba-12fa1c9de045"
+            },
+            "reason": "SuccessfulDelete",
+            "reportingComponent": "replicaset-controller",
+            "reportingInstance": "",
+            "source": {
+                "component": "replicaset-controller"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:42:24Z",
+            "involvedObject": {
+                "apiVersion": "apps/v1",
+                "kind": "ReplicaSet",
+                "name": "loadlab-5965489b55",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23200",
+                "uid": "a382d5fe-33e5-4590-8599-0e8031dfac81"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:42:24Z",
+            "message": "Deleted pod: loadlab-5965489b55-789zl",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:42:24Z",
+                "name": "loadlab-5965489b55.18e61f81f1d13c6e",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23208",
+                "uid": "1da99e3e-da37-44ea-99c4-ba1de0ef3b33"
+            },
+            "reason": "SuccessfulDelete",
+            "reportingComponent": "replicaset-controller",
+            "reportingInstance": "",
+            "source": {
+                "component": "replicaset-controller"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:44:09Z",
+            "involvedObject": {
+                "apiVersion": "apps/v1",
+                "kind": "ReplicaSet",
+                "name": "loadlab-5965489b55",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23346",
+                "uid": "a382d5fe-33e5-4590-8599-0e8031dfac81"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:44:09Z",
+            "message": "Created pod: loadlab-5965489b55-hwt8k",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:44:09Z",
+                "name": "loadlab-5965489b55.18e61f9a74e0d578",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23350",
+                "uid": "cffa380e-21a2-4069-a831-b5e9784fae67"
+            },
+            "reason": "SuccessfulCreate",
+            "reportingComponent": "replicaset-controller",
+            "reportingInstance": "",
+            "source": {
+                "component": "replicaset-controller"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:44:54Z",
+            "involvedObject": {
+                "apiVersion": "apps/v1",
+                "kind": "ReplicaSet",
+                "name": "loadlab-5965489b55",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23444",
+                "uid": "a382d5fe-33e5-4590-8599-0e8031dfac81"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:44:54Z",
+            "message": "Created pod: loadlab-5965489b55-47xtr",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:44:54Z",
+                "name": "loadlab-5965489b55.18e61fa4f65c72b8",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23448",
+                "uid": "2ceb67e1-8a8f-4a6a-aa8c-aeb6ded266c6"
+            },
+            "reason": "SuccessfulCreate",
+            "reportingComponent": "replicaset-controller",
+            "reportingInstance": "",
+            "source": {
+                "component": "replicaset-controller"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:46:55Z",
+            "involvedObject": {
+                "apiVersion": "apps/v1",
+                "kind": "ReplicaSet",
+                "name": "loadlab-5965489b55",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23610",
+                "uid": "a382d5fe-33e5-4590-8599-0e8031dfac81"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:46:55Z",
+            "message": "Deleted pod: loadlab-5965489b55-47xtr",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:46:55Z",
+                "name": "loadlab-5965489b55.18e61fc0ff9d1fc1",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23618",
+                "uid": "328e598a-564a-4ba7-8093-dd96d57e563a"
+            },
+            "reason": "SuccessfulDelete",
+            "reportingComponent": "replicaset-controller",
+            "reportingInstance": "",
+            "source": {
+                "component": "replicaset-controller"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:47:25Z",
+            "involvedObject": {
+                "apiVersion": "apps/v1",
+                "kind": "ReplicaSet",
+                "name": "loadlab-5965489b55",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23657",
+                "uid": "a382d5fe-33e5-4590-8599-0e8031dfac81"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:47:25Z",
+            "message": "Deleted pod: loadlab-5965489b55-hwt8k",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:47:25Z",
+                "name": "loadlab-5965489b55.18e61fc7fff98160",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23661",
+                "uid": "815700f2-5f21-4966-97e3-f74927d34999"
+            },
+            "reason": "SuccessfulDelete",
+            "reportingComponent": "replicaset-controller",
+            "reportingInstance": "",
+            "source": {
+                "component": "replicaset-controller"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:49:10Z",
+            "involvedObject": {
+                "apiVersion": "apps/v1",
+                "kind": "ReplicaSet",
+                "name": "loadlab-5965489b55",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23790",
+                "uid": "a382d5fe-33e5-4590-8599-0e8031dfac81"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:49:10Z",
+            "message": "Created pod: loadlab-5965489b55-sw5zq",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:49:10Z",
+                "name": "loadlab-5965489b55.18e61fe0836041f0",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23796",
+                "uid": "87aaee59-5214-4983-af11-613d4ae32266"
+            },
+            "reason": "SuccessfulCreate",
+            "reportingComponent": "replicaset-controller",
+            "reportingInstance": "",
+            "source": {
+                "component": "replicaset-controller"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:49:40Z",
+            "involvedObject": {
+                "apiVersion": "apps/v1",
+                "kind": "ReplicaSet",
+                "name": "loadlab-5965489b55",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23862",
+                "uid": "a382d5fe-33e5-4590-8599-0e8031dfac81"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:49:40Z",
+            "message": "Created pod: loadlab-5965489b55-p5r9s",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:49:40Z",
+                "name": "loadlab-5965489b55.18e61fe785a2d755",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23867",
+                "uid": "23b93117-fa08-425e-90a7-c34fa54a674c"
+            },
+            "reason": "SuccessfulCreate",
+            "reportingComponent": "replicaset-controller",
+            "reportingInstance": "",
+            "source": {
+                "component": "replicaset-controller"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:37:09Z",
+            "involvedObject": {
+                "apiVersion": "apps/v1",
+                "kind": "Deployment",
+                "name": "loadlab",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "22668",
+                "uid": "9897fac4-f823-493f-abf6-8ff5aa5d7f81"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:37:09Z",
+            "message": "Scaled up replica set loadlab-5965489b55 from 0 to 1",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:37:09Z",
+                "name": "loadlab.18e61f387cb9ed23",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "22670",
+                "uid": "716061b9-71e5-4a6f-a297-2abbef796c83"
+            },
+            "reason": "ScalingReplicaSet",
+            "reportingComponent": "deployment-controller",
+            "reportingInstance": "",
+            "source": {
+                "component": "deployment-controller"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:37:24Z",
+            "involvedObject": {
+                "apiVersion": "autoscaling/v2",
+                "kind": "HorizontalPodAutoscaler",
+                "name": "loadlab",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "22688",
+                "uid": "91a739b6-2882-4341-b5a6-95b340e66386"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:37:24Z",
+            "message": "failed to get cpu utilization: unable to get metrics for resource cpu: no metrics returned from resource metrics API",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:37:24Z",
+                "name": "loadlab.18e61f3bff5b31a2",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "22713",
+                "uid": "a5895c9c-7f3b-4e08-905f-44c7c2d43dd9"
+            },
+            "reason": "FailedGetResourceMetric",
+            "reportingComponent": "horizontal-pod-autoscaler",
+            "reportingInstance": "",
+            "source": {
+                "component": "horizontal-pod-autoscaler"
+            },
+            "type": "Warning"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:37:24Z",
+            "involvedObject": {
+                "apiVersion": "autoscaling/v2",
+                "kind": "HorizontalPodAutoscaler",
+                "name": "loadlab",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "22688",
+                "uid": "91a739b6-2882-4341-b5a6-95b340e66386"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:37:24Z",
+            "message": "invalid metrics (1 invalid out of 1), first error is: failed to get cpu resource metric value: failed to get cpu utilization: unable to get metrics for resource cpu: no metrics returned from resource metrics API",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:37:24Z",
+                "name": "loadlab.18e61f3bff865af3",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "22715",
+                "uid": "33f7f289-c58b-4153-9c99-77228adf5d90"
+            },
+            "reason": "FailedComputeMetricsReplicas",
+            "reportingComponent": "horizontal-pod-autoscaler",
+            "reportingInstance": "",
+            "source": {
+                "component": "horizontal-pod-autoscaler"
+            },
+            "type": "Warning"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:38:24Z",
+            "involvedObject": {
+                "apiVersion": "autoscaling/v2",
+                "kind": "HorizontalPodAutoscaler",
+                "name": "loadlab",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "22809",
+                "uid": "91a739b6-2882-4341-b5a6-95b340e66386"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:38:24Z",
+            "message": "New size: 2; reason: cpu resource utilization (percentage of request) above target",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:38:24Z",
+                "name": "loadlab.18e61f49fa837e9a",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "22824",
+                "uid": "3c49807c-5c4d-4d3a-b0cc-0d4ea3564a48"
+            },
+            "reason": "SuccessfulRescale",
+            "reportingComponent": "horizontal-pod-autoscaler",
+            "reportingInstance": "",
+            "source": {
+                "component": "horizontal-pod-autoscaler"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:38:24Z",
+            "involvedObject": {
+                "apiVersion": "apps/v1",
+                "kind": "Deployment",
+                "name": "loadlab",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "22823",
+                "uid": "9897fac4-f823-493f-abf6-8ff5aa5d7f81"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:38:24Z",
+            "message": "Scaled up replica set loadlab-5965489b55 from 1 to 2",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:38:24Z",
+                "name": "loadlab.18e61f49fabfb69e",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "22827",
+                "uid": "1f08a4e2-33c4-4cad-885d-265472478680"
+            },
+            "reason": "ScalingReplicaSet",
+            "reportingComponent": "deployment-controller",
+            "reportingInstance": "",
+            "source": {
+                "component": "deployment-controller"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 3,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:39:24Z",
+            "involvedObject": {
+                "apiVersion": "autoscaling/v2",
+                "kind": "HorizontalPodAutoscaler",
+                "name": "loadlab",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "22917",
+                "uid": "91a739b6-2882-4341-b5a6-95b340e66386"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:49:10Z",
+            "message": "New size: 3; reason: cpu resource utilization (percentage of request) above target",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:39:24Z",
+                "name": "loadlab.18e61f57f577f31d",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23789",
+                "uid": "4f48ee02-b1ff-48b3-8cb9-924dea90e0b8"
+            },
+            "reason": "SuccessfulRescale",
+            "reportingComponent": "horizontal-pod-autoscaler",
+            "reportingInstance": "",
+            "source": {
+                "component": "horizontal-pod-autoscaler"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 3,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:39:24Z",
+            "involvedObject": {
+                "apiVersion": "apps/v1",
+                "kind": "Deployment",
+                "name": "loadlab",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "22957",
+                "uid": "9897fac4-f823-493f-abf6-8ff5aa5d7f81"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:49:10Z",
+            "message": "Scaled up replica set loadlab-5965489b55 from 2 to 3",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:39:24Z",
+                "name": "loadlab.18e61f57f5b7850a",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23792",
+                "uid": "1260f056-51f4-4be0-ab92-11d0d24b04fc"
+            },
+            "reason": "ScalingReplicaSet",
+            "reportingComponent": "deployment-controller",
+            "reportingInstance": "",
+            "source": {
+                "component": "deployment-controller"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 3,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:40:09Z",
+            "involvedObject": {
+                "apiVersion": "autoscaling/v2",
+                "kind": "HorizontalPodAutoscaler",
+                "name": "loadlab",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23011",
+                "uid": "91a739b6-2882-4341-b5a6-95b340e66386"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:49:40Z",
+            "message": "New size: 4; reason: cpu resource utilization (percentage of request) above target",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:40:09Z",
+                "name": "loadlab.18e61f62720b53f3",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23861",
+                "uid": "d7f7a6df-e1d1-49a6-bade-59e0e947c3e4"
+            },
+            "reason": "SuccessfulRescale",
+            "reportingComponent": "horizontal-pod-autoscaler",
+            "reportingInstance": "",
+            "source": {
+                "component": "horizontal-pod-autoscaler"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 3,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:40:09Z",
+            "involvedObject": {
+                "apiVersion": "apps/v1",
+                "kind": "Deployment",
+                "name": "loadlab",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23025",
+                "uid": "9897fac4-f823-493f-abf6-8ff5aa5d7f81"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:49:40Z",
+            "message": "Scaled up replica set loadlab-5965489b55 from 3 to 4",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:40:09Z",
+                "name": "loadlab.18e61f62726d3f01",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23863",
+                "uid": "c5eee2ba-1ec7-48ca-9b54-fce69fdec3e6"
+            },
+            "reason": "ScalingReplicaSet",
+            "reportingComponent": "deployment-controller",
+            "reportingInstance": "",
+            "source": {
+                "component": "deployment-controller"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 2,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:41:54Z",
+            "involvedObject": {
+                "apiVersion": "autoscaling/v2",
+                "kind": "HorizontalPodAutoscaler",
+                "name": "loadlab",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23134",
+                "uid": "91a739b6-2882-4341-b5a6-95b340e66386"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:46:55Z",
+            "message": "New size: 3; reason: All metrics below target",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:41:54Z",
+                "name": "loadlab.18e61f7aeed5f5c9",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23611",
+                "uid": "e7197dcc-9595-499a-afe0-718c08bb7670"
+            },
+            "reason": "SuccessfulRescale",
+            "reportingComponent": "horizontal-pod-autoscaler",
+            "reportingInstance": "",
+            "source": {
+                "component": "horizontal-pod-autoscaler"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 2,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:41:54Z",
+            "involvedObject": {
+                "apiVersion": "apps/v1",
+                "kind": "Deployment",
+                "name": "loadlab",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23151",
+                "uid": "9897fac4-f823-493f-abf6-8ff5aa5d7f81"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:46:55Z",
+            "message": "Scaled down replica set loadlab-5965489b55 from 4 to 3",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:41:54Z",
+                "name": "loadlab.18e61f7af042c3c3",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23613",
+                "uid": "2ab61a28-2592-440a-abc5-0b463d54c5bf"
+            },
+            "reason": "ScalingReplicaSet",
+            "reportingComponent": "deployment-controller",
+            "reportingInstance": "",
+            "source": {
+                "component": "deployment-controller"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 2,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:42:24Z",
+            "involvedObject": {
+                "apiVersion": "autoscaling/v2",
+                "kind": "HorizontalPodAutoscaler",
+                "name": "loadlab",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23180",
+                "uid": "91a739b6-2882-4341-b5a6-95b340e66386"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:47:25Z",
+            "message": "New size: 2; reason: All metrics below target",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:42:24Z",
+                "name": "loadlab.18e61f81eff165ba",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23656",
+                "uid": "fb42571c-5978-4ea0-85bf-437e47a4451f"
+            },
+            "reason": "SuccessfulRescale",
+            "reportingComponent": "horizontal-pod-autoscaler",
+            "reportingInstance": "",
+            "source": {
+                "component": "horizontal-pod-autoscaler"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 2,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T16:42:24Z",
+            "involvedObject": {
+                "apiVersion": "apps/v1",
+                "kind": "Deployment",
+                "name": "loadlab",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23196",
+                "uid": "9897fac4-f823-493f-abf6-8ff5aa5d7f81"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T16:47:25Z",
+            "message": "Scaled down replica set loadlab-5965489b55 from 3 to 2",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T16:42:24Z",
+                "name": "loadlab.18e61f81f0f65b3a",
+                "namespace": "lab-b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+                "resourceVersion": "23659",
+                "uid": "f81088a4-aebe-47cf-983e-f99fe5ac0cf2"
+            },
+            "reason": "ScalingReplicaSet",
+            "reportingComponent": "deployment-controller",
+            "reportingInstance": "",
+            "source": {
+                "component": "deployment-controller"
+            },
+            "type": "Normal"
+        }
+    ],
+    "kind": "List",
+    "metadata": {
+        "resourceVersion": ""
+    }
+}

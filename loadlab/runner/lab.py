@@ -198,8 +198,15 @@ class Run:
                     env.append({"name": k, "value": str(v)})
         apply(objs, ns)
         if pol["policy"] == "hpa_cpu":
-            apply(render(ROOT / "k8s" / "hpa.yaml", min_replicas=pol["min"], max_replicas=pol["max"],
-                         target_cpu=pol["target_cpu"]), ns)
+            hpa = render(ROOT / "k8s" / "hpa.yaml", min_replicas=pol["min"], max_replicas=pol["max"],
+                         target_cpu=pol["target_cpu"])
+            if pol.get("scale_down_window_s") is not None:
+                # optional autoscaling/v2 behavior: shorter scale-down stabilisation so scale-in shows up
+                # within a run (default is 300 s). Recorded in scenario.json via the scaling spec.
+                for o in hpa:
+                    o["spec"]["behavior"] = {"scaleDown": {
+                        "stabilizationWindowSeconds": int(pol["scale_down_window_s"])}}
+            apply(hpa, ns)
         kubectl("rollout", "status", "deploy/loadlab", "--timeout=180s", ns=ns, timeout=200)
         self.log("app ready:", replicas, "replica(s), policy", pol["policy"])
 

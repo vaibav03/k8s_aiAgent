@@ -355,7 +355,16 @@ $PY runner/matrix.py --only d-leak-oom                       # re-run selected i
 $PY runner/build_dataset.py                                  # -> data/dataset_{deploy,pods}.csv.gz
 ```
 
-`runner/build_dataset.py` concatenates every run marked ok and adds the ground-truth label columns
+**Round 2** (`scenarios/matrix_round2.yaml`, 20 runs) adds a second independent run of every fault class, HPA
+runs with `scaling.scale_down_window_s: 30` (sets `behavior.scaleDown.stabilizationWindowSeconds`, so scale-in
+happens within a run) and a `solo: true` capacity run that only executes with `--lanes 1`:
+
+```bash
+$PY runner/matrix.py --matrix scenarios/matrix_round2.yaml            # 2 lanes, state in runs/_matrix/state_matrix_round2.json
+$PY runner/matrix.py --matrix scenarios/matrix_round2.yaml --lanes 1  # the solo capacity run, node to itself
+```
+
+`runner/build_dataset.py` concatenates every run marked ok in every round's state file (adds a `round` column) and adds the ground-truth label columns
 `active_fault`, `fault_target_pod`, `fault_ids`, plus `pod_is_fault_target` and `pod_active_fault`
 in the pods file. Schema, units, row counts and fault totals are in `data/DATASET_CARD.md`.
 

@@ -1,0 +1,10 @@
+11:03:36 [d-leak-medium-r2-1108-110336-3c8] scenario d-leak-medium-r2 -> namespace lab-d-leak-medium-r2-1108-110336-3c8
+11:03:43 [d-leak-medium-r2-1108-110336-3c8] app ready: 2 replica(s), policy hpa_cpu
+11:04:12 [d-leak-medium-r2-1108-110336-3c8] HPA has metrics: {'averageUtilization': 1, 'averageValue': '4m'}
+11:04:25 [d-leak-medium-r2-1108-110336-3c8] k6 started: diurnal base_rps 14.4 pod k6-k622c
+11:06:25 [d-leak-medium-r2-1108-110336-3c8] FAULT START f0 memory_leak target=one-pod pods=['loadlab-5965489b55-5g76n'] params={'leak_kb_per_s': 560}
+11:13:15 [d-leak-medium-r2-1108-110336-3c8] FAULT REAPPLY f0 memory_leak -> loadlab-5965489b55-5g76n (restartCount=1)
+11:14:55 [d-leak-medium-r2-1108-110336-3c8] FAULT END   f0 memory_leak
+11:16:29 [d-leak-medium-r2-1108-110336-3c8] load finished: succeeded
+11:16:49 [d-leak-medium-r2-1108-110336-3c8] exported deploy.csv (146 rows) pods.csv (415 rows) -> /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/d-leak-medium-r2-1108-110336-3c8
+11:16:49 [d-leak-medium-r2-1108-110336-3c8] namespace deleted

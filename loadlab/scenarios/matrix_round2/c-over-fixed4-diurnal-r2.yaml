@@ -1,0 +1,17 @@
+# generated from scenarios/matrix.yaml by runner/matrix.py - edit matrix.yaml instead
+id: c-over-fixed4-diurnal-r2
+group: C
+heavy: false
+duration_s: 600
+traffic:
+  shape: diurnal
+  base_load_pods: 0.4
+  params:
+    period_s: 300
+    amplitude: 0.5
+    noise: 0.08
+    seed: 13
+scaling:
+  policy: fixed
+  replicas: 4
+faults: []

@@ -1,0 +1,9 @@
+10:32:33 [d-bad-deploy-x2-hpa-r2-1108-103233-bb0] scenario d-bad-deploy-x2-hpa-r2 -> namespace lab-d-bad-deploy-x2-hpa-r2-1108-103233-bb0
+10:32:41 [d-bad-deploy-x2-hpa-r2-1108-103233-bb0] app ready: 3 replica(s), policy hpa_cpu
+10:33:07 [d-bad-deploy-x2-hpa-r2-1108-103233-bb0] HPA has metrics: {'averageUtilization': 0, 'averageValue': '1m'}
+10:33:18 [d-bad-deploy-x2-hpa-r2-1108-103233-bb0] k6 started: steady base_rps 16 pod k6-gxcfg
+10:36:38 [d-bad-deploy-x2-hpa-r2-1108-103233-bb0] FAULT START f0 bad_deploy target=one-pod pods=rollout params={'cpu_ms_per_req': 50}
+10:40:18 [d-bad-deploy-x2-hpa-r2-1108-103233-bb0] FAULT END   f0 bad_deploy
+10:43:21 [d-bad-deploy-x2-hpa-r2-1108-103233-bb0] load finished: succeeded
+10:43:41 [d-bad-deploy-x2-hpa-r2-1108-103233-bb0] exported deploy.csv (123 rows) pods.csv (479 rows) -> /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/d-bad-deploy-x2-hpa-r2-1108-103233-bb0
+10:43:41 [d-bad-deploy-x2-hpa-r2-1108-103233-bb0] namespace deleted

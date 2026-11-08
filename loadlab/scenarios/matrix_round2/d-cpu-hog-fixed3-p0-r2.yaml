@@ -1,0 +1,19 @@
+# generated from scenarios/matrix.yaml by runner/matrix.py - edit matrix.yaml instead
+id: d-cpu-hog-fixed3-p0-r2
+group: D
+heavy: false
+duration_s: 540
+traffic:
+  shape: steady
+  base_rps: 13
+scaling:
+  policy: fixed
+  replicas: 3
+faults:
+- type: cpu_hog
+  start_s: 180
+  end_s: 390
+  target: one-pod
+  pod_index: 0
+  params:
+    cpu_hog_millicores: 350

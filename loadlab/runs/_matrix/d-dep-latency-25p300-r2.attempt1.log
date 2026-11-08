@@ -1,0 +1,9 @@
+10:45:25 [d-dep-latency-25p300-r2-1108-104525-c23] scenario d-dep-latency-25p300-r2 -> namespace lab-d-dep-latency-25p300-r2-1108-104525-c23
+10:45:27 [d-dep-latency-25p300-r2-1108-104525-c23] app ready: 3 replica(s), policy fixed
+10:45:48 [d-dep-latency-25p300-r2-1108-104525-c23] k6 started: steady base_rps 15 pod k6-x94fw
+10:48:48 [d-dep-latency-25p300-r2-1108-104525-c23] FAULT START f0 dep_latency target=all pods=['loadlab-5965489b55-dn8lk', 'loadlab-5965489b55-gmfd6', 'loadlab-5965489b55-z9h6k'] params={'dep_latency_ms': 300, 'dep_fraction': 0.25}
+10:52:18 [d-dep-latency-25p300-r2-1108-104525-c23] FAULT END   f0 dep_latency
+10:54:51 [d-dep-latency-25p300-r2-1108-104525-c23] load finished: succeeded
+10:55:13 [d-dep-latency-25p300-r2-1108-104525-c23] exported deploy.csv (111 rows) pods.csv (333 rows) -> /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/d-dep-latency-25p300-r2-1108-104525-c23
+10:55:13 [d-dep-latency-25p300-r2-1108-104525-c23] namespace deleted
+/Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/d-dep-latency-25p300-r2-1108-104525-c23

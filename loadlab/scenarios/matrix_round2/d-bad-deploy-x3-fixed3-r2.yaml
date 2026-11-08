@@ -1,0 +1,18 @@
+# generated from scenarios/matrix.yaml by runner/matrix.py - edit matrix.yaml instead
+id: d-bad-deploy-x3-fixed3-r2
+group: D
+heavy: true
+duration_s: 600
+traffic:
+  shape: steady
+  base_rps: 15
+scaling:
+  policy: fixed
+  replicas: 3
+faults:
+- type: bad_deploy
+  start_s: 180
+  end_s: 400
+  params:
+    cpu_ms_per_req: 75
+    version: v3-bad

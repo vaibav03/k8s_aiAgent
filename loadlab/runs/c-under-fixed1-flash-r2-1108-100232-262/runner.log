@@ -1,0 +1,6 @@
+10:02:32 [c-under-fixed1-flash-r2-1108-100232-262] scenario c-under-fixed1-flash-r2 -> namespace lab-c-under-fixed1-flash-r2-1108-100232-262
+10:02:43 [c-under-fixed1-flash-r2-1108-100232-262] app ready: 1 replica(s), policy fixed
+10:02:59 [c-under-fixed1-flash-r2-1108-100232-262] k6 started: flash_crowd base_rps 10.8 pod k6-46wsj
+10:11:14 [c-under-fixed1-flash-r2-1108-100232-262] load finished: succeeded
+10:11:35 [c-under-fixed1-flash-r2-1108-100232-262] exported deploy.csv (100 rows) pods.csv (100 rows) -> /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/c-under-fixed1-flash-r2-1108-100232-262
+10:11:35 [c-under-fixed1-flash-r2-1108-100232-262] namespace deleted

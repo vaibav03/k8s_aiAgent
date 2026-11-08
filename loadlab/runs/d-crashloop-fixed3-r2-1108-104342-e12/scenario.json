@@ -1,0 +1,46 @@
+{
+  "id": "d-crashloop-fixed3-r2",
+  "group": "D",
+  "heavy": false,
+  "duration_s": 540,
+  "traffic": {
+    "shape": "steady",
+    "base_rps": 14,
+    "params": {}
+  },
+  "scaling": {
+    "policy": "fixed",
+    "replicas": 3,
+    "_lane_cap": 4
+  },
+  "faults": [
+    {
+      "type": "crashloop",
+      "start_s": 150,
+      "end_s": 390,
+      "target": "one-pod",
+      "params": {}
+    }
+  ],
+  "app": {
+    "cpu_ms_per_req": 25,
+    "alloc_kb": 64
+  },
+  "_run": {
+    "run_id": "d-crashloop-fixed3-r2-1108-104342-e12",
+    "namespace": "lab-d-crashloop-fixed3-r2-1108-104342-e12",
+    "scenario_file": "/Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/scenarios/matrix_round2/d-crashloop-fixed3-r2.yaml",
+    "image": "loadlab:v1",
+    "k6_image": "grafana/k6:0.54.0",
+    "context": "kubeai-lab",
+    "t_created": 1794159822.1659641,
+    "t0": 1794159842.49423,
+    "t_end": 1794160384.6482089,
+    "status": "succeeded",
+    "export_window": [
+      1794159812.49423,
+      1794160394.6482089
+    ],
+    "step_s": 5
+  }
+}

@@ -1,0 +1,182 @@
+{
+ "b-hpa-diurnal-sd30-s41-r2": {
+  "run_id": "b-hpa-diurnal-sd30-s41-r2-1108-093648-7ae",
+  "status": "ok",
+  "errors": [],
+  "attempt": 1,
+  "wall_s": 853,
+  "lane": 0,
+  "finished": "2026-11-08 09:51:01"
+ },
+ "b-hpa-diurnal-sd30-s59-r2": {
+  "run_id": "b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+  "status": "ok",
+  "errors": [],
+  "attempt": 1,
+  "wall_s": 849,
+  "lane": 1,
+  "finished": "2026-11-08 09:51:17"
+ },
+ "b-hpa-spike-sd30-b06-r2": {
+  "run_id": "b-hpa-spike-sd30-b06-r2-1108-095119-524",
+  "status": "ok",
+  "errors": [],
+  "attempt": 1,
+  "wall_s": 673,
+  "lane": 1,
+  "finished": "2026-11-08 10:02:30"
+ },
+ "b-hpa-saw-sd30-b12-r2": {
+  "run_id": "b-hpa-saw-sd30-b12-r2-1108-095103-b0a",
+  "status": "ok",
+  "errors": [],
+  "attempt": 1,
+  "wall_s": 796,
+  "lane": 0,
+  "finished": "2026-11-08 10:04:17"
+ },
+ "c-under-fixed1-flash-r2": {
+  "run_id": "c-under-fixed1-flash-r2-1108-100232-262",
+  "status": "ok",
+  "errors": [],
+  "attempt": 1,
+  "wall_s": 545,
+  "lane": 1,
+  "finished": "2026-11-08 10:11:36"
+ },
+ "c-over-fixed4-diurnal-r2": {
+  "run_id": "c-over-fixed4-diurnal-r2-1108-100418-9ec",
+  "status": "ok",
+  "errors": [],
+  "attempt": 1,
+  "wall_s": 654,
+  "lane": 0,
+  "finished": "2026-11-08 10:15:11"
+ },
+ "d-error10-hpa-diurnal-r2": {
+  "run_id": "d-error10-hpa-diurnal-r2-1108-101137-aee",
+  "status": "ok",
+  "errors": [],
+  "attempt": 1,
+  "wall_s": 673,
+  "lane": 1,
+  "finished": "2026-11-08 10:22:49"
+ },
+ "d-error30-fixed3-r2": {
+  "run_id": "d-error30-fixed3-r2-1108-101512-c7c",
+  "status": "ok",
+  "errors": [],
+  "attempt": 1,
+  "wall_s": 587,
+  "lane": 0,
+  "finished": "2026-11-08 10:24:58"
+ },
+ "d-cpu-hog-fixed3-p0-r2": {
+  "run_id": "d-cpu-hog-fixed3-p0-r2-1108-102249-eeb",
+  "status": "ok",
+  "errors": [],
+  "attempt": 1,
+  "wall_s": 584,
+  "lane": 1,
+  "finished": "2026-11-08 10:32:33"
+ },
+ "d-cpu-hog-fixed3-p2-r2": {
+  "run_id": "d-cpu-hog-fixed3-p2-r2-1108-102458-364",
+  "status": "ok",
+  "errors": [],
+  "attempt": 1,
+  "wall_s": 583,
+  "lane": 0,
+  "finished": "2026-11-08 10:34:41"
+ },
+ "d-bad-deploy-x2-hpa-r2": {
+  "run_id": "d-bad-deploy-x2-hpa-r2-1108-103233-bb0",
+  "status": "ok",
+  "errors": [],
+  "attempt": 1,
+  "wall_s": 668,
+  "lane": 1,
+  "finished": "2026-11-08 10:43:41"
+ },
+ "d-bad-deploy-x3-fixed3-r2": {
+  "run_id": "d-bad-deploy-x3-fixed3-r2-1108-103441-b62",
+  "status": "ok",
+  "errors": [],
+  "attempt": 1,
+  "wall_s": 644,
+  "lane": 0,
+  "finished": "2026-11-08 10:45:25"
+ },
+ "d-crashloop-fixed3-r2": {
+  "run_id": "d-crashloop-fixed3-r2-1108-104342-e12",
+  "status": "ok",
+  "errors": [],
+  "attempt": 1,
+  "wall_s": 583,
+  "lane": 1,
+  "finished": "2026-11-08 10:53:25"
+ },
+ "d-dep-latency-25p300-r2": {
+  "run_id": "d-dep-latency-25p300-r2-1108-104525-c23",
+  "status": "ok",
+  "errors": [],
+  "attempt": 1,
+  "wall_s": 588,
+  "lane": 0,
+  "finished": "2026-11-08 10:55:13"
+ },
+ "d-dep-latency-75p600-r2": {
+  "run_id": "d-dep-latency-75p600-r2-1108-105325-7af",
+  "status": "ok",
+  "errors": [],
+  "attempt": 1,
+  "wall_s": 611,
+  "lane": 1,
+  "finished": "2026-11-08 11:03:36"
+ },
+ "d-leak-fast-oom-r2": {
+  "run_id": "d-leak-fast-oom-r2-1108-105515-0e5",
+  "status": "ok",
+  "errors": [],
+  "attempt": 1,
+  "wall_s": 590,
+  "lane": 0,
+  "finished": "2026-11-08 11:05:04"
+ },
+ "d-pod-kill-fixed2-r2": {
+  "run_id": "d-pod-kill-fixed2-r2-1108-110504-d8b",
+  "status": "ok",
+  "errors": [],
+  "attempt": 1,
+  "wall_s": 580,
+  "lane": 0,
+  "finished": "2026-11-08 11:14:44"
+ },
+ "d-leak-medium-r2": {
+  "run_id": "d-leak-medium-r2-1108-110336-3c8",
+  "status": "ok",
+  "errors": [],
+  "attempt": 1,
+  "wall_s": 793,
+  "lane": 1,
+  "finished": "2026-11-08 11:16:49"
+ },
+ "d-pod-kill-hpa-r2": {
+  "run_id": "d-pod-kill-hpa-r2-1108-111444-615",
+  "status": "ok",
+  "errors": [],
+  "attempt": 1,
+  "wall_s": 668,
+  "lane": 0,
+  "finished": "2026-11-08 11:25:52"
+ },
+ "a-cap-fixed2-solo-r2": {
+  "run_id": "a-cap-fixed2-solo-r2-1108-112553-1f0",
+  "status": "ok",
+  "errors": [],
+  "attempt": 1,
+  "wall_s": 652,
+  "lane": 0,
+  "finished": "2026-11-08 11:36:44"
+ }
+}

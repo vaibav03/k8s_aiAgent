@@ -3,6 +3,8 @@
     python runner/matrix.py                       # run everything not yet done
     python runner/matrix.py --only d-leak-oom     # (re-)run selected ids
     python runner/matrix.py --list                # show plan / state
+    python runner/matrix.py --matrix scenarios/matrix_round2.yaml          # another matrix (own state file)
+    python runner/matrix.py --matrix scenarios/matrix_round2.yaml --lanes 1  # also runs `solo: true` entries
 
 * Each matrix entry is written to scenarios/matrix/<id>.yaml and executed by `lab.py <file>` in its own
   process, with LOADLAB_LANE_CAP=LANE_MAX_REPLICAS (4) exactly like `lab.py --lanes 2`.
@@ -11,7 +13,10 @@
 * Validation after each run: status succeeded, deploy.csv rows >= 80 % of duration/5s, no all-NaN core
   column, one faults.jsonl record per scheduled fault. A failed run is moved to runs/_failed/ and retried
   once.
-* State: runs/_matrix/state.json (id -> run_id/status), log: runs/_matrix/matrix.log.
+* State: runs/_matrix/state.json (id -> run_id/status), log: runs/_matrix/matrix.log. Another matrix file
+  (--matrix scenarios/<name>.yaml) uses runs/_matrix/state_<name>.json and scenarios/<name>/<id>.yaml.
+* `solo: true` entries (e.g. capacity probes that must have the node to themselves) are skipped when
+  --lanes > 1 and only run with --lanes 1.
 """
 from __future__ import annotations
 
@@ -32,6 +37,7 @@ ROOT = HERE.parent
 MATRIX = ROOT / "scenarios" / "matrix.yaml"
 SCDIR = ROOT / "scenarios" / "matrix"
 MDIR = ROOT / "runs" / "_matrix"
+STATE = MDIR / "state.json"
 LANE_CAP = os.environ.get("LANE_MAX_REPLICAS", "4")
 CORE = ["rps", "p95", "error_rate", "cpu_cores_used", "mem_ws_bytes_total", "replicas_ready"]
 
@@ -46,12 +52,11 @@ def log(*m):
 
 
 def load_state() -> dict:
-    p = MDIR / "state.json"
-    return json.loads(p.read_text()) if p.exists() else {}
+    return json.loads(STATE.read_text()) if STATE.exists() else {}
 
 
 def save_state(st: dict):
-    (MDIR / "state.json").write_text(json.dumps(st, indent=1))
+    STATE.write_text(json.dumps(st, indent=1))
 
 
 def validate(run_dir: Path, sc: dict) -> list[str]:
@@ -102,11 +107,17 @@ def run_entry(sc: dict, attempt: int) -> tuple[str | None, list[str]]:
 
 
 def main():
+    global MATRIX, SCDIR, STATE
     ap = argparse.ArgumentParser()
     ap.add_argument("--only", nargs="*")
     ap.add_argument("--list", action="store_true")
     ap.add_argument("--lanes", type=int, default=2)
+    ap.add_argument("--matrix", default=str(MATRIX), help="matrix yaml (default scenarios/matrix.yaml)")
     a = ap.parse_args()
+    MATRIX = Path(a.matrix).resolve()
+    if MATRIX.name != "matrix.yaml":
+        SCDIR = MATRIX.parent / MATRIX.stem
+        STATE = MDIR / f"state_{MATRIX.stem}.json"
     MDIR.mkdir(parents=True, exist_ok=True)
     SCDIR.mkdir(parents=True, exist_ok=True)
     entries = yaml.safe_load(MATRIX.read_text())["runs"]
@@ -117,10 +128,16 @@ def main():
     st = load_state()
     if a.list:
         for sc in entries:
-            print(f"{sc['id']:28s} {sc['group']} heavy={sc['heavy']!s:5s} {sc['duration_s']:4d}s ->",
+            print(f"{sc['id']:32s} {sc['group']} heavy={sc['heavy']!s:5s} solo={sc.get('solo', False)!s:5s} "
+                  f"{sc['duration_s']:4d}s ->",
                   st.get(sc["id"], {}).get("status", "pending"))
         return
     todo = [sc for sc in entries if (sc["id"] in a.only if a.only else st.get(sc["id"], {}).get("status") != "ok")]
+    if a.lanes > 1:
+        solo = [sc["id"] for sc in todo if sc.get("solo")]
+        todo = [sc for sc in todo if not sc.get("solo")]
+        if solo:
+            log(f"skipping solo entries with lanes={a.lanes} (run them with --lanes 1): {solo}")
     log(f"matrix start: {len(todo)} runs, lanes={a.lanes}, lane cap={LANE_CAP}, "
         f"est lane-s={sum(s['duration_s'] + 80 for s in todo)}")
     running: dict[int, dict] = {}

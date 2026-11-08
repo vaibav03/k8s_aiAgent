@@ -161,8 +161,14 @@ def sig_hpa(g, sc):
     corr = float(np.corrcoef(g.rps, g.hpa_desired)[0, 1]) if g.hpa_desired.std() > 0 else float("nan")
     tail = g.iloc[-12:]
     scaled_in = bool((g.replicas_desired.diff() < 0).any())
-    st = "PASS" if rmax > 1 and streak <= 120 and med(tail.p95) < SLO_P95 else "WARN"
-    ev = [f"replicas 1->{rmax:.0f}, scale-in seen {scaled_in}, viol rows {int(viol.sum())}, longest breach {streak}s, "
+    n_in = int((g.replicas_desired.diff() < 0).sum())
+    # round 2: HPA with a short scale-down window must actually scale in at least once
+    want_in = sc["scaling"].get("scale_down_window_s") is not None
+    st = "PASS" if rmax > 1 and streak <= 120 and med(tail.p95) < SLO_P95 and (scaled_in or not want_in) else "WARN"
+    ev = [f"replicas {g.replicas_ready.iloc[0]:.0f}->{rmax:.0f}, scale-in seen {scaled_in} ({n_in} steps down"
+          f"{', scaleDown window ' + str(sc['scaling']['scale_down_window_s']) + 's' if want_in else ''}), "
+          f"min replicas after peak {g.replicas_desired[g.replicas_desired.idxmax():].min():.0f}, "
+          f"viol rows {int(viol.sum())}, longest breach {streak}s, "
           f"corr(rps,hpa_desired) {corr:.2f}, end p95 {med(tail.p95)*1e3:.0f} ms"]
     return st, ev
 
@@ -282,9 +288,19 @@ def sig_fault(g, gp, f, sc):
         w = win(g, a, a + 30)
         dip = w.replicas_ready.min() < pre.replicas_ready.median()
         rec = win(g, a + 30, a + 60).replicas_ready.max() >= pre.replicas_ready.median()
-        st = "PASS" if dip and rec else "FAIL"
+        # round 2: a replacement pod can become ready inside one 5 s step, so replicas_ready never dips.
+        # The kill is then only visible as pod churn: the victim's rows stop and a new pod name appears.
+        victim = (f.get("pods") or [None])[0]
+        # (a terminating pod keeps cAdvisor rows for a while with ready NaN, so use ready == 1)
+        rdy = gp[gp.ready == 1]
+        seen_before = set(win(rdy, a - 30, a - 1).pod)
+        new_pods = sorted(set(win(rdy, a, a + 30).pod) - seen_before)
+        victim_gone = victim is not None and win(rdy, a + 10, a + 30).pod.eq(victim).sum() == 0
+        churn = bool(new_pods) and victim_gone
+        st = "PASS" if dip and rec else ("WARN" if churn and rec else "FAIL")
         ev.append(f"kill @{a:.0f}s: replicas_ready {pre.replicas_ready.median():.0f}->{w.replicas_ready.min():.0f}, "
-                  f"recovered within 60s {rec}, p95 max {w.p95.max()*1e3:.0f} ms")
+                  f"recovered within 60s {rec}, pod churn (victim gone + {len(new_pods)} new pod) {churn}, "
+                  f"p95 max {w.p95.max()*1e3:.0f} ms{'' if dip else ' -- no replicas_ready dip at 5 s resolution'}")
         return st, ev
     return "WARN", [f"no check for {t}"]
 
@@ -361,7 +377,7 @@ def plot_run(rid, g, gp, faults, status):
 
 def plot_knee(caps):
     fig, ax = plt.subplots(1, 2, figsize=(10, 3.8))
-    colors = [C1, C2, C3]
+    colors = [C1, C2, C3, C4]
     for (name, s), c in zip(caps.items(), colors):
         ax[0].semilogy(s.offered_per_pod, s.p95, marker="o", ms=4, color=c, label=name)
         ax[1].plot(s.offered_per_pod, s.achieved_per_pod, marker="o", ms=4, color=c, label=name)
@@ -462,7 +478,8 @@ def main():
             sig_ev.append(f"spike+dep phase: cpu/request {med(w.cpu_util_vs_request):.2f}, p95 {med(w.p95):.2f}s, "
                           f"replicas {w.replicas_ready.max():.0f}")
         overall = worst(st_i, st_l, sig_st, st_b)
-        results.append({"scenario": name, "run_id": rid, "group": sc.get("group"), "overall": overall,
+        results.append({"scenario": name, "run_id": rid, "group": sc.get("group"),
+                        "round": int(g["round"].iloc[0]) if "round" in g else 1, "overall": overall,
                         "integrity": st_i, "labels": st_l, "baseline": st_b, "signature": sig_st,
                         "integrity_ev": ev_i, "label_ev": ev_l, "baseline_ev": ev_b, "signature_ev": sig_ev,
                         **{k: v for k, v in extra.items() if k != "pod_nan"}})

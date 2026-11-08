@@ -1,7 +1,7 @@
 {
- "runs": 24,
- "deploy_rows": 2914,
- "pod_rows": 9175,
+ "runs": 44,
+ "deploy_rows": 5368,
+ "pod_rows": 16608,
  "deploy_columns": [
   "run_id",
   "scenario",
@@ -36,7 +36,8 @@
   "active_fault",
   "fault_target_pod",
   "fault_ids",
-  "qa_flag"
+  "qa_flag",
+  "round"
  ],
  "pod_columns": [
   "run_id",
@@ -64,79 +65,122 @@
   "fault_ids",
   "pod_is_fault_target",
   "pod_active_fault",
-  "qa_flag"
+  "qa_flag",
+  "round"
  ],
  "fault_totals": {
   "bad_deploy": {
-   "count": 1,
-   "minutes": 3.67,
-   "label_minutes": 3.67
+   "count": 3,
+   "minutes": 11.0,
+   "label_minutes": 11.0
   },
   "cpu_hog": {
-   "count": 1,
-   "minutes": 3.7,
-   "label_minutes": 3.7
+   "count": 3,
+   "minutes": 10.77,
+   "label_minutes": 10.77
   },
   "crashloop": {
-   "count": 1,
-   "minutes": 3.67,
-   "label_minutes": 3.67
+   "count": 2,
+   "minutes": 7.66,
+   "label_minutes": 7.66
   },
   "dep_latency": {
-   "count": 2,
-   "minutes": 8.17,
-   "label_minutes": 8.17
+   "count": 4,
+   "minutes": 15.67,
+   "label_minutes": 15.67
   },
   "error_rate": {
-   "count": 1,
-   "minutes": 3.67,
-   "label_minutes": 3.67
+   "count": 3,
+   "minutes": 10.17,
+   "label_minutes": 10.17
   },
   "memory_leak": {
-   "count": 3,
-   "minutes": 23.5,
-   "label_minutes": 23.5
+   "count": 5,
+   "minutes": 37.5,
+   "label_minutes": 37.5
   },
   "pod_kill": {
-   "count": 2,
+   "count": 7,
    "minutes": 0.0,
-   "label_minutes": 1.0
+   "label_minutes": 3.5
   }
  },
  "deploy_rows_by_active_fault": {
-  "none": 2346,
-  "memory_leak": 282,
-  "dep_latency": 98,
-  "error_rate": 44,
-  "cpu_hog": 44,
-  "bad_deploy": 44,
-  "crashloop": 44,
-  "pod_kill": 12
+  "none": 4212,
+  "memory_leak": 450,
+  "dep_latency": 188,
+  "bad_deploy": 132,
+  "cpu_hog": 130,
+  "error_rate": 122,
+  "crashloop": 92,
+  "pod_kill": 42
  },
  "deploy_rows_by_group": {
-  "D": 1028,
-  "B": 980,
-  "C": 358,
-  "E": 294,
-  "A": 254
+  "D": 2550,
+  "B": 1566,
+  "C": 580,
+  "A": 378,
+  "E": 294
+ },
+ "runs_by_round": {
+  "1": 24,
+  "2": 20
+ },
+ "deploy_rows_by_round": {
+  "1": 2914,
+  "2": 2454
+ },
+ "deploy_rows_by_active_fault_and_round": {
+  "bad_deploy|r1": 44,
+  "bad_deploy|r2": 88,
+  "cpu_hog|r1": 44,
+  "cpu_hog|r2": 86,
+  "crashloop|r1": 44,
+  "crashloop|r2": 48,
+  "dep_latency|r1": 98,
+  "dep_latency|r2": 90,
+  "error_rate|r1": 44,
+  "error_rate|r2": 78,
+  "memory_leak|r1": 282,
+  "memory_leak|r2": 168,
+  "none|r1": 2346,
+  "none|r2": 1866,
+  "pod_kill|r1": 12,
+  "pod_kill|r2": 30
+ },
+ "fault_injections_by_type_and_round": {
+  "bad_deploy|r1": 1,
+  "bad_deploy|r2": 2,
+  "cpu_hog|r1": 1,
+  "cpu_hog|r2": 2,
+  "crashloop|r1": 1,
+  "crashloop|r2": 1,
+  "dep_latency|r1": 2,
+  "dep_latency|r2": 2,
+  "error_rate|r1": 1,
+  "error_rate|r2": 2,
+  "memory_leak|r1": 3,
+  "memory_leak|r2": 2,
+  "pod_kill|r1": 2,
+  "pod_kill|r2": 5
  },
  "nan_share_deploy": {
-  "mem_growth_bytes_per_s": 0.081
+  "mem_growth_bytes_per_s": 0.0922
  },
  "nan_share_pods": {
-  "cpu": 0.0141,
-  "throttle": 0.0159,
-  "mem_ws": 0.0141,
-  "mem_frac_limit": 0.0172,
-  "restarts": 0.0061,
-  "p95": 0.0178,
-  "ready": 0.0061,
-  "cpu_proc": 0.0171
+  "cpu": 0.0201,
+  "throttle": 0.0188,
+  "mem_ws": 0.0157,
+  "mem_frac_limit": 0.024,
+  "restarts": 0.0112,
+  "p95": 0.0232,
+  "ready": 0.0112,
+  "cpu_proc": 0.0221
  },
  "deploy_rows_by_qa_flag": {
-  "ok": 2842,
-  "post_fault_tail": 66,
+  "ok": 5200,
+  "post_fault_tail": 162,
   "node_glitch": 6
  },
- "slo_violation_rows": 426
+ "slo_violation_rows": 778
 }
