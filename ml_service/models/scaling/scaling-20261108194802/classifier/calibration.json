@@ -1,0 +1,122 @@
+{
+ "healthy": {
+  "bad_deploy": 0.0032,
+  "crashloop": 0.0003,
+  "dependency_latency": 0.012,
+  "error_fault": 0.0003,
+  "healthy": 0.8371,
+  "memory_leak": 0.0091,
+  "noisy_pod": 0.0003,
+  "pod_restart": 0.0109,
+  "scale_down": 0.0766,
+  "scale_up": 0.0502
+ },
+ "scale_up": {
+  "bad_deploy": 0.012,
+  "crashloop": 0.0011,
+  "dependency_latency": 0.0599,
+  "error_fault": 0.0011,
+  "healthy": 0.134,
+  "memory_leak": 0.0011,
+  "noisy_pod": 0.0011,
+  "pod_restart": 0.0011,
+  "scale_down": 0.0011,
+  "scale_up": 0.7876
+ },
+ "scale_down": {
+  "bad_deploy": 0.0085,
+  "crashloop": 0.0015,
+  "dependency_latency": 0.0075,
+  "error_fault": 0.0045,
+  "healthy": 0.0664,
+  "memory_leak": 0.0185,
+  "noisy_pod": 0.0145,
+  "pod_restart": 0.0005,
+  "scale_down": 0.8738,
+  "scale_up": 0.0045
+ },
+ "memory_leak": {
+  "bad_deploy": 0.0014,
+  "crashloop": 0.0014,
+  "dependency_latency": 0.0014,
+  "error_fault": 0.0014,
+  "healthy": 0.013,
+  "memory_leak": 0.8977,
+  "noisy_pod": 0.0216,
+  "pod_restart": 0.0014,
+  "scale_down": 0.0591,
+  "scale_up": 0.0014
+ },
+ "dependency_latency": {
+  "bad_deploy": 0.0263,
+  "crashloop": 0.0053,
+  "dependency_latency": 0.9105,
+  "error_fault": 0.0053,
+  "healthy": 0.0053,
+  "memory_leak": 0.0053,
+  "noisy_pod": 0.0053,
+  "pod_restart": 0.0053,
+  "scale_down": 0.0053,
+  "scale_up": 0.0263
+ },
+ "error_fault": {
+  "bad_deploy": 0.0062,
+  "crashloop": 0.0062,
+  "dependency_latency": 0.0062,
+  "error_fault": 0.9444,
+  "healthy": 0.0062,
+  "memory_leak": 0.0062,
+  "noisy_pod": 0.0062,
+  "pod_restart": 0.0062,
+  "scale_down": 0.0062,
+  "scale_up": 0.0062
+ },
+ "noisy_pod": {
+  "bad_deploy": 0.0068,
+  "crashloop": 0.0068,
+  "dependency_latency": 0.0068,
+  "error_fault": 0.0068,
+  "healthy": 0.0068,
+  "memory_leak": 0.0068,
+  "noisy_pod": 0.911,
+  "pod_restart": 0.0068,
+  "scale_down": 0.0342,
+  "scale_up": 0.0068
+ },
+ "bad_deploy": {
+  "bad_deploy": 0.9013,
+  "crashloop": 0.0066,
+  "dependency_latency": 0.0066,
+  "error_fault": 0.0066,
+  "healthy": 0.0461,
+  "memory_leak": 0.0066,
+  "noisy_pod": 0.0066,
+  "pod_restart": 0.0066,
+  "scale_down": 0.0066,
+  "scale_up": 0.0066
+ },
+ "crashloop": {
+  "bad_deploy": 0.0096,
+  "crashloop": 0.8365,
+  "dependency_latency": 0.0096,
+  "error_fault": 0.0096,
+  "healthy": 0.0096,
+  "memory_leak": 0.0865,
+  "noisy_pod": 0.0096,
+  "pod_restart": 0.0096,
+  "scale_down": 0.0096,
+  "scale_up": 0.0096
+ },
+ "pod_restart": {
+  "bad_deploy": 0.0455,
+  "crashloop": 0.0455,
+  "dependency_latency": 0.0455,
+  "error_fault": 0.0455,
+  "healthy": 0.0455,
+  "memory_leak": 0.0455,
+  "noisy_pod": 0.0455,
+  "pod_restart": 0.5909,
+  "scale_down": 0.0455,
+  "scale_up": 0.0455
+ }
+}

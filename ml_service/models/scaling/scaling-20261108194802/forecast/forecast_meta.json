@@ -1,0 +1,58 @@
+{
+  "horizons_s": [
+    60,
+    120,
+    300
+  ],
+  "quantiles": [
+    0.5,
+    0.9
+  ],
+  "step_s": 5,
+  "hist_steps": 60,
+  "features": [
+    "d_1",
+    "d_3",
+    "d_6",
+    "d_12",
+    "d_24",
+    "d_60",
+    "mean_rel_6",
+    "std_6",
+    "max_rel_6",
+    "min_rel_6",
+    "mean_rel_12",
+    "std_12",
+    "max_rel_12",
+    "min_rel_12",
+    "mean_rel_24",
+    "std_24",
+    "max_rel_24",
+    "min_rel_24",
+    "mean_rel_60",
+    "std_60",
+    "max_rel_60",
+    "min_rel_60",
+    "slope_6",
+    "slope_12",
+    "slope_24",
+    "pos_60",
+    "curv"
+  ],
+  "target": "log1p(rps)",
+  "q90_margin": {
+    "60": 0.07967045658163824,
+    "120": 0.32846109410869684,
+    "300": 0.3704627549398543
+  },
+  "info": {
+    "runs": 33,
+    "holdout_excluded": true,
+    "q90_outer_correction": {
+      "60": 0.06345064717556431,
+      "120": 0.2437441696307427,
+      "300": 0.25987199452812076
+    },
+    "target": "rps (demand)"
+  }
+}

@@ -1,0 +1,31 @@
+{
+ "slo": {
+  "p95_s": 0.3,
+  "error_rate": 0.01
+ },
+ "fault_rows": "active_fault -> state (states.FAULT_TO_STATE); overlaps by states.FAULT_PRIORITY",
+ "label_capacity_knee_rps_per_pod": {
+  "table": {
+   "1": 17.0,
+   "2": 17.0,
+   "3": 13.0
+  },
+  "fallback": 13.0
+ },
+ "scale_up": "fault-free and ((SLO breached and (demand/pod >= 0.85 c(r) or throttle >= 0.5)) or peak demand over (t, t+60s] / ready >= c(r))",
+ "scale_down": "fault-free, SLO ok, ready >= 2, peak demand over [t-60s, t+180s] <= 0.75 * c(r-1) * (r-1), sustained over the trailing 60 s",
+ "healthy": "otherwise",
+ "masked": "qa_flag != ok; cpu_hog that outlived its logged end (labels.residual_hog_mask)",
+ "demand": "goodput_rps, or rps while p95 >= SLO (overload 504s are offered load)",
+ "knee_rule": "decision stump per replica count on fault-free ok rows (SAFE_BREACH_RATE 0.1)",
+ "fault_gates_in_priority_order": {
+  "crashloop": "crashloop_pods >= 1, or (pods_not_ready >= 1 and restarts_delta_3m >= 2)",
+  "memory_leak": "(mem_growth_med_1m >= 50 KB/s and no backlog (inflight/pod < 10, throttle_1m < 0.8) and not noisy) or oomkills_delta_3m >= 1",
+  "pod_restart": "ready_drop_1m >= 1 and ready_deficit >= 1",
+  "bad_deploy": "cpr_ratio >= 1.8 and (with pods: rollout < 900 s ago and pod_cpr_disp_1m < 1.6; without pods: not overloaded)",
+  "noisy_pod": "pod_cpr_disp_1m >= 2.0 and pod_cpu_disp_1m >= 0.15 cores and no rollout < 900 s",
+  "error_fault": "fast_error_share >= 0.01 and error_rate >= 0.005",
+  "dependency_latency": "p95_slo_1m >= 1 and p95_slo_min_30s >= 1 and throttle_1m < 0.3 and cpu_frac_limit_1m < 0.6"
+ },
+ "settled_scoring": "drop rows within 30 s after a label change"
+}
