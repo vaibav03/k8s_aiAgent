@@ -1,0 +1,12 @@
+# generated from scenarios/matrix.yaml by runner/matrix.py - edit matrix.yaml instead
+id: c-over-fixed4-steady
+group: C
+heavy: false
+duration_s: 480
+traffic:
+  shape: steady
+  base_load_pods: 0.5
+scaling:
+  policy: fixed
+  replicas: 4
+faults: []

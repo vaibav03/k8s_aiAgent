@@ -1,0 +1,33 @@
+# In-cluster k6 load generator (open-loop, ramping-arrival-rate). Rendered by runner/lab.py.
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: k6
+  labels: {app: k6}
+spec:
+  backoffLimit: 0
+  ttlSecondsAfterFinished: 600
+  template:
+    metadata:
+      labels: {app: k6}
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: k6
+          image: ${k6_image}
+          imagePullPolicy: IfNotPresent
+          args: ["run", "--quiet", "--no-color", "/scripts/shapes.js"]
+          env:
+            - {name: SHAPE, value: "${shape}"}
+            - {name: BASE_RPS, value: "${base_rps}"}
+            - {name: DURATION_S, value: "${duration_s}"}
+            - {name: TARGET_URL, value: "${target_url}"}
+            - {name: PARAMS_JSON, value: '${params_json}'}
+          resources:
+            requests: {cpu: 200m, memory: 128Mi}
+            limits: {cpu: "1", memory: 768Mi}
+          volumeMounts:
+            - {name: scripts, mountPath: /scripts}
+      volumes:
+        - name: scripts
+          configMap: {name: k6-script}

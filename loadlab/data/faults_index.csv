@@ -1,0 +1,12 @@
+run_id,scenario,fault_id,type,target,start_rel_s,end_rel_s,duration_s,label_window_s,params,reapplied
+d-leak-oom-1108-081244-c2e,d-leak-oom,d-leak-oom-1108-081244-c2e-f0,memory_leak,loadlab-5965489b55-9drp2,180.178,600.132,419.95,419.95,"{""leak_kb_per_s"": 768, ""free_on_end"": true}",1
+d-leak-slow-1108-082126-2e4,d-leak-slow,d-leak-slow-1108-082126-2e4-f0,memory_leak,loadlab-5965489b55-kkw5c,180.205,600.121,419.92,419.92,"{""leak_kb_per_s"": 96}",0
+d-dep-latency-1108-082554-5cd,d-dep-latency,d-dep-latency-1108-082554-5cd-f0,dep_latency,all,200.242,420.15,219.91,219.91,"{""dep_latency_ms"": 400, ""dep_fraction"": 0.5}",0
+d-error-burst-1108-083437-087,d-error-burst,d-error-burst-1108-083437-087-f0,error_rate,all,200.157,420.215,220.06,220.06,"{""error_rate"": 0.2}",0
+d-cpu-hog-1108-083701-80d,d-cpu-hog,d-cpu-hog-1108-083701-80d-f0,cpu_hog,loadlab-5965489b55-bwq6j,200.152,422.266,222.11,222.11,"{""cpu_hog_millicores"": 450}",0
+d-pod-kill-1108-084547-75d,d-pod-kill,d-pod-kill-1108-084547-75d-f0,pod_kill,loadlab-5965489b55-7hbfb,200.136,200.136,0.0,30.0,{},0
+d-pod-kill-1108-084547-75d,d-pod-kill,d-pod-kill-1108-084547-75d-f1,pod_kill,loadlab-5965489b55-mk2gk,380.17,380.17,0.0,30.0,{},0
+d-bad-deploy-1108-084824-d38,d-bad-deploy,d-bad-deploy-1108-084824-d38-f0,bad_deploy,rollout,200.072,420.058,219.99,219.99,"{""cpu_ms_per_req"": 75}",0
+d-crashloop-1108-085711-263,d-crashloop,d-crashloop-1108-085711-263-f0,crashloop,rollout,200.113,420.034,219.92,219.92,{},0
+e-spike-dep-latency-1108-085933-36c,e-spike-dep-latency,e-spike-dep-latency-1108-085933-36c-f0,dep_latency,all,180.129,450.194,270.07,270.07,"{""dep_latency_ms"": 400, ""dep_fraction"": 0.5}",1
+e-diurnal-leak-1108-090819-f65,e-diurnal-leak,e-diurnal-leak-1108-090819-f65-f0,memory_leak,loadlab-5965489b55-b9wvm,120.187,690.165,569.98,569.98,"{""leak_kb_per_s"": 640, ""free_on_end"": true}",1

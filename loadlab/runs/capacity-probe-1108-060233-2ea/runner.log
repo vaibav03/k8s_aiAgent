@@ -1,0 +1,6 @@
+06:02:33 [capacity-probe-1108-060233-2ea] scenario capacity-probe -> namespace lab-capacity-probe-1108-060233-2ea
+06:02:35 [capacity-probe-1108-060233-2ea] app ready: 1 replica(s), policy fixed
+06:02:49 [capacity-probe-1108-060233-2ea] k6 started: step_ramp base_rps 4 pod k6-4kz5p
+06:11:04 [capacity-probe-1108-060233-2ea] load finished: succeeded
+06:11:24 [capacity-probe-1108-060233-2ea] exported deploy.csv (98 rows) pods.csv (98 rows) -> /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/capacity-probe-1108-060233-2ea
+06:11:24 [capacity-probe-1108-060233-2ea] namespace deleted

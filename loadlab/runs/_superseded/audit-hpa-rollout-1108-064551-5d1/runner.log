@@ -1,0 +1,21 @@
+06:45:51 [audit-hpa-rollout-1108-064551-5d1] scenario audit-hpa-rollout -> namespace lab-audit-hpa-rollout-1108-064551-5d1
+06:45:54 [audit-hpa-rollout-1108-064551-5d1] app ready: 1 replica(s), policy hpa_cpu
+06:46:22 [audit-hpa-rollout-1108-064551-5d1] HPA has metrics: {'averageUtilization': 1, 'averageValue': '3m'}
+06:46:33 [audit-hpa-rollout-1108-064551-5d1] k6 started: flash_crowd base_rps 9.0 pod k6-6zj7f
+06:46:54 [audit-hpa-rollout-1108-064551-5d1] FAULT START f0 dep_latency target=all pods=['loadlab-5965489b55-4vn4p', 'loadlab-5965489b55-fc5bj'] params={'dep_latency_ms': 150, 'dep_fraction': 0.3}
+06:47:41 [audit-hpa-rollout-1108-064551-5d1] FAULT REAPPLY f0 dep_latency -> loadlab-5965489b55-cvn6l (restartCount=0)
+06:47:41 [audit-hpa-rollout-1108-064551-5d1] FAULT REAPPLY f0 dep_latency -> loadlab-5965489b55-nf8fg (restartCount=0)
+06:49:04 [audit-hpa-rollout-1108-064551-5d1] FAULT START f1 bad_deploy target=one-pod pods=rollout params={'cpu_ms_per_req': 100}
+06:49:07 [audit-hpa-rollout-1108-064551-5d1] FAULT REAPPLY f0 dep_latency -> loadlab-79577d6b5b-7s2fb (restartCount=0)
+06:49:08 [audit-hpa-rollout-1108-064551-5d1] FAULT REAPPLY f0 dep_latency -> loadlab-79577d6b5b-xbvtf (restartCount=0)
+06:49:11 [audit-hpa-rollout-1108-064551-5d1] FAULT REAPPLY f0 dep_latency -> loadlab-79577d6b5b-cvr7w (restartCount=0)
+06:49:15 [audit-hpa-rollout-1108-064551-5d1] FAULT REAPPLY f0 dep_latency -> loadlab-79577d6b5b-zc64v (restartCount=0)
+06:50:34 [audit-hpa-rollout-1108-064551-5d1] FAULT END   f1 bad_deploy
+06:50:48 [audit-hpa-rollout-1108-064551-5d1] FAULT REAPPLY f0 dep_latency -> loadlab-5965489b55-rxfx5 (restartCount=0)
+06:50:52 [audit-hpa-rollout-1108-064551-5d1] FAULT REAPPLY f0 dep_latency -> loadlab-5965489b55-zzmfv (restartCount=0)
+06:50:59 [audit-hpa-rollout-1108-064551-5d1] FAULT REAPPLY f0 dep_latency -> loadlab-5965489b55-fblh2 (restartCount=0)
+06:51:02 [audit-hpa-rollout-1108-064551-5d1] FAULT REAPPLY f0 dep_latency -> loadlab-5965489b55-x7wzw (restartCount=0)
+06:51:22 [audit-hpa-rollout-1108-064551-5d1] FAULT END   f0 dep_latency
+06:51:36 [audit-hpa-rollout-1108-064551-5d1] load finished: succeeded
+06:51:58 [audit-hpa-rollout-1108-064551-5d1] exported deploy.csv (62 rows) pods.csv (266 rows) -> /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/audit-hpa-rollout-1108-064551-5d1
+06:51:58 [audit-hpa-rollout-1108-064551-5d1] namespace deleted

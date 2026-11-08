@@ -1,0 +1,11 @@
+# Crashlooping rollout under sawtooth load: new ReplicaSet crashes, old pods keep serving.
+id: crashloop-rollout
+duration_s: 600
+traffic:
+  shape: sawtooth
+  base_load_pods: 1.0
+  params: {period_s: 120, low_mult: 0.5, high_mult: 1.5}
+scaling: {policy: fixed, replicas: 3}
+faults:
+  - {type: crashloop, start_s: 150, end_s: 420}
+  - {type: pod_kill, start_s: 480}

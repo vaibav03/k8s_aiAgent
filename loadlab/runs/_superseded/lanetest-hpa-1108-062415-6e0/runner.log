@@ -1,0 +1,9 @@
+06:24:15 [lanetest-hpa-1108-062415-6e0] scenario lanetest-hpa -> namespace lab-lanetest-hpa-1108-062415-6e0
+06:24:18 [lanetest-hpa-1108-062415-6e0] app ready: 1 replica(s), policy hpa_cpu
+06:24:49 [lanetest-hpa-1108-062415-6e0] HPA has metrics: {'averageUtilization': 1, 'averageValue': '4m'}
+06:25:02 [lanetest-hpa-1108-062415-6e0] k6 started: flash_crowd base_rps 9.0 pod k6-h6tpk
+06:28:22 [lanetest-hpa-1108-062415-6e0] FAULT START f0 bad_deploy target=one-pod pods=rollout params={'cpu_ms_per_req': 50}
+06:29:22 [lanetest-hpa-1108-062415-6e0] FAULT END   f0 bad_deploy
+06:30:05 [lanetest-hpa-1108-062415-6e0] load finished: succeeded
+06:30:26 [lanetest-hpa-1108-062415-6e0] exported deploy.csv (63 rows) pods.csv (259 rows) -> /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/lanetest-hpa-1108-062415-6e0
+06:30:26 [lanetest-hpa-1108-062415-6e0] namespace deleted

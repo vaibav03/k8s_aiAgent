@@ -1,0 +1,218 @@
+{
+ "a-cap-fixed1": {
+  "run_id": "a-cap-fixed1-1108-070434-095",
+  "status": "ok",
+  "errors": [],
+  "attempt": 1,
+  "wall_s": 459,
+  "lane": 0,
+  "finished": "2026-11-08 07:12:13"
+ },
+ "b-hpa-diurnal-s7": {
+  "run_id": "b-hpa-diurnal-s7-1108-070454-27f",
+  "status": "ok",
+  "errors": [],
+  "attempt": 1,
+  "wall_s": 850,
+  "lane": 1,
+  "finished": "2026-11-08 07:19:03"
+ },
+ "a-cap-fixed2": {
+  "run_id": "a-cap-fixed2-1108-071215-0ef",
+  "status": "ok",
+  "errors": [],
+  "attempt": 1,
+  "wall_s": 465,
+  "lane": 0,
+  "finished": "2026-11-08 07:19:58"
+ },
+ "a-cap-fixed3": {
+  "run_id": "a-cap-fixed3-1108-072000-e7a",
+  "status": "ok",
+  "errors": [],
+  "attempt": 1,
+  "wall_s": 462,
+  "lane": 0,
+  "finished": "2026-11-08 07:27:40"
+ },
+ "b-hpa-diurnal-s23": {
+  "run_id": "b-hpa-diurnal-s23-1108-071905-bb4",
+  "status": "ok",
+  "errors": [],
+  "attempt": 1,
+  "wall_s": 855,
+  "lane": 1,
+  "finished": "2026-11-08 07:33:18"
+ },
+ "b-hpa-spike-b08": {
+  "run_id": "b-hpa-spike-b08-1108-072742-044",
+  "status": "ok",
+  "errors": [],
+  "attempt": 1,
+  "wall_s": 630,
+  "lane": 0,
+  "finished": "2026-11-08 07:38:11"
+ },
+ "b-hpa-spike-b05": {
+  "run_id": "b-hpa-spike-b05-1108-073319-1bf",
+  "status": "ok",
+  "errors": [],
+  "attempt": 1,
+  "wall_s": 610,
+  "lane": 1,
+  "finished": "2026-11-08 07:43:28"
+ },
+ "b-hpa-flash-b06": {
+  "run_id": "b-hpa-flash-b06-1108-073812-80c",
+  "status": "ok",
+  "errors": [],
+  "attempt": 1,
+  "wall_s": 630,
+  "lane": 0,
+  "finished": "2026-11-08 07:48:41"
+ },
+ "b-hpa-flash-b09": {
+  "run_id": "b-hpa-flash-b09-1108-074329-b3e",
+  "status": "ok",
+  "errors": [],
+  "attempt": 1,
+  "wall_s": 625,
+  "lane": 1,
+  "finished": "2026-11-08 07:53:53"
+ },
+ "b-hpa-saw-b10": {
+  "run_id": "b-hpa-saw-b10-1108-074841-c6e",
+  "status": "ok",
+  "errors": [],
+  "attempt": 1,
+  "wall_s": 606,
+  "lane": 0,
+  "finished": "2026-11-08 07:58:47"
+ },
+ "b-hpa-saw-b14": {
+  "run_id": "b-hpa-saw-b14-1108-075353-a5c",
+  "status": "ok",
+  "errors": [],
+  "attempt": 1,
+  "wall_s": 605,
+  "lane": 1,
+  "finished": "2026-11-08 08:03:58"
+ },
+ "c-under-fixed1-diurnal": {
+  "run_id": "c-under-fixed1-diurnal-1108-075847-410",
+  "status": "ok",
+  "errors": [],
+  "attempt": 1,
+  "wall_s": 775,
+  "lane": 0,
+  "finished": "2026-11-08 08:11:42"
+ },
+ "c-over-fixed4-steady": {
+  "run_id": "c-over-fixed4-steady-1108-080359-929",
+  "status": "ok",
+  "errors": [],
+  "attempt": 1,
+  "wall_s": 525,
+  "lane": 1,
+  "finished": "2026-11-08 08:12:43"
+ },
+ "c-under-fixed2-spike": {
+  "run_id": "c-under-fixed2-spike-1108-081142-093",
+  "status": "ok",
+  "errors": [],
+  "attempt": 1,
+  "wall_s": 584,
+  "lane": 0,
+  "finished": "2026-11-08 08:21:26"
+ },
+ "d-leak-oom": {
+  "run_id": "d-leak-oom-1108-081244-c2e",
+  "status": "ok",
+  "errors": [],
+  "attempt": 1,
+  "wall_s": 790,
+  "lane": 1,
+  "finished": "2026-11-08 08:25:54"
+ },
+ "d-leak-slow": {
+  "run_id": "d-leak-slow-1108-082126-2e4",
+  "status": "ok",
+  "errors": [],
+  "attempt": 1,
+  "wall_s": 791,
+  "lane": 0,
+  "finished": "2026-11-08 08:34:37"
+ },
+ "d-dep-latency": {
+  "run_id": "d-dep-latency-1108-082554-5cd",
+  "status": "ok",
+  "errors": [],
+  "attempt": 1,
+  "wall_s": 668,
+  "lane": 1,
+  "finished": "2026-11-08 08:37:01"
+ },
+ "d-error-burst": {
+  "run_id": "d-error-burst-1108-083437-087",
+  "status": "ok",
+  "errors": [],
+  "attempt": 1,
+  "wall_s": 670,
+  "lane": 0,
+  "finished": "2026-11-08 08:45:47"
+ },
+ "d-cpu-hog": {
+  "run_id": "d-cpu-hog-1108-083701-80d",
+  "status": "ok",
+  "errors": [],
+  "attempt": 1,
+  "wall_s": 683,
+  "lane": 1,
+  "finished": "2026-11-08 08:48:24"
+ },
+ "d-pod-kill": {
+  "run_id": "d-pod-kill-1108-084547-75d",
+  "status": "ok",
+  "errors": [],
+  "attempt": 1,
+  "wall_s": 684,
+  "lane": 0,
+  "finished": "2026-11-08 08:57:11"
+ },
+ "d-bad-deploy": {
+  "run_id": "d-bad-deploy-1108-084824-d38",
+  "status": "ok",
+  "errors": [],
+  "attempt": 1,
+  "wall_s": 668,
+  "lane": 1,
+  "finished": "2026-11-08 08:59:32"
+ },
+ "d-crashloop": {
+  "run_id": "d-crashloop-1108-085711-263",
+  "status": "ok",
+  "errors": [],
+  "attempt": 1,
+  "wall_s": 667,
+  "lane": 0,
+  "finished": "2026-11-08 09:08:19"
+ },
+ "e-spike-dep-latency": {
+  "run_id": "e-spike-dep-latency-1108-085933-36c",
+  "status": "ok",
+  "errors": [],
+  "attempt": 1,
+  "wall_s": 744,
+  "lane": 1,
+  "finished": "2026-11-08 09:11:56"
+ },
+ "e-diurnal-leak": {
+  "run_id": "e-diurnal-leak-1108-090819-f65",
+  "status": "ok",
+  "errors": [],
+  "attempt": 1,
+  "wall_s": 848,
+  "lane": 0,
+  "finished": "2026-11-08 09:22:26"
+ }
+}

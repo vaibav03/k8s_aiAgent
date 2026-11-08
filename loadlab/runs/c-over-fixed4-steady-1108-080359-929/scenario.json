@@ -1,0 +1,40 @@
+{
+  "id": "c-over-fixed4-steady",
+  "group": "C",
+  "heavy": false,
+  "duration_s": 480,
+  "traffic": {
+    "shape": "steady",
+    "base_load_pods": 0.5,
+    "params": {},
+    "base_rps": 9.0,
+    "_capacity_ref_rps_per_pod": 18
+  },
+  "scaling": {
+    "policy": "fixed",
+    "replicas": 4,
+    "_lane_cap": 4
+  },
+  "faults": [],
+  "app": {
+    "cpu_ms_per_req": 25,
+    "alloc_kb": 64
+  },
+  "_run": {
+    "run_id": "c-over-fixed4-steady-1108-080359-929",
+    "namespace": "lab-c-over-fixed4-steady-1108-080359-929",
+    "scenario_file": "/Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/scenarios/matrix/c-over-fixed4-steady.yaml",
+    "image": "loadlab:v1",
+    "k6_image": "grafana/k6:0.54.0",
+    "context": "kubeai-lab",
+    "t_created": 1794150239.024096,
+    "t0": 1794150258.51867,
+    "t_end": 1794150743.448124,
+    "status": "succeeded",
+    "export_window": [
+      1794150228.51867,
+      1794150753.448124
+    ],
+    "step_s": 5
+  }
+}

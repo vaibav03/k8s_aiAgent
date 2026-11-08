@@ -1,0 +1,10 @@
+08:45:47 [d-pod-kill-1108-084547-75d] scenario d-pod-kill -> namespace lab-d-pod-kill-1108-084547-75d
+08:45:54 [d-pod-kill-1108-084547-75d] app ready: 3 replica(s), policy hpa_cpu
+08:46:35 [d-pod-kill-1108-084547-75d] HPA has metrics: {'averageUtilization': 0, 'averageValue': '1m'}
+08:46:46 [d-pod-kill-1108-084547-75d] k6 started: steady base_rps 18.0 pod k6-r8lvz
+08:50:06 [d-pod-kill-1108-084547-75d] FAULT START f0 pod_kill target=one-pod pods=['loadlab-5965489b55-7hbfb'] params={}
+08:53:07 [d-pod-kill-1108-084547-75d] FAULT START f1 pod_kill target=one-pod pods=['loadlab-5965489b55-mk2gk'] params={}
+08:56:51 [d-pod-kill-1108-084547-75d] load finished: succeeded
+08:57:11 [d-pod-kill-1108-084547-75d] exported deploy.csv (123 rows) pods.csv (375 rows) -> /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/d-pod-kill-1108-084547-75d
+08:57:11 [d-pod-kill-1108-084547-75d] namespace deleted
+/Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/d-pod-kill-1108-084547-75d

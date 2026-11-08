@@ -1,0 +1,7 @@
+08:11:42 [c-under-fixed2-spike-1108-081142-093] scenario c-under-fixed2-spike -> namespace lab-c-under-fixed2-spike-1108-081142-093
+08:11:44 [c-under-fixed2-spike-1108-081142-093] app ready: 2 replica(s), policy fixed
+08:12:01 [c-under-fixed2-spike-1108-081142-093] k6 started: spike base_rps 14.4 pod k6-sswbz
+08:21:05 [c-under-fixed2-spike-1108-081142-093] load finished: succeeded
+08:21:26 [c-under-fixed2-spike-1108-081142-093] exported deploy.csv (111 rows) pods.csv (222 rows) -> /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/c-under-fixed2-spike-1108-081142-093
+08:21:26 [c-under-fixed2-spike-1108-081142-093] namespace deleted
+/Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/c-under-fixed2-spike-1108-081142-093

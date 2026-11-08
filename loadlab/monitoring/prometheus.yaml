@@ -1,0 +1,169 @@
+# Lightweight Prometheus for the loadlab. Namespace: monitoring.
+# Scrapes: kubelet cAdvisor (via API-server node proxy), kube-state-metrics, annotated pods.
+# 5s scrape/eval interval, 24h retention, emptyDir storage (data is lost on pod restart by design:
+# every run exports its own CSVs).
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: monitoring
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: prometheus
+  namespace: monitoring
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: loadlab-prometheus
+rules:
+  - apiGroups: [""]
+    resources: [nodes, nodes/proxy, nodes/metrics, services, endpoints, pods]
+    verbs: [get, list, watch]
+  - nonResourceURLs: ["/metrics", "/metrics/cadvisor"]
+    verbs: [get]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: loadlab-prometheus
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: loadlab-prometheus
+subjects:
+  - kind: ServiceAccount
+    name: prometheus
+    namespace: monitoring
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-config
+  namespace: monitoring
+data:
+  prometheus.yml: |
+    global:
+      scrape_interval: 5s
+      scrape_timeout: 4s
+      evaluation_interval: 5s
+    scrape_configs:
+      # kubelet cAdvisor through the API server node proxy (no kubelet TLS hassle).
+      - job_name: cadvisor
+        scheme: https
+        tls_config:
+          ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+        bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+        kubernetes_sd_configs:
+          - role: node
+        relabel_configs:
+          - target_label: __address__
+            replacement: kubernetes.default.svc:443
+          - source_labels: [__meta_kubernetes_node_name]
+            regex: (.+)
+            target_label: __metrics_path__
+            replacement: /api/v1/nodes/$1/proxy/metrics/cadvisor
+          - source_labels: [__meta_kubernetes_node_name]
+            target_label: node
+        metric_relabel_configs:
+          # keep only what the lab uses (keeps Prometheus small)
+          - source_labels: [__name__]
+            regex: container_(cpu_usage_seconds_total|cpu_cfs_throttled_periods_total|cpu_cfs_periods_total|cpu_cfs_throttled_seconds_total|memory_working_set_bytes|memory_rss|oom_events_total|spec_memory_limit_bytes|spec_cpu_quota|spec_cpu_period|last_seen)
+            action: keep
+          # On minikube (docker driver, cgroup v2, cri-dockerd) cAdvisor cannot resolve
+          # container-level cgroups to names, so it only labels the POD-level cgroup
+          # (container="", pod=..., namespace=...). Pod cgroups carry the pod's summed
+          # limits (cpu.max / memory.max) and are hierarchical, so for single-container app pods
+          # pod-level == app container (+ the negligible pause process). We keep exactly the
+          # pod-level cgroup rows and tag them scope="pod".
+          - source_labels: [pod]
+            regex: ""
+            action: drop
+          - source_labels: [id]
+            regex: '.*/(kubepods-[a-z]+-)?pod[0-9a-f_-]{30,}(\.slice)?'
+            action: keep
+          - target_label: scope
+            replacement: pod
+      - job_name: kube-state-metrics
+        static_configs:
+          - targets: ["kube-state-metrics.kube-system.svc:8080"]
+        metric_relabel_configs:
+          - source_labels: [__name__]
+            regex: kube_(deployment_spec_replicas|deployment_status_replicas.*|pod_container_status_restarts_total|pod_container_status_last_terminated_reason|pod_container_status_last_terminated_exitcode|pod_container_status_waiting_reason|pod_container_status_ready|pod_container_status_running|pod_container_resource_requests|pod_container_resource_limits|pod_status_phase|pod_status_ready|pod_info|pod_labels|horizontalpodautoscaler_.*|replicaset_.*|namespace_status_phase)
+            action: keep
+      - job_name: annotated-pods
+        kubernetes_sd_configs:
+          - role: pod
+        relabel_configs:
+          - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
+            regex: "true"
+            action: keep
+          - source_labels: [__meta_kubernetes_pod_phase]
+            regex: Running
+            action: keep
+          - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_path]
+            regex: (.+)
+            target_label: __metrics_path__
+          - source_labels: [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
+            regex: ([^:]+)(?::\d+)?;(\d+)
+            replacement: $1:$2
+            target_label: __address__
+          - source_labels: [__meta_kubernetes_namespace]
+            target_label: namespace
+          - source_labels: [__meta_kubernetes_pod_name]
+            target_label: pod
+          - source_labels: [__meta_kubernetes_pod_label_app]
+            target_label: app
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prometheus
+  namespace: monitoring
+  labels: {app: prometheus}
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: prometheus}
+  template:
+    metadata:
+      labels: {app: prometheus}
+    spec:
+      serviceAccountName: prometheus
+      containers:
+        - name: prometheus
+          image: prom/prometheus:v2.54.1
+          args:
+            - --config.file=/etc/prometheus/prometheus.yml
+            - --storage.tsdb.path=/prometheus
+            - --storage.tsdb.retention.time=24h
+            - --web.enable-lifecycle
+            - --query.lookback-delta=30s
+          ports:
+            - containerPort: 9090
+          resources:
+            requests: {cpu: 200m, memory: 400Mi}
+            limits: {cpu: "1", memory: 1500Mi}
+          readinessProbe:
+            httpGet: {path: /-/ready, port: 9090}
+            periodSeconds: 5
+          volumeMounts:
+            - {name: config, mountPath: /etc/prometheus}
+            - {name: data, mountPath: /prometheus}
+      volumes:
+        - name: config
+          configMap: {name: prometheus-config}
+        - name: data
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: prometheus
+  namespace: monitoring
+spec:
+  selector: {app: prometheus}
+  ports:
+    - port: 9090
+      targetPort: 9090

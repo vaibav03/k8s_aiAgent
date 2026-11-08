@@ -1,0 +1,10 @@
+08:34:37 [d-error-burst-1108-083437-087] scenario d-error-burst -> namespace lab-d-error-burst-1108-083437-087
+08:34:40 [d-error-burst-1108-083437-087] app ready: 3 replica(s), policy hpa_cpu
+08:35:11 [d-error-burst-1108-083437-087] HPA has metrics: {'averageUtilization': 0, 'averageValue': '1m'}
+08:35:22 [d-error-burst-1108-083437-087] k6 started: steady base_rps 18.0 pod k6-4htxv
+08:38:42 [d-error-burst-1108-083437-087] FAULT START f0 error_rate target=all pods=['loadlab-5965489b55-d9vdh', 'loadlab-5965489b55-drp8k', 'loadlab-5965489b55-jcjgv'] params={'error_rate': 0.2}
+08:42:22 [d-error-burst-1108-083437-087] FAULT END   f0 error_rate
+08:45:27 [d-error-burst-1108-083437-087] load finished: succeeded
+08:45:47 [d-error-burst-1108-083437-087] exported deploy.csv (123 rows) pods.csv (369 rows) -> /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/d-error-burst-1108-083437-087
+08:45:47 [d-error-burst-1108-083437-087] namespace deleted
+/Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/d-error-burst-1108-083437-087

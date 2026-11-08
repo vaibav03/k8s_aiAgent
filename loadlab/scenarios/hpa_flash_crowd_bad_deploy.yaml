@@ -1,0 +1,10 @@
+# Flash crowd handled by HPA, then a bad deploy (3x CPU per request) at 360s, reverted at 540s.
+id: hpa-flash-bad-deploy
+duration_s: 720
+traffic:
+  shape: flash_crowd
+  base_load_pods: 1.0
+  params: {at_s: 120, mult: 3, ramp_s: 5}
+scaling: {policy: hpa_cpu, min: 1, max: 6, target_cpu: 70}
+faults:
+  - {type: bad_deploy, start_s: 360, end_s: 540, params: {cpu_ms_per_req: 75}}

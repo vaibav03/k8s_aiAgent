@@ -1,0 +1,459 @@
+{
+    "apiVersion": "v1",
+    "items": [
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T12:36:25Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "kind": "Pod",
+                "name": "k6-dr4vk",
+                "namespace": "lab-capacity-probe-1108-053607-027",
+                "resourceVersion": "1363",
+                "uid": "223c9e3e-88a8-4eae-9088-21f0e858d398"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T12:36:25Z",
+            "message": "Successfully assigned lab-capacity-probe-1108-053607-027/k6-dr4vk to kubeai-lab",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T12:36:25Z",
+                "name": "k6-dr4vk.18e6121588d927ba",
+                "namespace": "lab-capacity-probe-1108-053607-027",
+                "resourceVersion": "1367",
+                "uid": "57217b3a-3829-450d-80be-d2e5e1394d80"
+            },
+            "reason": "Scheduled",
+            "reportingComponent": "default-scheduler",
+            "reportingInstance": "",
+            "source": {
+                "component": "default-scheduler"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T12:36:25Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{k6}",
+                "kind": "Pod",
+                "name": "k6-dr4vk",
+                "namespace": "lab-capacity-probe-1108-053607-027",
+                "resourceVersion": "1364",
+                "uid": "223c9e3e-88a8-4eae-9088-21f0e858d398"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T12:36:25Z",
+            "message": "Container image \"grafana/k6:0.54.0\" already present on machine",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T12:36:25Z",
+                "name": "k6-dr4vk.18e61215b4e0c518",
+                "namespace": "lab-capacity-probe-1108-053607-027",
+                "resourceVersion": "1369",
+                "uid": "a55cfdde-1389-46fe-af88-d2fb1a6fc8ad"
+            },
+            "reason": "Pulled",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "kubeai-lab",
+            "source": {
+                "component": "kubelet",
+                "host": "kubeai-lab"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T12:36:26Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{k6}",
+                "kind": "Pod",
+                "name": "k6-dr4vk",
+                "namespace": "lab-capacity-probe-1108-053607-027",
+                "resourceVersion": "1364",
+                "uid": "223c9e3e-88a8-4eae-9088-21f0e858d398"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T12:36:26Z",
+            "message": "Created container: k6",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T12:36:26Z",
+                "name": "k6-dr4vk.18e61215b5e3d638",
+                "namespace": "lab-capacity-probe-1108-053607-027",
+                "resourceVersion": "1370",
+                "uid": "9a736bd4-b912-4fba-bf15-2b792517247e"
+            },
+            "reason": "Created",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "kubeai-lab",
+            "source": {
+                "component": "kubelet",
+                "host": "kubeai-lab"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T12:36:26Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{k6}",
+                "kind": "Pod",
+                "name": "k6-dr4vk",
+                "namespace": "lab-capacity-probe-1108-053607-027",
+                "resourceVersion": "1364",
+                "uid": "223c9e3e-88a8-4eae-9088-21f0e858d398"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T12:36:26Z",
+            "message": "Started container k6",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T12:36:26Z",
+                "name": "k6-dr4vk.18e61215b8c777c2",
+                "namespace": "lab-capacity-probe-1108-053607-027",
+                "resourceVersion": "1371",
+                "uid": "e0138953-fb04-4952-b693-bb7b5c980a53"
+            },
+            "reason": "Started",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "kubeai-lab",
+            "source": {
+                "component": "kubelet",
+                "host": "kubeai-lab"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T12:36:25Z",
+            "involvedObject": {
+                "apiVersion": "batch/v1",
+                "kind": "Job",
+                "name": "k6",
+                "namespace": "lab-capacity-probe-1108-053607-027",
+                "resourceVersion": "1362",
+                "uid": "257340d7-df2d-4ab6-ab41-b2bad26d9ff5"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T12:36:25Z",
+            "message": "Created pod: k6-dr4vk",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T12:36:25Z",
+                "name": "k6.18e6121588aa28a3",
+                "namespace": "lab-capacity-probe-1108-053607-027",
+                "resourceVersion": "1366",
+                "uid": "774e45f3-0a1c-46fa-a36b-9732322f14a6"
+            },
+            "reason": "SuccessfulCreate",
+            "reportingComponent": "job-controller",
+            "reportingInstance": "",
+            "source": {
+                "component": "job-controller"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T12:44:37Z",
+            "involvedObject": {
+                "apiVersion": "batch/v1",
+                "kind": "Job",
+                "name": "k6",
+                "namespace": "lab-capacity-probe-1108-053607-027",
+                "resourceVersion": "1807",
+                "uid": "257340d7-df2d-4ab6-ab41-b2bad26d9ff5"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T12:44:37Z",
+            "message": "Job completed",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T12:44:37Z",
+                "name": "k6.18e612883a1f79e7",
+                "namespace": "lab-capacity-probe-1108-053607-027",
+                "resourceVersion": "1810",
+                "uid": "905fc3ca-d754-4b32-98a5-c0fe1ca247d4"
+            },
+            "reason": "Completed",
+            "reportingComponent": "job-controller",
+            "reportingInstance": "",
+            "source": {
+                "component": "job-controller"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T12:36:07Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "kind": "Pod",
+                "name": "loadlab-5965489b55-c6k2j",
+                "namespace": "lab-capacity-probe-1108-053607-027",
+                "resourceVersion": "1320",
+                "uid": "40eed8fb-e8e5-4ef8-890e-079337438121"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T12:36:07Z",
+            "message": "Successfully assigned lab-capacity-probe-1108-053607-027/loadlab-5965489b55-c6k2j to kubeai-lab",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T12:36:07Z",
+                "name": "loadlab-5965489b55-c6k2j.18e61211594c8596",
+                "namespace": "lab-capacity-probe-1108-053607-027",
+                "resourceVersion": "1330",
+                "uid": "e040a6ad-6286-4cfe-b115-6fa33035da27"
+            },
+            "reason": "Scheduled",
+            "reportingComponent": "default-scheduler",
+            "reportingInstance": "",
+            "source": {
+                "component": "default-scheduler"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T12:36:07Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{app}",
+                "kind": "Pod",
+                "name": "loadlab-5965489b55-c6k2j",
+                "namespace": "lab-capacity-probe-1108-053607-027",
+                "resourceVersion": "1324",
+                "uid": "40eed8fb-e8e5-4ef8-890e-079337438121"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T12:36:07Z",
+            "message": "Container image \"loadlab:v1\" already present on machine",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T12:36:07Z",
+                "name": "loadlab-5965489b55-c6k2j.18e6121172a73bd2",
+                "namespace": "lab-capacity-probe-1108-053607-027",
+                "resourceVersion": "1334",
+                "uid": "f03801ff-2389-4edc-973f-9f2548ff9bd1"
+            },
+            "reason": "Pulled",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "kubeai-lab",
+            "source": {
+                "component": "kubelet",
+                "host": "kubeai-lab"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T12:36:07Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{app}",
+                "kind": "Pod",
+                "name": "loadlab-5965489b55-c6k2j",
+                "namespace": "lab-capacity-probe-1108-053607-027",
+                "resourceVersion": "1324",
+                "uid": "40eed8fb-e8e5-4ef8-890e-079337438121"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T12:36:07Z",
+            "message": "Created container: app",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T12:36:07Z",
+                "name": "loadlab-5965489b55-c6k2j.18e6121174445855",
+                "namespace": "lab-capacity-probe-1108-053607-027",
+                "resourceVersion": "1335",
+                "uid": "4b4ed54b-9626-4f17-989c-5c9686a476af"
+            },
+            "reason": "Created",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "kubeai-lab",
+            "source": {
+                "component": "kubelet",
+                "host": "kubeai-lab"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T12:36:07Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{app}",
+                "kind": "Pod",
+                "name": "loadlab-5965489b55-c6k2j",
+                "namespace": "lab-capacity-probe-1108-053607-027",
+                "resourceVersion": "1324",
+                "uid": "40eed8fb-e8e5-4ef8-890e-079337438121"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T12:36:07Z",
+            "message": "Started container app",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T12:36:07Z",
+                "name": "loadlab-5965489b55-c6k2j.18e6121176b91bdf",
+                "namespace": "lab-capacity-probe-1108-053607-027",
+                "resourceVersion": "1336",
+                "uid": "af1cc119-cb04-41c6-8704-2317e853b123"
+            },
+            "reason": "Started",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "kubeai-lab",
+            "source": {
+                "component": "kubelet",
+                "host": "kubeai-lab"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T12:36:08Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{app}",
+                "kind": "Pod",
+                "name": "loadlab-5965489b55-c6k2j",
+                "namespace": "lab-capacity-probe-1108-053607-027",
+                "resourceVersion": "1324",
+                "uid": "40eed8fb-e8e5-4ef8-890e-079337438121"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T12:36:08Z",
+            "message": "Readiness probe failed: Get \"http://10.244.0.8:8080/readyz\": dial tcp 10.244.0.8:8080: connect: connection refused",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T12:36:08Z",
+                "name": "loadlab-5965489b55-c6k2j.18e6121185b0b680",
+                "namespace": "lab-capacity-probe-1108-053607-027",
+                "resourceVersion": "1338",
+                "uid": "2a2800e8-102f-4694-bba0-7ded7d87fb4a"
+            },
+            "reason": "Unhealthy",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "kubeai-lab",
+            "source": {
+                "component": "kubelet",
+                "host": "kubeai-lab"
+            },
+            "type": "Warning"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 16,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T12:43:16Z",
+            "involvedObject": {
+                "apiVersion": "v1",
+                "fieldPath": "spec.containers{app}",
+                "kind": "Pod",
+                "name": "loadlab-5965489b55-c6k2j",
+                "namespace": "lab-capacity-probe-1108-053607-027",
+                "resourceVersion": "1324",
+                "uid": "40eed8fb-e8e5-4ef8-890e-079337438121"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T12:44:30Z",
+            "message": "Readiness probe failed: Get \"http://10.244.0.8:8080/readyz\": context deadline exceeded (Client.Timeout exceeded while awaiting headers)",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T12:43:16Z",
+                "name": "loadlab-5965489b55-c6k2j.18e612752f9f8b90",
+                "namespace": "lab-capacity-probe-1108-053607-027",
+                "resourceVersion": "1792",
+                "uid": "d2ef2aed-cd55-4543-9c83-eecc6c7c8f53"
+            },
+            "reason": "Unhealthy",
+            "reportingComponent": "kubelet",
+            "reportingInstance": "kubeai-lab",
+            "source": {
+                "component": "kubelet",
+                "host": "kubeai-lab"
+            },
+            "type": "Warning"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T12:36:07Z",
+            "involvedObject": {
+                "apiVersion": "apps/v1",
+                "kind": "ReplicaSet",
+                "name": "loadlab-5965489b55",
+                "namespace": "lab-capacity-probe-1108-053607-027",
+                "resourceVersion": "1316",
+                "uid": "9f536a30-e9c4-4f51-8203-18a729cf3406"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T12:36:07Z",
+            "message": "Created pod: loadlab-5965489b55-c6k2j",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T12:36:07Z",
+                "name": "loadlab-5965489b55.18e6121158f62c9b",
+                "namespace": "lab-capacity-probe-1108-053607-027",
+                "resourceVersion": "1325",
+                "uid": "0b6f7237-881c-45d2-a73d-1316eb6de891"
+            },
+            "reason": "SuccessfulCreate",
+            "reportingComponent": "replicaset-controller",
+            "reportingInstance": "",
+            "source": {
+                "component": "replicaset-controller"
+            },
+            "type": "Normal"
+        },
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2026-11-08T12:36:07Z",
+            "involvedObject": {
+                "apiVersion": "apps/v1",
+                "kind": "Deployment",
+                "name": "loadlab",
+                "namespace": "lab-capacity-probe-1108-053607-027",
+                "resourceVersion": "1315",
+                "uid": "63be4407-ed4b-4259-b05f-2d44adffeb48"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2026-11-08T12:36:07Z",
+            "message": "Scaled up replica set loadlab-5965489b55 from 0 to 1",
+            "metadata": {
+                "creationTimestamp": "2026-11-08T12:36:07Z",
+                "name": "loadlab.18e6121158a5aabe",
+                "namespace": "lab-capacity-probe-1108-053607-027",
+                "resourceVersion": "1318",
+                "uid": "285d2ece-7eb6-4b69-9506-6926505d0259"
+            },
+            "reason": "ScalingReplicaSet",
+            "reportingComponent": "deployment-controller",
+            "reportingInstance": "",
+            "source": {
+                "component": "deployment-controller"
+            },
+            "type": "Normal"
+        }
+    ],
+    "kind": "List",
+    "metadata": {
+        "resourceVersion": ""
+    }
+}

@@ -1,0 +1,142 @@
+{
+ "runs": 24,
+ "deploy_rows": 2914,
+ "pod_rows": 9175,
+ "deploy_columns": [
+  "run_id",
+  "scenario",
+  "group",
+  "policy",
+  "shape",
+  "base_rps",
+  "seconds_since_start",
+  "ts",
+  "rps",
+  "inflight",
+  "p50",
+  "p95",
+  "p99",
+  "error_rate",
+  "cpu_cores_used",
+  "cpu_util_vs_request",
+  "throttle_ratio",
+  "mem_ws_bytes_total",
+  "mem_ws_max_pod_frac_of_limit",
+  "mem_growth_bytes_per_s",
+  "replicas_desired",
+  "replicas_ready",
+  "restarts_total",
+  "oomkills_total",
+  "crashloop_pods",
+  "hpa_desired",
+  "cpu_cores_proc",
+  "cpu_fallback_pods",
+  "goodput_rps",
+  "pods_not_ready",
+  "active_fault",
+  "fault_target_pod",
+  "fault_ids",
+  "qa_flag"
+ ],
+ "pod_columns": [
+  "run_id",
+  "scenario",
+  "group",
+  "policy",
+  "shape",
+  "base_rps",
+  "seconds_since_start",
+  "ts",
+  "pod",
+  "cpu",
+  "throttle",
+  "mem_ws",
+  "mem_frac_limit",
+  "restarts",
+  "rps",
+  "p95",
+  "errors",
+  "ready",
+  "cpu_proc",
+  "oomkills",
+  "active_fault",
+  "fault_target_pod",
+  "fault_ids",
+  "pod_is_fault_target",
+  "pod_active_fault",
+  "qa_flag"
+ ],
+ "fault_totals": {
+  "bad_deploy": {
+   "count": 1,
+   "minutes": 3.67,
+   "label_minutes": 3.67
+  },
+  "cpu_hog": {
+   "count": 1,
+   "minutes": 3.7,
+   "label_minutes": 3.7
+  },
+  "crashloop": {
+   "count": 1,
+   "minutes": 3.67,
+   "label_minutes": 3.67
+  },
+  "dep_latency": {
+   "count": 2,
+   "minutes": 8.17,
+   "label_minutes": 8.17
+  },
+  "error_rate": {
+   "count": 1,
+   "minutes": 3.67,
+   "label_minutes": 3.67
+  },
+  "memory_leak": {
+   "count": 3,
+   "minutes": 23.5,
+   "label_minutes": 23.5
+  },
+  "pod_kill": {
+   "count": 2,
+   "minutes": 0.0,
+   "label_minutes": 1.0
+  }
+ },
+ "deploy_rows_by_active_fault": {
+  "none": 2346,
+  "memory_leak": 282,
+  "dep_latency": 98,
+  "error_rate": 44,
+  "cpu_hog": 44,
+  "bad_deploy": 44,
+  "crashloop": 44,
+  "pod_kill": 12
+ },
+ "deploy_rows_by_group": {
+  "D": 1028,
+  "B": 980,
+  "C": 358,
+  "E": 294,
+  "A": 254
+ },
+ "nan_share_deploy": {
+  "mem_growth_bytes_per_s": 0.081
+ },
+ "nan_share_pods": {
+  "cpu": 0.0141,
+  "throttle": 0.0159,
+  "mem_ws": 0.0141,
+  "mem_frac_limit": 0.0172,
+  "restarts": 0.0061,
+  "p95": 0.0178,
+  "ready": 0.0061,
+  "cpu_proc": 0.0171
+ },
+ "deploy_rows_by_qa_flag": {
+  "ok": 2842,
+  "post_fault_tail": 66,
+  "node_glitch": 6
+ },
+ "slo_violation_rows": 426
+}

@@ -1,0 +1,19 @@
+# generated from scenarios/matrix.yaml by runner/matrix.py - edit matrix.yaml instead
+id: b-hpa-diurnal-s23
+group: B
+heavy: false
+duration_s: 780
+traffic:
+  shape: diurnal
+  base_load_pods: 1.0
+  params:
+    period_s: 400
+    amplitude: 0.5
+    noise: 0.12
+    seed: 23
+scaling:
+  policy: hpa_cpu
+  min: 1
+  max: 6
+  target_cpu: 70
+faults: []

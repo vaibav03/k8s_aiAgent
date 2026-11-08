@@ -1,0 +1,240 @@
+{
+  "source_run": "capacity-probe-1108-060233-2ea",
+  "slo": {
+    "p95_s": 0.3,
+    "error_ratio": 0.01
+  },
+  "app": {
+    "cpu_ms_per_req": 25,
+    "alloc_kb": 64
+  },
+  "pod_resources": {
+    "cpu_request": "250m",
+    "cpu_limit": "500m",
+    "mem_request": "128Mi",
+    "mem_limit": "256Mi"
+  },
+  "per_pod_rps_at_slo": 18,
+  "per_pod_max_rps": 19.6,
+  "cpu_core_seconds_per_req": 0.02601,
+  "hpa_70pct_cpu_equiv_rps_per_pod": 6.73,
+  "steps": [
+    {
+      "step": 0,
+      "offered_rps": 4,
+      "window": [
+        1794142984,
+        1794143009
+      ],
+      "achieved_rps": 3.9996000399960003,
+      "p50_s": 0.0275,
+      "p95_s": 0.02975,
+      "p99_s": 0.029949999999999997,
+      "error_ratio": 0.0,
+      "cpu_cores": 0.10910216225770342,
+      "throttle_ratio": 0.0,
+      "cpu_cores_proc": 0.1084891510848915,
+      "inflight_avg": 0.0,
+      "meets_slo": true
+    },
+    {
+      "step": 1,
+      "offered_rps": 6,
+      "window": [
+        1794143024,
+        1794143049
+      ],
+      "achieved_rps": 5.998200539838049,
+      "p50_s": 0.0275,
+      "p95_s": 0.02975,
+      "p99_s": 0.029949999999999997,
+      "error_ratio": 0.0,
+      "cpu_cores": 0.16065404651544363,
+      "throttle_ratio": 0.0,
+      "cpu_cores_proc": 0.16045186444066775,
+      "inflight_avg": 0.0,
+      "meets_slo": true
+    },
+    {
+      "step": 2,
+      "offered_rps": 8,
+      "window": [
+        1794143064,
+        1794143089
+      ],
+      "achieved_rps": 7.996001999000501,
+      "p50_s": 0.027515723270440252,
+      "p95_s": 0.029779874213836478,
+      "p99_s": 0.029981132075471695,
+      "error_ratio": 0.0,
+      "cpu_cores": 0.20854443977885087,
+      "throttle_ratio": 0.0,
+      "cpu_cores_proc": 0.20839580209895053,
+      "inflight_avg": 0.0,
+      "meets_slo": true
+    },
+    {
+      "step": 3,
+      "offered_rps": 10,
+      "window": [
+        1794143104,
+        1794143129
+      ],
+      "achieved_rps": 9.99950002499875,
+      "p50_s": 0.0275,
+      "p95_s": 0.02975,
+      "p99_s": 0.029949999999999997,
+      "error_ratio": 0.0,
+      "cpu_cores": 0.25705721613577354,
+      "throttle_ratio": 0.0,
+      "cpu_cores_proc": 0.25648717564121787,
+      "inflight_avg": 0.8,
+      "meets_slo": true
+    },
+    {
+      "step": 4,
+      "offered_rps": 12,
+      "window": [
+        1794143144,
+        1794143169
+      ],
+      "achieved_rps": 11.9994000299985,
+      "p50_s": 0.0275,
+      "p95_s": 0.02975,
+      "p99_s": 0.029949999999999997,
+      "error_ratio": 0.0,
+      "cpu_cores": 0.307782898270491,
+      "throttle_ratio": 0.005347593582887701,
+      "cpu_cores_proc": 0.30698465076746195,
+      "inflight_avg": 1.0,
+      "meets_slo": true
+    },
+    {
+      "step": 5,
+      "offered_rps": 14,
+      "window": [
+        1794143184,
+        1794143209
+      ],
+      "achieved_rps": 13.999300034998251,
+      "p50_s": 0.027564102564102563,
+      "p95_s": 0.02987179487179487,
+      "p99_s": 0.036,
+      "error_ratio": 0.0,
+      "cpu_cores": 0.3589914315165572,
+      "throttle_ratio": 0.1446945337620579,
+      "cpu_cores_proc": 0.35848207589620495,
+      "inflight_avg": 0.0,
+      "meets_slo": true
+    },
+    {
+      "step": 6,
+      "offered_rps": 16,
+      "window": [
+        1794143224,
+        1794143249
+      ],
+      "achieved_rps": 16.000800040002005,
+      "p50_s": 0.02789855072463768,
+      "p95_s": 0.03848484848484848,
+      "p99_s": 0.04709090909090907,
+      "error_ratio": 0.0,
+      "cpu_cores": 0.41351990878793204,
+      "throttle_ratio": 0.21052631578947367,
+      "cpu_cores_proc": 0.41252062603130163,
+      "inflight_avg": 0.0,
+      "meets_slo": true
+    },
+    {
+      "step": 7,
+      "offered_rps": 18,
+      "window": [
+        1794143264,
+        1794143289
+      ],
+      "achieved_rps": 18.0,
+      "p50_s": 0.028125,
+      "p95_s": 0.04,
+      "p99_s": 0.04847058823529412,
+      "error_ratio": 0.0,
+      "cpu_cores": 0.4614171673090001,
+      "throttle_ratio": 0.36827195467422097,
+      "cpu_cores_proc": 0.45899999999999963,
+      "inflight_avg": 0.0,
+      "meets_slo": true
+    },
+    {
+      "step": 8,
+      "offered_rps": 20,
+      "window": [
+        1794143304,
+        1794143329
+      ],
+      "achieved_rps": 19.499025048747562,
+      "p50_s": 0.5822916666666667,
+      "p95_s": 0.8258928571428568,
+      "p99_s": 0.9651785714285712,
+      "error_ratio": 0.0,
+      "cpu_cores": 0.3871549288010265,
+      "throttle_ratio": 1.0,
+      "cpu_cores_proc": 0.4994750262486873,
+      "inflight_avg": 8.2,
+      "meets_slo": false
+    },
+    {
+      "step": 9,
+      "offered_rps": 22,
+      "window": [
+        1794143344,
+        1794143369
+      ],
+      "achieved_rps": 19.55,
+      "p50_s": 2.5181268882175227,
+      "p95_s": 3.9138888888888888,
+      "p99_s": 4.7827777777777785,
+      "error_ratio": 0.0,
+      "cpu_cores": 0.5000201122411189,
+      "throttle_ratio": 1.0,
+      "cpu_cores_proc": 0.5009999999999998,
+      "inflight_avg": 45.4,
+      "meets_slo": false
+    },
+    {
+      "step": 10,
+      "offered_rps": 24,
+      "window": [
+        1794143384,
+        1794143409
+      ],
+      "achieved_rps": 19.54804519548045,
+      "p50_s": 7.372311827956989,
+      "p95_s": 9.737231182795698,
+      "p99_s": 9.94744623655914,
+      "error_ratio": 0.0,
+      "cpu_cores": 0.40196186838767756,
+      "throttle_ratio": 1.0,
+      "cpu_cores_proc": 0.49995000499950004,
+      "inflight_avg": 117.4,
+      "meets_slo": false
+    },
+    {
+      "step": 11,
+      "offered_rps": 26,
+      "window": [
+        1794143424,
+        1794143449
+      ],
+      "achieved_rps": 19.598040195980403,
+      "p50_s": 10.0,
+      "p95_s": 10.0,
+      "p99_s": 10.0,
+      "error_ratio": 0.0,
+      "cpu_cores": 0.2510198000000003,
+      "throttle_ratio": 1.0,
+      "cpu_cores_proc": 0.49995000499950004,
+      "inflight_avg": 233.79999999999998,
+      "meets_slo": false
+    }
+  ],
+  "notes": "per_pod_rps_at_slo = highest offered step meeting p95<300ms, err<1%, achieved>=95% offered. Use traffic.base_load_pods in scenarios to express load in pods-worth of SLO capacity."
+}

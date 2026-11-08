@@ -1,0 +1,10 @@
+# 5xx burst on all pods, then a CPU hog on one pod (noisy neighbour inside the container).
+id: errors-cpu-hog
+duration_s: 600
+traffic:
+  shape: steady
+  base_load_pods: 1.5
+scaling: {policy: fixed, replicas: 3}
+faults:
+  - {type: error_rate, start_s: 120, end_s: 240, target: all, params: {error_rate: 0.08}}
+  - {type: cpu_hog, start_s: 330, end_s: 510, target: one-pod, params: {cpu_hog_millicores: 400}}

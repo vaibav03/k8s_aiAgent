@@ -1,0 +1,58 @@
+{
+  "id": "smoke",
+  "duration_s": 300,
+  "traffic": {
+    "shape": "steady",
+    "base_load_pods": 1.0,
+    "params": {},
+    "base_rps": 18.0,
+    "_capacity_ref_rps_per_pod": 18
+  },
+  "scaling": {
+    "policy": "fixed",
+    "replicas": 2,
+    "_lane_cap": 4
+  },
+  "app": {
+    "cpu_ms_per_req": 25,
+    "alloc_kb": 64
+  },
+  "faults": [
+    {
+      "type": "memory_leak",
+      "start_s": 20,
+      "end_s": 290,
+      "target": "one-pod",
+      "params": {
+        "leak_kb_per_s": 1536
+      }
+    },
+    {
+      "type": "dep_latency",
+      "start_s": 200,
+      "end_s": 260,
+      "target": "all",
+      "params": {
+        "dep_latency_ms": 400,
+        "dep_fraction": 0.5
+      }
+    }
+  ],
+  "_run": {
+    "run_id": "smoke-1108-063805-d8e",
+    "namespace": "lab-smoke-1108-063805-d8e",
+    "scenario_file": "scenarios/smoke.yaml",
+    "image": "loadlab:v1",
+    "k6_image": "grafana/k6:0.54.0",
+    "context": "kubeai-lab",
+    "t_created": 1794145085.122321,
+    "t0": 1794145104.1384819,
+    "t_end": 1794145408.4444768,
+    "status": "succeeded",
+    "export_window": [
+      1794145074.1384819,
+      1794145418.4444768
+    ],
+    "step_s": 5
+  }
+}

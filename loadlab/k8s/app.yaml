@@ -1,0 +1,58 @@
+# loadlab Deployment + Service. Rendered by runner/lab.py with string.Template (dollar-brace vars).
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: loadlab
+  labels: {app: loadlab}
+spec:
+  replicas: ${replicas}
+  revisionHistoryLimit: 5
+  selector:
+    matchLabels: {app: loadlab}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate: {maxSurge: 25%, maxUnavailable: 25%}
+  template:
+    metadata:
+      labels: {app: loadlab}
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
+        prometheus.io/path: "/metrics"
+    spec:
+      terminationGracePeriodSeconds: 5
+      containers:
+        - name: app
+          image: ${image}
+          imagePullPolicy: IfNotPresent
+          ports:
+            - {name: http, containerPort: 8080}
+            - {name: admin, containerPort: 8081}
+          env:
+            - name: POD_NAME
+              valueFrom: {fieldRef: {fieldPath: metadata.name}}
+            - {name: CPU_MS_PER_REQ, value: "${cpu_ms_per_req}"}
+            - {name: ALLOC_KB, value: "${alloc_kb}"}
+            - {name: CRASH_ON_START, value: "0"}
+            - {name: APP_VERSION, value: "v1"}
+          resources:
+            requests: {cpu: 250m, memory: 128Mi}
+            limits: {cpu: 500m, memory: 256Mi}
+          readinessProbe:
+            httpGet: {path: /readyz, port: 8080}
+            periodSeconds: 5
+            timeoutSeconds: 2
+            failureThreshold: 3
+          securityContext:
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: loadlab
+  labels: {app: loadlab}
+spec:
+  selector: {app: loadlab}
+  ports:
+    - {name: http, port: 80, targetPort: 8080}

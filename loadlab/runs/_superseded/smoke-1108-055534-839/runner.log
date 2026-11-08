@@ -1,0 +1,10 @@
+05:55:34 [smoke-1108-055534-839] scenario smoke -> namespace lab-smoke-1108-055534-839
+05:55:36 [smoke-1108-055534-839] app ready: 2 replica(s), policy fixed
+05:55:56 [smoke-1108-055534-839] k6 started: steady base_rps 18.0 pod k6-h9zkd
+05:56:17 [smoke-1108-055534-839] FAULT START f0 memory_leak target=one-pod pods=['loadlab-5965489b55-bxbxn'] params={'leak_kb_per_s': 1536}
+05:59:18 [smoke-1108-055534-839] FAULT START f1 dep_latency target=all pods=['loadlab-5965489b55-bxbxn', 'loadlab-5965489b55-wh6b7'] params={'dep_latency_ms': 400, 'dep_fraction': 0.5}
+06:00:17 [smoke-1108-055534-839] FAULT END   f1 dep_latency
+06:00:47 [smoke-1108-055534-839] FAULT END   f0 memory_leak
+06:01:00 [smoke-1108-055534-839] load finished: succeeded
+06:01:20 [smoke-1108-055534-839] exported deploy.csv (70 rows) pods.csv (136 rows) -> /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/smoke-1108-055534-839
+06:01:20 [smoke-1108-055534-839] namespace deleted

@@ -1,0 +1,8 @@
+07:27:42 [b-hpa-spike-b08-1108-072742-044] scenario b-hpa-spike-b08 -> namespace lab-b-hpa-spike-b08-1108-072742-044
+07:27:52 [b-hpa-spike-b08-1108-072742-044] app ready: 1 replica(s), policy hpa_cpu
+07:28:32 [b-hpa-spike-b08-1108-072742-044] HPA has metrics: {'averageUtilization': 0, 'averageValue': '1m'}
+07:28:44 [b-hpa-spike-b08-1108-072742-044] k6 started: spike base_rps 14.4 pod k6-gxlql
+07:37:48 [b-hpa-spike-b08-1108-072742-044] load finished: succeeded
+07:38:10 [b-hpa-spike-b08-1108-072742-044] exported deploy.csv (111 rows) pods.csv (390 rows) -> /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/b-hpa-spike-b08-1108-072742-044
+07:38:10 [b-hpa-spike-b08-1108-072742-044] namespace deleted
+/Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/b-hpa-spike-b08-1108-072742-044

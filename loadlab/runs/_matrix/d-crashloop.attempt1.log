@@ -1,0 +1,10 @@
+08:57:11 [d-crashloop-1108-085711-263] scenario d-crashloop -> namespace lab-d-crashloop-1108-085711-263
+08:57:13 [d-crashloop-1108-085711-263] app ready: 3 replica(s), policy hpa_cpu
+08:57:45 [d-crashloop-1108-085711-263] HPA has metrics: {'averageUtilization': 0, 'averageValue': '1m'}
+08:57:56 [d-crashloop-1108-085711-263] k6 started: steady base_rps 18.0 pod k6-6lnpv
+09:01:16 [d-crashloop-1108-085711-263] FAULT START f0 crashloop target=one-pod pods=rollout params={}
+09:04:56 [d-crashloop-1108-085711-263] FAULT END   f0 crashloop
+09:07:58 [d-crashloop-1108-085711-263] load finished: succeeded
+09:08:18 [d-crashloop-1108-085711-263] exported deploy.csv (122 rows) pods.csv (413 rows) -> /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/d-crashloop-1108-085711-263
+09:08:19 [d-crashloop-1108-085711-263] namespace deleted
+/Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/d-crashloop-1108-085711-263

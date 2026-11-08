@@ -1,0 +1,48 @@
+{
+  "id": "b-hpa-flash-b09",
+  "group": "B",
+  "heavy": true,
+  "duration_s": 540,
+  "traffic": {
+    "shape": "flash_crowd",
+    "base_load_pods": 0.9,
+    "params": {
+      "at_s": 180,
+      "mult": 3,
+      "ramp_s": 3
+    },
+    "base_rps": 16.2,
+    "_capacity_ref_rps_per_pod": 18
+  },
+  "scaling": {
+    "policy": "hpa_cpu",
+    "min": 1,
+    "max": 4,
+    "target_cpu": 70,
+    "initial": 1,
+    "_uncapped_max": 6,
+    "_lane_cap": 4
+  },
+  "faults": [],
+  "app": {
+    "cpu_ms_per_req": 25,
+    "alloc_kb": 64
+  },
+  "_run": {
+    "run_id": "b-hpa-flash-b09-1108-074329-b3e",
+    "namespace": "lab-b-hpa-flash-b09-1108-074329-b3e",
+    "scenario_file": "/Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/scenarios/matrix/b-hpa-flash-b09.yaml",
+    "image": "loadlab:v1",
+    "k6_image": "grafana/k6:0.54.0",
+    "context": "kubeai-lab",
+    "t_created": 1794149009.114701,
+    "t0": 1794149069.50687,
+    "t_end": 1794149612.85344,
+    "status": "succeeded",
+    "export_window": [
+      1794149039.50687,
+      1794149622.85344
+    ],
+    "step_s": 5
+  }
+}

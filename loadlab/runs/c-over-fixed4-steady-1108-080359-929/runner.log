@@ -1,0 +1,6 @@
+08:03:59 [c-over-fixed4-steady-1108-080359-929] scenario c-over-fixed4-steady -> namespace lab-c-over-fixed4-steady-1108-080359-929
+08:04:01 [c-over-fixed4-steady-1108-080359-929] app ready: 4 replica(s), policy fixed
+08:04:18 [c-over-fixed4-steady-1108-080359-929] k6 started: steady base_rps 9.0 pod k6-9ts2p
+08:12:23 [c-over-fixed4-steady-1108-080359-929] load finished: succeeded
+08:12:43 [c-over-fixed4-steady-1108-080359-929] exported deploy.csv (98 rows) pods.csv (392 rows) -> /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/c-over-fixed4-steady-1108-080359-929
+08:12:43 [c-over-fixed4-steady-1108-080359-929] namespace deleted

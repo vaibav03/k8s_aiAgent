@@ -1,0 +1,11 @@
+08:59:33 [e-spike-dep-latency-1108-085933-36c] scenario e-spike-dep-latency -> namespace lab-e-spike-dep-latency-1108-085933-36c
+08:59:35 [e-spike-dep-latency-1108-085933-36c] app ready: 1 replica(s), policy hpa_cpu
+09:00:21 [e-spike-dep-latency-1108-085933-36c] HPA has metrics: {'averageUtilization': 0, 'averageValue': '2m'}
+09:00:33 [e-spike-dep-latency-1108-085933-36c] k6 started: spike base_rps 14.4 pod k6-q64hx
+09:03:33 [e-spike-dep-latency-1108-085933-36c] FAULT START f0 dep_latency target=all pods=['loadlab-5965489b55-bpt4r', 'loadlab-5965489b55-cwcv7', 'loadlab-5965489b55-xrkcc'] params={'dep_latency_ms': 400, 'dep_fraction': 0.5}
+09:05:11 [e-spike-dep-latency-1108-085933-36c] FAULT REAPPLY f0 dep_latency -> loadlab-5965489b55-7dcgx (restartCount=0)
+09:08:03 [e-spike-dep-latency-1108-085933-36c] FAULT END   f0 dep_latency
+09:11:36 [e-spike-dep-latency-1108-085933-36c] load finished: succeeded
+09:11:56 [e-spike-dep-latency-1108-085933-36c] exported deploy.csv (135 rows) pods.csv (474 rows) -> /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/e-spike-dep-latency-1108-085933-36c
+09:11:56 [e-spike-dep-latency-1108-085933-36c] namespace deleted
+/Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/e-spike-dep-latency-1108-085933-36c

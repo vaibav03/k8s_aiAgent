@@ -1,0 +1,43 @@
+{
+  "id": "a-cap-fixed3",
+  "group": "A",
+  "heavy": true,
+  "duration_s": 400,
+  "traffic": {
+    "shape": "step_ramp",
+    "base_rps": 18,
+    "params": {
+      "start_rps": 18,
+      "step_rps": 6,
+      "step_s": 40,
+      "ramp_s": 3
+    }
+  },
+  "scaling": {
+    "policy": "fixed",
+    "replicas": 3,
+    "_lane_cap": 4
+  },
+  "faults": [],
+  "app": {
+    "cpu_ms_per_req": 25,
+    "alloc_kb": 64
+  },
+  "_run": {
+    "run_id": "a-cap-fixed3-1108-072000-e7a",
+    "namespace": "lab-a-cap-fixed3-1108-072000-e7a",
+    "scenario_file": "/Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/scenarios/matrix/a-cap-fixed3.yaml",
+    "image": "loadlab:v1",
+    "k6_image": "grafana/k6:0.54.0",
+    "context": "kubeai-lab",
+    "t_created": 1794147600.133379,
+    "t0": 1794147624.131847,
+    "t_end": 1794148039.581953,
+    "status": "succeeded",
+    "export_window": [
+      1794147594.131847,
+      1794148049.581953
+    ],
+    "step_s": 5
+  }
+}

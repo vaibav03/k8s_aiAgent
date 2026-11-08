@@ -1,0 +1,45 @@
+{
+  "id": "c-under-fixed2-spike",
+  "group": "C",
+  "heavy": true,
+  "duration_s": 540,
+  "traffic": {
+    "shape": "spike",
+    "base_load_pods": 0.8,
+    "params": {
+      "spike_at_s": 180,
+      "spike_mult": 4,
+      "spike_s": 120,
+      "ramp_s": 10
+    },
+    "base_rps": 14.4,
+    "_capacity_ref_rps_per_pod": 18
+  },
+  "scaling": {
+    "policy": "fixed",
+    "replicas": 2,
+    "_lane_cap": 4
+  },
+  "faults": [],
+  "app": {
+    "cpu_ms_per_req": 25,
+    "alloc_kb": 64
+  },
+  "_run": {
+    "run_id": "c-under-fixed2-spike-1108-081142-093",
+    "namespace": "lab-c-under-fixed2-spike-1108-081142-093",
+    "scenario_file": "/Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/scenarios/matrix/c-under-fixed2-spike.yaml",
+    "image": "loadlab:v1",
+    "k6_image": "grafana/k6:0.54.0",
+    "context": "kubeai-lab",
+    "t_created": 1794150702.636043,
+    "t0": 1794150721.869718,
+    "t_end": 1794151265.98805,
+    "status": "succeeded",
+    "export_window": [
+      1794150691.869718,
+      1794151275.98805
+    ],
+    "step_s": 5
+  }
+}

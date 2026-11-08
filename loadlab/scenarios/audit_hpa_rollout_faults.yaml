@@ -1,0 +1,14 @@
+# Audit scenario (5 min): checks that chaos faults survive HPA scale-out and a full rollout (reconciler),
+# and that overload shows up as server-side 504s in error_rate (REQUEST_TIMEOUT_S).
+# flash crowd 9 -> 27 RPS; slow dependency on ALL pods for the whole run (new HPA/rollout pods must get it);
+# bad deploy (100 ms/req) at 150-240 s: with <= 4 pods x 5 RPS = 20 RPS capacity < 27 RPS -> queueing -> 504s.
+id: audit-hpa-rollout
+duration_s: 300
+traffic:
+  shape: flash_crowd
+  base_load_pods: 0.5
+  params: {at_s: 40, mult: 3, ramp_s: 5}
+scaling: {policy: hpa_cpu, min: 1, max: 6, target_cpu: 70}
+faults:
+  - {type: dep_latency, start_s: 20, end_s: 285, target: all, params: {dep_latency_ms: 150, dep_fraction: 0.3}}
+  - {type: bad_deploy, start_s: 150, end_s: 240, params: {cpu_ms_per_req: 100}}

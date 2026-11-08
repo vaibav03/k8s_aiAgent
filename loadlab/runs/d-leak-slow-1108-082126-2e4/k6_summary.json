@@ -1,0 +1,225 @@
+{
+ "root_group": {
+  "name": "",
+  "path": "",
+  "id": "d41d8cd98f00b204e9800998ecf8427e",
+  "groups": [],
+  "checks": []
+ },
+ "options": {
+  "summaryTrendStats": [
+   "avg",
+   "min",
+   "med",
+   "p(90)",
+   "p(95)",
+   "p(99)",
+   "max"
+  ],
+  "summaryTimeUnit": "",
+  "noColor": true
+ },
+ "state": {
+  "isStdOutTTY": false,
+  "isStdErrTTY": false,
+  "testRunDurationMs": 720005.801916
+ },
+ "metrics": {
+  "iterations": {
+   "type": "counter",
+   "contains": "default",
+   "values": {
+    "count": 12887,
+    "rate": 17.89846688138698
+   }
+  },
+  "http_req_failed": {
+   "type": "rate",
+   "contains": "default",
+   "values": {
+    "rate": 0,
+    "passes": 0,
+    "fails": 12887
+   }
+  },
+  "http_req_sending": {
+   "type": "trend",
+   "contains": "time",
+   "values": {
+    "min": 0.006708,
+    "med": 0.029666,
+    "p(90)": 0.055350400000000015,
+    "p(95)": 0.06736239999999998,
+    "p(99)": 0.11483974,
+    "max": 68.813792,
+    "avg": 0.040879714052921436
+   }
+  },
+  "http_req_receiving": {
+   "values": {
+    "p(90)": 0.082708,
+    "p(95)": 0.103959,
+    "p(99)": 0.17288088,
+    "max": 4.610666,
+    "avg": 0.05341695584697759,
+    "min": 0.018709,
+    "med": 0.042041
+   },
+   "type": "trend",
+   "contains": "time"
+  },
+  "http_req_tls_handshaking": {
+   "type": "trend",
+   "contains": "time",
+   "values": {
+    "max": 0,
+    "avg": 0,
+    "min": 0,
+    "med": 0,
+    "p(90)": 0,
+    "p(95)": 0,
+    "p(99)": 0
+   }
+  },
+  "data_sent": {
+   "type": "counter",
+   "contains": "data",
+   "values": {
+    "count": 1701084,
+    "rate": 2362.5976283430814
+   }
+  },
+  "http_req_blocked": {
+   "type": "trend",
+   "contains": "time",
+   "values": {
+    "avg": 0.2383568718087995,
+    "min": 0.049709,
+    "med": 0.138375,
+    "p(90)": 0.2300164,
+    "p(95)": 0.2635417,
+    "p(99)": 0.4375219999999999,
+    "max": 289.055584
+   }
+  },
+  "data_received": {
+   "contains": "data",
+   "values": {
+    "count": 2616061,
+    "rate": 3633.388776921557
+   },
+   "type": "counter"
+  },
+  "http_req_duration": {
+   "type": "trend",
+   "contains": "time",
+   "values": {
+    "p(90)": 26.073033600000002,
+    "p(95)": 31.230445599999992,
+    "p(99)": 45.438496119999996,
+    "max": 1020.570751,
+    "avg": 28.216862336851076,
+    "min": 24.396736,
+    "med": 25.567625
+   }
+  },
+  "http_req_waiting": {
+   "type": "trend",
+   "contains": "time",
+   "values": {
+    "min": 24.258777,
+    "med": 25.487417,
+    "p(90)": 25.9321004,
+    "p(95)": 31.1391714,
+    "p(99)": 45.31006712,
+    "max": 1020.456208,
+    "avg": 28.122565666951278
+   }
+  },
+  "iteration_duration": {
+   "values": {
+    "p(99)": 45.689561379999994,
+    "max": 1223.516834,
+    "avg": 28.56520899433542,
+    "min": 25.4065,
+    "med": 25.779041,
+    "p(90)": 26.4275586,
+    "p(95)": 31.482933799999994
+   },
+   "type": "trend",
+   "contains": "time"
+  },
+  "http_req_duration{expected_response:true}": {
+   "values": {
+    "p(90)": 26.073033600000002,
+    "p(95)": 31.230445599999992,
+    "p(99)": 45.438496119999996,
+    "max": 1020.570751,
+    "avg": 28.216862336851076,
+    "min": 24.396736,
+    "med": 25.567625
+   },
+   "type": "trend",
+   "contains": "time"
+  },
+  "http_req_connecting": {
+   "type": "trend",
+   "contains": "time",
+   "values": {
+    "min": 0.037959,
+    "med": 0.097916,
+    "p(90)": 0.17275,
+    "p(95)": 0.20585009999999995,
+    "p(99)": 0.32085837999999983,
+    "max": 289.007875,
+    "avg": 0.1927276429735403
+   }
+  },
+  "vus": {
+   "type": "gauge",
+   "contains": "default",
+   "values": {
+    "max": 17,
+    "value": 0,
+    "min": 0
+   }
+  },
+  "vus_max": {
+   "type": "gauge",
+   "contains": "default",
+   "values": {
+    "value": 154,
+    "min": 154,
+    "max": 154
+   }
+  },
+  "http_reqs": {
+   "type": "counter",
+   "contains": "default",
+   "values": {
+    "count": 12887,
+    "rate": 17.89846688138698
+   }
+  }
+ },
+ "loadlab": {
+  "duration_s": 720,
+  "params": {},
+  "points": [
+   [
+    0,
+    3.6
+   ],
+   [
+    10,
+    18
+   ],
+   [
+    720,
+    18
+   ]
+  ],
+  "shape": "steady",
+  "base_rps": 18
+ }
+}
