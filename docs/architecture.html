@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KubeAI Rebuild</title>
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e4e1d9;--accent:#2f6f5e;--bad:#b4462f;--good:#2f6f5e;--chip:#f0eee8}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#151614;--fg:#ecebe6;--muted:#a2a19a;--card:#1d1f1c;--line:#33352f;--accent:#7cc4ad;--bad:#e8826b;--good:#7cc4ad;--chip:#262823}}
+:root[data-theme="dark"]{--bg:#151614;--fg:#ecebe6;--muted:#a2a19a;--card:#1d1f1c;--line:#33352f;--accent:#7cc4ad;--bad:#e8826b;--good:#7cc4ad;--chip:#262823}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.55 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:980px;margin:0 auto;padding:28px 16px 64px}
+h1{font-size:26px;margin:0 0 4px}h2{font-size:19px;margin:36px 0 10px;padding-top:8px;border-top:1px solid var(--line)}h3{font-size:15px;margin:18px 0 6px}
+p{margin:6px 0}.muted{color:var(--muted)}
+nav{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0 4px}nav a{font-size:13px;padding:3px 10px;border-radius:99px;background:var(--chip);color:var(--fg);text-decoration:none}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:12px 0}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px}.kpi b{display:block;font-size:22px}.kpi span{font-size:13px;color:var(--muted)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:10px 0;overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:13.5px}th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);white-space:nowrap}th{color:var(--muted);font-weight:600}
+td.w{white-space:normal}.good{color:var(--good);font-weight:600}.bad{color:var(--bad);font-weight:600}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}@media(max-width:720px){.two{grid-template-columns:1fr}}
+pre.mermaid{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px;overflow-x:auto;margin:10px 0;text-align:center}
+ul{margin:6px 0;padding-left:20px}li{margin:3px 0}code{background:var(--chip);padding:1px 5px;border-radius:4px;font-size:12.5px}
+.warn{border-left:3px solid var(--bad)}
+</style>
+</head>
+<body>
+<main>
+<h1>KubeAI: what it was, what it is now</h1>
+<p class="muted">The Kubernetes autoscaling and incident agent was rebuilt end to end: new data, models, serving and agent. Branch <code>ml-service-upgrade</code> on <code>vaibav03/k8s_aiAgent</code>.</p>
+<nav><a href="#tldr">TL;DR</a><a href="#old">Old system</a><a href="#new">New system</a><a href="#data">Lab &amp; dataset</a><a href="#models">Models</a><a href="#ab">Live A/B</a><a href="#todo">To do</a></nav>
+
+<section id="tldr">
+<div class="grid">
+<div class="kpi"><b>0.89</b><span>OOM-ahead F1 (old hybrid 0.71)</span></div>
+<div class="kpi"><b>0 / h</b><span>false OOM alarms (old: 13 per hour)</span></div>
+<div class="kpi"><b>0.84</b><span>10-state decision macro-F1, held out (HPA rule: 0.14)</span></div>
+<div class="kpi"><b>0%</b><span>pods added during faults (HPA: 24%)</span></div>
+<div class="kpi"><b>44 runs</b><span>ground-truth lab dataset, 27 injected faults</span></div>
+</div>
+<p><b>In one line:</b> the old system guessed from one pod's memory. The new one reads all four signal groups (compute, memory, traffic, request quality). It works out <i>why</i> a service is hurting, adds pods only when more pods will actually help, and otherwise fixes the cause.</p>
+</section>
+
+<section id="old">
+<h2>1 · The old system</h2>
+<pre class="mermaid">
+flowchart LR
+  P[(Prometheus)] -->|memory of ONE hardcoded pod| N[index.js]
+  N -->|stdin| H[hybrid_predict.py]
+  H --> L[LSTM: next memory value]
+  L --> G[LightGBM: anomaly from 1 number]
+  G -->|isAnamoly typo, never true| AI[Gemini suggests kubectl]
+  AI -.-> X[nothing runs]
+</pre>
+<div class="card warn">
+<b>Why it couldn't work</b>
+<ul>
+<li>The label (<code>status != Running</code>) marked pods that had <i>already</i> crashed, so the model learned "crashed" rather than "about to crash".</li>
+<li>LightGBM was scored on its own training data. The LSTM was 9× worse than just repeating the last value.</li>
+<li>The agent's models didn't match the dataset. Memory was scaled one way in training and another way at serving.</li>
+<li>Requests, latency and errors were never used, so the system could not decide when to scale.</li>
+<li>A Google API key was committed in git history, so <b>it must be rotated</b>.</li>
+</ul>
+</div>
+</section>
+
+<section id="new">
+<h2>2 · The new system</h2>
+<pre class="mermaid">
+flowchart LR
+  subgraph Cluster
+    APP[Deployment pods] --> PR[(Prometheus 5s<br/>+ kube-state-metrics)]
+  end
+  PR -->|"4 signal groups:<br/>CPU/throttle · memory<br/>RPS/inflight · p95/p99/errors"| AG[Node agent]
+  AG -->|/v1/predict| OOM[OOM-ahead model]
+  AG -->|/v1/decide| DE[Decision engine]
+  DE --> C1[10-state classifier]
+  DE --> C2[Learned capacity per pod]
+  DE --> C3[Load forecaster, advisory]
+  DE --> POL{Fault-aware policy}
+  POL -->|load problem| SC[kubectl scale]
+  POL -->|fault| RM[restart pod / rollout / rollback / page]
+  POL -.->|explain| LLM[LLM: strict JSON, allowlisted]
+  SC & RM --> GATE{ACT_MODE<br/>observe · dryrun · act}
+</pre>
+<div class="two">
+<div class="card"><b>Decision states</b><p class="muted">The engine picks one state each tick.</p>
+<p>healthy · scale_up · scale_down · memory_leak · dependency_latency · error_fault · noisy_pod · bad_deploy · crashloop · pod_restart</p></div>
+<div class="card"><b>Safety rails</b><ul>
+<li>No scaling on faults that more pods can't fix</li>
+<li>At most 1 restart per 5 min, and none while the deployment is under-ready</li>
+<li>Never fights an existing HPA</li>
+<li>kubectl is built by the agent itself via execFile; the LLM only fills an allowlist</li>
+<li>Stale or missing telemetry freezes scale-down</li></ul></div>
+</div>
+<pre class="mermaid">
+flowchart TD
+  S[Signals every 15s] --> Q{Which state?}
+  Q -->|memory_leak| A1[restart leaking pod]
+  Q -->|dependency_latency / error_fault| A2[page, don't scale]
+  Q -->|crashloop| A3[rollback if new rollout, else page]
+  Q -->|bad_deploy| A4[rollback + stop-gap pods only while SLO breached]
+  Q -->|noisy_pod| A5[restart the hot pod]
+  Q -->|scale_up / scale_down| A6[desired = demand / safe capacity per pod]
+</pre>
+</section>
+
+<section id="data">
+<h2>3 · Lab &amp; dataset (built from scratch)</h2>
+<pre class="mermaid">
+flowchart LR
+  K6[k6 open-loop shapes<br/>diurnal · spike · sawtooth · flash] --> APP2[instrumented FastAPI app]
+  F[fault switches<br/>leak · dep latency · errors · cpu hog<br/>bad deploy · crashloop · pod kill] --> APP2
+  APP2 --> PR2[(Prometheus)] --> EX[promexport → 5s grid]
+  F --> GT[faults.jsonl ground truth]
+  EX & GT --> DS[(dataset_deploy / dataset_pods)]
+</pre>
+<div class="card"><table>
+<tr><th>Item</th><th>Value</th></tr>
+<tr><td>Cluster</td><td>minikube <code>kubeai-lab</code>, k8s 1.33, 6 CPU / 6 GB</td></tr>
+<tr><td>Runs</td><td>44 (round 1: 24, round 2: 20); 5,368 deployment rows; 16,608 pod rows</td></tr>
+<tr><td>Faults</td><td>27 injected, every class in ≥ 2 independent runs</td></tr>
+<tr><td>Measured pod capacity</td><td>~17 RPS per pod at 1–2 replicas and ~13 at 3 (the knee moves with replica count)</td></tr>
+<tr><td>SLO</td><td>p95 &lt; 300 ms and error rate &lt; 1%</td></tr>
+</table></div>
+</section>
+
+<section id="models">
+<h2>4 · Models: old vs new</h2>
+<h3>OOM-ahead (pod level)</h3>
+<div class="card"><table>
+<tr><th>Model</th><th>F1</th><th>False alarms / h</th><th>MAE at +120 s</th></tr>
+<tr><td>Old LSTM + LightGBM</td><td class="bad">0.71</td><td class="bad">13</td><td>189 MiB</td></tr>
+<tr><td>Rule: usage threshold</td><td>0.83</td><td>–</td><td>–</td></tr>
+<tr><td>Rule: time-to-limit</td><td>0.85</td><td>–</td><td>–</td></tr>
+<tr><td><b>New calibrated monotone LightGBM + trend gate</b></td><td class="good">0.89</td><td class="good">0</td><td>105 MiB (trend)</td></tr>
+</table><p class="muted">The label is now "OOM or restart within 120 s", scored on Running rows only, with a time-ordered split. On the collaborator's older data it is weaker (F1 0.41–0.64).</p></div>
+<h3>Decision engine (deployment level)</h3>
+<div class="card"><table>
+<tr><th>Piece</th><th>Choice</th><th>Held-out result</th></tr>
+<tr><td>State classifier</td><td>Fault rules + LightGBM load head (hybrid)</td><td>macro-F1 0.844 (blind 0.803) vs HPA rule 0.139</td></tr>
+<tr><td>Capacity</td><td>Logistic P(SLO breach) on CPU utilisation</td><td>AUC 0.967; recall 0.94 at 2.3% false alarms (HPA-70%: 25.6% false alarms)</td></tr>
+<tr><td>Forecaster</td><td>LightGBM quantile, level-invariant</td><td>Beats persistence at +60 s and +120 s, but not at +300 s</td></tr>
+<tr><td>Fault replay</td><td>Fault gate</td><td>Adds pods on 0% of held-out fault decisions</td></tr>
+</table></div>
+<div class="card warn"><b>Result against expectations:</b> a forecast-driven scaler did <i>not</i> beat a tuned HPA at the same cost (held out: 2.17 vs 0.67 SLO-violation minutes). So forecasting is advisory only, and the shipped policy sizes reactively from learned capacity and adds the fault gate. The shipped default is <b>HPA_GATED</b>: HPA sizing (CPU 70%, 30 s scale-down) plus the fault gate. In replay it ties the HPA on load (0.67 vs 0.67 violation-min) and adds pods on 2.3% of fault decisions, against 16.5% for the HPA (0.50 vs 3.75 wasted pod-min).</div>
+</section>
+
+<section id="ab">
+<h2>5 · Live A/B on the cluster</h2>
+<p class="muted">Same k6 trace (seed 42, diurnal load with a 6× flash spike), bounds 1–4 replicas, one run per arm. SLO violation is counted on a 15 s grid, so 0.25 min = one point.</p>
+<pre class="mermaid">
+flowchart LR
+  T[same k6 trace] --> A[KubeAI agent<br/>ACT_MODE=act, no HPA]
+  T --> B[HPA cpu 70%<br/>30s scale-down]
+  T --> C[HPA cpu 70%<br/>300s stock]
+  A & B & C --> M[Prometheus → violation-min, pod-min, MTTR]
+</pre>
+<div class="card"><table>
+<tr><th>Trial</th><th>Agent</th><th>HPA 30 s</th><th>HPA 300 s</th><th>Read</th></tr>
+<tr><td>Pure load (violation-min / pod-min)</td><td>1.00 / 35.8</td><td>1.25 / 33.7</td><td>1.50 / 34.0</td><td class="w">Tie: the differences are within one grid point</td></tr>
+<tr><td>Dependency latency (violation-min)</td><td>3.75</td><td>4.00</td><td>4.75</td><td class="w">Agent paged and did not scale up after detection; extra HPA pods didn't lower p95</td></tr>
+<tr><td>Memory leak: time to recovery</td><td class="good">44.7 s (restart)</td><td class="bad">222 s (OOMKill)</td><td class="bad">221 s (OOMKill)</td><td class="w">About 5× faster and no OOMKill; SLO damage was small in every arm</td></tr>
+</table></div>
+<div class="card warn"><b>Where the agent loses or is unproven</b><ul>
+<li>In 2 of 3 runs it read the spike overload as <code>dependency_latency</code> once (a false page).</li>
+<li>After the leak restart, the <code>memory_leak</code> state blocked scale-up for about 60 s (the latch has since been shortened).</li>
+<li>n = 1 per arm, one service on one node. A second seed failed because the API server overloaded.</li></ul></div>
+</section>
+
+<section id="todo">
+<h2>6 · What you should do</h2>
+<ul>
+<li><b>Revoke and rotate the Google API key</b> that is in the history of <code>k8s_aiAgent</code> (commits c700f68, 48952ce) and in the collaborator's fork. History was not rewritten, so that needs your approval.</li>
+<li>Review and merge the PR from <code>ml-service-upgrade</code>.</li>
+<li>Production would need more than one service and node: retrain capacity per service, and keep <code>ACT_MODE=observe</code> for the first week.</li>
+</ul>
+</section>
+</main>
+<script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.esm.min.mjs";
+const dark = matchMedia("(prefers-color-scheme: dark)").matches && document.documentElement.dataset.theme!=="light" || document.documentElement.dataset.theme==="dark";
+mermaid.initialize({startOnLoad:true, theme: dark ? "dark" : "neutral", securityLevel:"strict", flowchart:{curve:"basis"}});
+</script>
+</body>
+</html>
