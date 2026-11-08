@@ -1,5 +1,9 @@
-# ML service (ml_service/). Build + load the image first, e.g.:
-#   docker build -t kubeai-ml:latest ml_service && minikube image load kubeai-ml:latest
+# ML service (ml_service/): /v1/predict (OOM-ahead) + /v1/decide (scaling bundle).
+# Build the image straight into the minikube node first:
+#   minikube -p kubeai-lab image build -t kubeai-ml:latest ml_service
+# (or: docker build -t kubeai-ml:latest ml_service && minikube image load kubeai-ml:latest)
+# Single replica, single worker: the decision engine keeps per-deployment
+# stabilisation memory (scale-down window, restart cooldown) in process.
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -8,6 +12,7 @@ metadata:
   labels: {app.kubernetes.io/name: kubeai-ml, app.kubernetes.io/part-of: kubeai}
 spec:
   replicas: 1
+  strategy: {type: Recreate}
   selector:
     matchLabels: {app.kubernetes.io/name: kubeai-ml}
   template:
@@ -22,11 +27,17 @@ spec:
         - name: ml
           image: kubeai-ml:latest
           imagePullPolicy: IfNotPresent
+          env:
+            - {name: MODEL_DIR, value: /app/models/LATEST}
+            - {name: SCALING_MODEL_DIR, value: /app/models/scaling/LATEST}
+            # optional replica-policy override (predictive | fault_aware | hpa_gated, if the
+            # shipped engine supports it); unset = the bundle's own policy
+            # - {name: POLICY_MODE, value: fault_aware}
           ports:
             - {name: http, containerPort: 8000}
           readinessProbe:
             httpGet: {path: /readyz, port: http}
-            initialDelaySeconds: 3
+            initialDelaySeconds: 5
             periodSeconds: 5
             failureThreshold: 3
           livenessProbe:

@@ -1,10 +1,13 @@
 # KubeAI agent image (Node 20 + pinned kubectl for allowlisted remediation).
+# Build straight into the minikube node:  minikube -p kubeai-lab image build -t kubeai-agent:latest .
 FROM node:20-alpine
 
-ARG KUBECTL_VERSION=v1.31.0
-ARG TARGETARCH=amd64
+ARG KUBECTL_VERSION=v1.33.1
+# kubectl for the build platform's arch (works with BuildKit and with the classic builder that
+# `minikube image build` may use, where TARGETARCH is not set)
 RUN apk add --no-cache curl ca-certificates \
- && curl -fsSLo /usr/local/bin/kubectl "https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/${TARGETARCH}/kubectl" \
+ && case "$(apk --print-arch)" in x86_64) ARCH=amd64 ;; aarch64) ARCH=arm64 ;; *) echo "unsupported arch" >&2; exit 1 ;; esac \
+ && curl -fsSLo /usr/local/bin/kubectl "https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/${ARCH}/kubectl" \
  && chmod +x /usr/local/bin/kubectl \
  && apk del curl
 

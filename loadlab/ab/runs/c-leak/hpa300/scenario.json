@@ -1,0 +1,64 @@
+{
+  "id": "ab-c-leak-hpa300",
+  "duration_s": 720,
+  "traffic": {
+    "shape": "diurnal_spike",
+    "base_rps": 14.4,
+    "params": {
+      "period_s": 600,
+      "amplitude": 0.5,
+      "noise": 0.08,
+      "point_s": 10,
+      "spike_at_s": 560,
+      "spike_mult": 6,
+      "spike_s": 90,
+      "ramp_s": 10,
+      "seed": 42
+    }
+  },
+  "app": {
+    "cpu_ms_per_req": 25,
+    "alloc_kb": 64,
+    "env": {}
+  },
+  "faults": [
+    {
+      "type": "memory_leak",
+      "start_s": 120,
+      "end_s": 690,
+      "target": "one-pod",
+      "reapply_on_restart": false,
+      "params": {
+        "leak_kb_per_s": 1024
+      }
+    }
+  ],
+  "ab": {
+    "trial": "c-leak",
+    "arm": "hpa300"
+  },
+  "scaling": {
+    "policy": "hpa_cpu",
+    "min": 1,
+    "max": 4,
+    "target_cpu": 70,
+    "initial": 1
+  },
+  "_run": {
+    "run_id": "ab-c-leak-hpa300-1108-145014-590",
+    "namespace": "lab-ab-c-leak-hpa300-1108-145014-590",
+    "scenario_file": "/Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/ab/scenarios/c-leak-hpa300.yaml",
+    "image": "loadlab:v1",
+    "k6_image": "grafana/k6:0.54.0",
+    "context": "kubeai-lab",
+    "t_created": 1794174614.163681,
+    "t0": 1794174655.812601,
+    "t_end": 1794175380.841738,
+    "status": "succeeded",
+    "export_window": [
+      1794174625.812601,
+      1794175390.841738
+    ],
+    "step_s": 5
+  }
+}

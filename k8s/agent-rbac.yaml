@@ -1,8 +1,16 @@
 # Least-privilege identity for the agent.
-# The Role lives in the WATCHED namespace (default) and is bound to the
-# agent's ServiceAccount in the kubeai namespace. Change both `namespace:
-# default` lines if you watch a different namespace (and NAMESPACE in
-# agent.yaml).
+#
+# The permissions live in a ClusterRole but are granted per WATCHED namespace by
+# a RoleBinding there, so the agent can only read/act inside namespaces you bind
+# explicitly (a ClusterRole bound by a RoleBinding is namespace-scoped). This
+# file binds the "default" namespace; for another target namespace (e.g. a
+# loadlab run namespace) add one more binding:
+#   kubectl -n <ns> create rolebinding kubeai-agent \
+#     --clusterrole=kubeai-agent --serviceaccount=kubeai:kubeai-agent
+# and set NAMESPACE in agent.yaml.
+#
+# Everything that writes runs as --dry-run=server unless ACT_MODE=act AND
+# ALLOW_EXEC=true (a server-side dry run needs the same verbs as the real call).
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -10,24 +18,37 @@ metadata:
   namespace: kubeai
 ---
 apiVersion: rbac.authorization.k8s.io/v1
-kind: Role
+kind: ClusterRole
 metadata:
   name: kubeai-agent
-  namespace: default
 rules:
-  # discovery: list pods by label selector, read limits/restarts/status
+  # discovery: pods by label selector, limits/restarts/status (OOM loop + live pod check)
   - apiGroups: [""]
     resources: ["pods"]
     verbs: ["get", "list", "watch"]
-  # remediation (always --dry-run=server unless ALLOW_EXEC=true):
-  # kubectl set resources / rollout restart -> get + patch deployments
+  # remediation: restart ONE owner-verified live pod of the decided Deployment through the
+  # Eviction API (POST pods/<name>/eviction; honours PodDisruptionBudgets). No pod delete verb.
+  - apiGroups: [""]
+    resources: ["pods/eviction"]
+    verbs: ["create"]
+  # deployment loop: spec.replicas, revision annotation, kubeai.io/{min,max}-replicas,
+  # DEPLOY_SELECTOR discovery; remediation: set resources / rollout restart / rollout undo
   - apiGroups: ["apps"]
     resources: ["deployments"]
-    verbs: ["get", "patch"]
+    verbs: ["get", "list", "watch", "patch"]
+  # kubectl rollout undo reads the Deployment's ReplicaSets to find the previous revision
+  - apiGroups: ["apps"]
+    resources: ["replicasets"]
+    verbs: ["get", "list"]
   # kubectl scale -> deployments/scale subresource
   - apiGroups: ["apps"]
     resources: ["deployments/scale"]
     verbs: ["get", "patch", "update"]
+  # never fight an HPA: the agent refuses to scale a Deployment an HPA targets
+  # (and refuses when it cannot read HPAs)
+  - apiGroups: ["autoscaling"]
+    resources: ["horizontalpodautoscalers"]
+    verbs: ["get", "list"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
@@ -40,5 +61,5 @@ subjects:
     namespace: kubeai
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: Role
+  kind: ClusterRole
   name: kubeai-agent

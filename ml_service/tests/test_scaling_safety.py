@@ -110,12 +110,16 @@ def test_bounds_validated(engine):
         engine.decide(deploy_rows(), None, 2, 3, 2)
 
 
-def test_flat_traffic_does_not_follow_the_wide_forecast(engine):
-    """Flat 10 rps on 1 pod for 15 min: the p90 at +120 s is ~3x, but nothing measured backs it."""
+@pytest.mark.parametrize("mode,want", [("predictive", 1), ("hpa_gated", 2)])
+def test_flat_traffic_does_not_follow_the_wide_forecast(mode, want):
+    """Flat 10 rps on 1 pod for 15 min: the p90 at +120 s is ~3x, but nothing measured backs it.
+    PREDICTIVE keeps 1 pod (learned capacity); HPA_GATED (default) follows the CPU-70 % formula:
+    0.275 cores on a 0.25 request = 110 % -> ceil(1.1 / 0.7) = 2, never the forecast's 3+."""
+    from kubeai_ml.scaling.engine import DecisionEngine
     dep = deploy_rows(n=180, rps=10.0, ready=1)
-    out = engine.decide(dep, None, 1, 1, 8)
+    out = DecisionEngine(oom_model_dir=None, policy_mode=mode).decide(dep, None, 1, 1, 8)
     assert out["forecast"][120]["p90"] > 15
-    assert out["desired_replicas"] == 1
+    assert out["desired_replicas"] == want
 
 
 def test_bad_deploy_without_rollout_evidence_pages_not_rollback(engine):
@@ -158,3 +162,63 @@ def test_restart_without_pod_name_pages(engine):
     from kubeai_ml.scaling.policy import ScalerMemory
     act, _ = engine._restart(None, "hot pod", mem=ScalerMemory(), ready=3, current=3, now=T0, deployment="web")
     assert act is not None and act["type"] == "page"
+
+
+# --------------------------------------------------------------------- review fixes (A/B review)
+_LIM = 256 * 2**20
+
+
+def _rollout_pods(n=180, change=118, cpr_jump=120):
+    old = ("web-aaa11-x0001", "web-aaa11-x0002", "web-aaa11-x0003", "web-aaa11-x0004")
+    new = ("web-bbb22-y0001", "web-bbb22-y0002", "web-bbb22-y0003", "web-bbb22-y0004")
+    return [{"ts": T0 + i * 5, "pod": p, "cpu": 0.13 * (2 if i >= cpr_jump else 1), "throttle": 0.0,
+             "mem_ws": 0.3 * _LIM, "mem_frac_limit": 0.3, "rps": 5.0, "ready": 1}
+            for i in range(n) for p in (old if i < change else new)]
+
+
+def test_agents_own_rollout_is_not_rollout_evidence():
+    """A new ReplicaSet that appears right after the caller's own undo / rollout restart must not
+    re-arm `rollback` (undo ping-pong): with agent_rollout_ts the engine pages instead."""
+    from kubeai_ml.scaling.engine import DecisionEngine
+    dep = deploy_rows(ready=4, cpr=lambda i: CPU_REQ * (2.0 if i >= 120 else 1.0))
+    out = DecisionEngine().decide(dep, _rollout_pods(), 4, 1, 8)
+    assert out["state"] == S.BAD_DEPLOY and "rollback" in _types(out)
+    own = DecisionEngine().decide(dep, _rollout_pods(), 4, 1, 8, agent_rollout_ts=[T0 + 117 * 5])
+    assert "rollback" not in _types(own) and "page" in _types(own)
+    # an agent rollout long before the new ReplicaSet does not hide it
+    old = DecisionEngine().decide(dep, _rollout_pods(), 4, 1, 8, agent_rollout_ts=[T0 + 10 * 5])
+    assert "rollback" in _types(old)
+
+
+def _leak_then_delete(n, growth_until):
+    """Pod web-abc-2 leaks 1 MB/s from i=90 and is deleted at i=150 (replacement web-abc-9).
+    growth_until: last row index where the deployment-level mem_growth still shows the slope
+    (150 = v2 query, the deleted pod drops out at once; 162 = v1 query, ~60 s stale range)."""
+    def leak_ws(i):
+        return 0.3 * _LIM + max(0, i - 90) * 5 * 1e6
+    dep = deploy_rows(n=n, ready=3, mem_growth_bytes_per_s=lambda i: 1e6 if 102 < i < growth_until else 0.0,
+                      mem_ws_max_pod_frac_of_limit=lambda i: (leak_ws(i) if i < 150 else 0.3 * _LIM) / _LIM)
+    pods = [r for r in pod_rows(n=n, mem=lambda p, i: leak_ws(i) if p == "web-abc-2" else 0.3 * _LIM)
+            if not (r["pod"] == "web-abc-2" and r["ts"] >= T0 + 150 * 5)]
+    pods += [dict(ts=T0 + i * 5, pod="web-abc-9", cpu=0.13, throttle=0.0, mem_ws=0.2 * _LIM,
+                  mem_frac_limit=0.2, rps=6.6, ready=1) for i in range(150, n)]
+    return dep, pods
+
+
+@pytest.mark.parametrize("growth_until,max_latched", [(150, 2), (162, 6)])
+def test_leak_state_clears_once_the_deleted_pods_growth_series_ends(growth_until, max_latched):
+    """v2 mem_growth (live targets only): after the restart decision the state leaves memory_leak
+    within 2 decisions (30 s). The v1 artefact (deleted pod's slope kept ~60 s) latches longer."""
+    from kubeai_ml.scaling.engine import DecisionEngine
+    e = DecisionEngine()
+    states = []
+    for n in range(150, 172, 3):                      # one decision per 15 s, first one at the restart
+        dep, pods = _leak_then_delete(n, growth_until)
+        states.append(e.decide(dep, pods, 3, 1, 6, key="leak")["state"])
+    assert states[0] == S.MEMORY_LEAK
+    latched = next(i for i, s in enumerate(states[1:], 1) if s != S.MEMORY_LEAK) - 1
+    assert latched <= max_latched
+    if growth_until == 150:
+        assert latched <= 2 and states[3] != S.MEMORY_LEAK
+    else:
+        assert latched > 2                              # the artefact the v2 query removes

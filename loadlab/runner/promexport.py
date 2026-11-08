@@ -21,7 +21,16 @@ PROM = os.environ.get("PROM_URL", "http://127.0.0.1:9090")
 STEP = 5
 APP_W = "20s"   # window for app (5s-scraped) counters (4 scrapes; 30s lagged fault ends by ~30s)
 CAD_W = "45s"   # window for cAdvisor counters (kubelet housekeeping ~15s)
-APP_POD_RE = "loadlab-.*"
+# Query version v2 (2026-11-08, after the live A/B review). The committed dataset (round 1 + 2)
+# was exported with v1: APP_POD_RE "loadlab-.*", kube-state-metrics pod selectors not
+# restricted to the pod regex, hpa_desired namespace-wide, and mem_growth_bytes_per_s without
+# the live-target join. In a one-Deployment lab namespace v2 selects the same series except
+# mem_growth right after a pod deletion (v1 kept a deleted pod's last 60 s slope in the max).
+# lib/promDeploy.js builds the same strings (queryVersion "v1" reproduces the old ones).
+QUERY_VERSION = "v2"
+APP_POD_RE = "loadlab-[a-z0-9]+-[a-z0-9]{5}"   # RS hash + pod suffix: never a sibling Deployment
+POD_SCOPE = f',pod=~"{APP_POD_RE}"'
+HPA_NAME = "loadlab"
 
 
 MEM_WARM = "90s"  # mem growth only for pods with a working-set sample >= this long ago (startup ramp != leak)
@@ -48,10 +57,10 @@ def _cpu_by_pod(ns: str) -> str:
 def deploy_queries(ns: str) -> dict[str, str]:
     a = f'namespace="{ns}"'
     c = f'namespace="{ns}",pod=~"{APP_POD_RE}",scope="pod"'
-    k = f'namespace="{ns}",container="app"'
+    k = f'namespace="{ns}",container="app"{POD_SCOPE}'
     cpu = _cpu_by_pod(ns)
     req_running = (f'sum(kube_pod_container_resource_requests{{{k},resource="cpu"}} '
-                   f'* on(namespace,pod) group_left() (kube_pod_status_phase{{{a},phase="Running"}} == bool 1))')
+                   f'* on(namespace,pod) group_left() (kube_pod_status_phase{{{a}{POD_SCOPE},phase="Running"}} == bool 1))')
     q = {
         "rps": f'sum(rate(http_requests_total{{{a}}}[{APP_W}]))',
         "inflight": f'sum(http_inflight_requests{{{a}}})',
@@ -68,13 +77,15 @@ def deploy_queries(ns: str) -> dict[str, str]:
         "mem_ws_max_pod_frac_of_limit": (
             f'max(max by (pod)(container_memory_working_set_bytes{{{c}}}) '
             f'/ on(pod) group_left() max by (pod)(kube_pod_container_resource_limits{{{k},resource="memory"}}))'),
-        "mem_growth_bytes_per_s": (f'max(deriv(container_memory_working_set_bytes{{{c}}}[60s]) '
-                                   f'and on(pod) (container_memory_working_set_bytes{{{c}}} offset {MEM_WARM}))'),
+        # live scrape targets only: a range selector keeps returning a deleted pod's last 60 s
+        "mem_growth_bytes_per_s": (f'max((deriv(container_memory_working_set_bytes{{{c}}}[60s]) '
+                                   f'and on(pod) (container_memory_working_set_bytes{{{c}}} offset {MEM_WARM})) '
+                                   f'and on(pod) group by (pod)(up{{{a},job="annotated-pods"}}))'),
         "replicas_desired": f'max(kube_deployment_spec_replicas{{{a},deployment="loadlab"}})',
         "replicas_ready": f'max(kube_deployment_status_replicas_ready{{{a},deployment="loadlab"}})',
         "restarts_total": f'sum(kube_pod_container_status_restarts_total{{{k}}})',
         "crashloop_pods": f'count(kube_pod_container_status_waiting_reason{{{k},reason="CrashLoopBackOff"}} == 1)',
-        "hpa_desired": f'max(kube_horizontalpodautoscaler_status_desired_replicas{{{a}}})',
+        "hpa_desired": f'max(kube_horizontalpodautoscaler_status_desired_replicas{{{a},horizontalpodautoscaler="{HPA_NAME}"}})',
         # extra (appended) column: the app's own CPU (prometheus_client process collector, 5s
         # resolution, main process only - excludes the cpu_hog child). Cross-check for cAdvisor.
         "cpu_cores_proc": f'sum(rate(process_cpu_seconds_total{{{a},job="annotated-pods"}}[{APP_W}]))',
@@ -88,7 +99,7 @@ def deploy_queries(ns: str) -> dict[str, str]:
 def pod_queries(ns: str) -> dict[str, str]:
     a = f'namespace="{ns}"'
     c = f'namespace="{ns}",pod=~"{APP_POD_RE}",scope="pod"'
-    k = f'namespace="{ns}",container="app"'
+    k = f'namespace="{ns}",container="app"{POD_SCOPE}'
     return {
         "cpu": _cpu_by_pod(ns),
         "throttle": (f'sum by (pod)(rate(container_cpu_cfs_throttled_periods_total{{{c}}}[{CAD_W}])) '

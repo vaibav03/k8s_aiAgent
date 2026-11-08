@@ -103,7 +103,7 @@ from .classifier import capacity_features
 from .data import SLO_ERR, SLO_P95_S
 from .features import FEATURES, build_features
 from .forecast import HORIZONS_S, forecast_from_samples
-from .policy import Bounds, ScalerMemory, desired_replicas
+from .policy import MODES, Bounds, ScalerMemory, desired_replicas, fault_aware_replicas
 
 REQUIRED_DEPLOY = ("ts", "rps", "p95", "error_rate", "cpu_cores_used", "replicas_ready")
 OPTIONAL_DEPLOY = ("goodput_rps", "inflight", "p50", "p99", "cpu_util_vs_request", "throttle_ratio",
@@ -122,6 +122,10 @@ RESTART_COOLDOWN_S = 300.0           # one pod restart per deployment per 5 min
 OOM_POD_MIN_P = 0.5                  # trust the OOM-ahead model's pod pick above this p_oom
 LEAK_POD_MIN_GROWTH = 10e3           # B/s: below this no pod is "the leaking one"
 ROLLOUT_RECENT_S = 900.0
+# a new ReplicaSet seen within this long after a rollout the caller itself triggered
+# (agent_rollout_ts: its own rollout undo / rollout restart) is that rollout, not evidence of
+# an external deploy (otherwise the agent's own undo re-arms "rollback" for 15 min)
+AGENT_ROLLOUT_ATTRIB_S = 180.0
 TREND_NOW_S, TREND_BASE_S = (30.0, (120.0, 60.0))
 
 _EVIDENCE: dict[str, tuple[tuple[str, str, float], ...]] = {
@@ -156,6 +160,7 @@ class DecisionEngine:
 
     bundle_dir: str | Path | None = None
     oom_model_dir: str | Path | None = "auto"
+    policy_mode: str | None = None      # predictive | fault_aware | hpa_gated; None = the bundle's
     bundle: Bundle = field(init=False)
     _memory: dict[str, ScalerMemory] = field(init=False, default_factory=dict)
     _oom: Any = field(init=False, default=None)
@@ -163,6 +168,13 @@ class DecisionEngine:
     def __post_init__(self) -> None:
         self.bundle = Bundle.load(self.bundle_dir)
         self._oom = self._load_oom(self.oom_model_dir)
+        if self.policy_mode is not None and self.policy_mode not in MODES:
+            raise ValueError(f"policy_mode must be one of {MODES}")
+
+    @property
+    def mode(self) -> str:
+        """Replica policy in use (``policy_mode`` if set, else the bundle's ``stabilization.mode``)."""
+        return self.policy_mode or getattr(self.bundle.policy.stabilization, "mode", "predictive")
 
     @staticmethod
     def _load_oom(model_dir: str | Path | None) -> Any:
@@ -296,17 +308,33 @@ class DecisionEngine:
             return mem
         mem = ScalerMemory()
         st = self.bundle.policy.stabilization
+        mode = self.mode
+        window = st.down_window_s if mode == "predictive" else st.fa_down_window_s
         ts = d["ts"].to_numpy(float)
         now = ts[-1]
-        if now - ts[0] >= st.down_window_s:
-            mem.first_ts = now - st.down_window_s
+        if now - ts[0] >= window:
+            mem.first_ts = now - window
             period = self.bundle.policy.decision_period_s
-            for t in np.arange(now - st.down_window_s + period, now - 1e-6, period):
+            for t in np.arange(now - window + period, now - 1e-6, period):
                 w = d[(d["ts"] > t - period) & (d["ts"] <= t)]
                 peak = float(w["rps"].max()) if len(w) else float("nan")
-                if np.isfinite(peak):
-                    mem.recs.append((float(t), self.bundle.capacity.replicas_needed(
-                        peak, cpu, max_replicas=max_r)))
+                if not np.isfinite(peak):
+                    continue
+                if mode == "predictive":
+                    rec = self.bundle.capacity.replicas_needed(peak, cpu, max_replicas=max_r)
+                else:   # v2: the same max() of traffic and compute the live policy records
+                    recs = []
+                    if mode == "fault_aware":
+                        recs.append(self.bundle.capacity.replicas_needed(peak * st.fa_headroom, cpu,
+                                                                         max_replicas=max_r))
+                    util = float(w["cpu_util_vs_request"].max())
+                    rdy = float(w["replicas_ready"].iloc[-1])
+                    if (mode == "hpa_gated" or st.fa_use_cpu) and np.isfinite(util) and np.isfinite(rdy) and rdy >= 1:
+                        recs.append(max(1, math.ceil(rdy * util / st.fa_cpu_target)))
+                    if not recs:
+                        continue
+                    rec = min(max(recs), max_r)
+                mem.recs.append((float(t), rec))
         self._memory[key] = mem
         return mem
 
@@ -342,10 +370,15 @@ class DecisionEngine:
         return float(np.mean(cur) / max(np.mean(base), 0.5))
 
     @staticmethod
-    def _rollout_evidence(d: pd.DataFrame, f: pd.Series) -> tuple[bool, str]:
+    def _rollout_evidence(d: pd.DataFrame, f: pd.Series,
+                          agent_rollout_ts: list[float] | None = None) -> tuple[bool, str]:
         since = f.get("secs_since_rollout", np.nan)
         if np.isfinite(since) and since < ROLLOUT_RECENT_S:
-            return True, f"new ReplicaSet {since:.0f}s ago"
+            event = float(d["ts"].iloc[-1]) - float(since)
+            own = [a for a in (agent_rollout_ts or []) if a - 15.0 <= event <= a + AGENT_ROLLOUT_ATTRIB_S]
+            if not own:
+                return True, f"new ReplicaSet {since:.0f}s ago"
+            # the newest ReplicaSet is the agent's own rollout; fall through to the revision check
         rev = d[["ts", "revision"]].dropna()
         if len(rev):
             recent = rev[rev["ts"] >= float(d["ts"].iloc[-1]) - ROLLOUT_RECENT_S]
@@ -370,13 +403,17 @@ class DecisionEngine:
     # ------------------------------------------------------------------ main entry point
     def decide(self, deployment_obs: Any, pod_obs: Any = None, current_replicas: int | None = None,
                min_replicas: int = 1, max_replicas: int = 10, *, key: str = "default",
-               deployment: str = "deployment", now_ts: float | None = None) -> dict[str, Any]:
+               deployment: str = "deployment", now_ts: float | None = None,
+               agent_rollout_ts: list[float] | None = None) -> dict[str, Any]:
         """Decide for the newest observation.
 
         Returns ``{state, state_probs, confidence, desired_replicas, replicas_needed,
         forecast {60|120|300: {p50, p90}}, safe_rps_per_pod, slo_risk, actions [{type, target,
         params, reason}], reasons [str], scaling_helps, model_version, inputs}`` where action
         ``type`` is one of scale | restart_pod | rollback | page | none.
+
+        ``agent_rollout_ts`` (optional): unix times of rollouts the caller triggered itself; a
+        new ReplicaSet appearing within AGENT_ROLLOUT_ATTRIB_S after one is not rollout evidence.
 
         ``now_ts`` (optional, unix s): wall-clock time of the decision; stale data is detected
         against it (default: the newest row). ``current_replicas`` above ``max_replicas`` is
@@ -434,17 +471,34 @@ class DecisionEngine:
         mem = self._memory_for(key, d, cpu, max_replicas)
         p95_last, err_last = float(last["p95"]), float(last["error_rate"])
         breached = (np.isfinite(p95_last) and p95_last >= SLO_P95_S) or (np.isfinite(err_last) and err_last >= SLO_ERR)
-        dec = desired_replicas({h: forecast[h]["p90"] for h in HORIZONS_S}, cap, current,
-                               Bounds(min_replicas, max_replicas), b.policy.stabilization, state=state,
-                               now_rps=rps_now, cpu_per_req_s=cpu, baseline_cpu_per_req_s=cpu_base,
-                               ts=eval_ts, memory=mem, slo_risk=slo_risk, risk_budget=cap.risk,
-                               trend_ratio=trend, slo_breached=bool(breached),
-                               allow_down=not telemetry and outage is None, use_forecast=not telemetry)
+        mode = self.mode
+        common = dict(state=state, now_rps=rps_now, cpu_per_req_s=cpu, baseline_cpu_per_req_s=cpu_base,
+                      ts=eval_ts, memory=mem, slo_risk=slo_risk, risk_budget=cap.risk, trend_ratio=trend,
+                      allow_down=not telemetry and outage is None, use_forecast=not telemetry)
+        if mode == "predictive":
+            dec = desired_replicas({h: forecast[h]["p90"] for h in HORIZONS_S}, cap, current,
+                                   Bounds(min_replicas, max_replicas), b.policy.stabilization,
+                                   slo_breached=bool(breached), **common)
+        else:
+            tail = d.tail(2)
+            br2 = ((tail["p95"].fillna(0) >= SLO_P95_S) | (tail["error_rate"].fillna(0) >= SLO_ERR)).to_numpy()
+            util_v = d["cpu_util_vs_request"].to_numpy(float)
+            util_v = util_v[np.isfinite(util_v)]
+            mem_v = d["mem_ws_max_pod_frac_of_limit"].to_numpy(float)[-1:]
+            # bad_deploy stop-gap keys on the newest sample (as in v1); the request-quality
+            # co-signal needs the last two samples breached (one noisy scrape is not a breach)
+            dec = fault_aware_replicas(cap, current, Bounds(min_replicas, max_replicas), b.policy.stabilization,
+                                       ready=int(round(float(last["replicas_ready"]))) if np.isfinite(last["replicas_ready"]) else 0,
+                                       cpu_util=float(util_v[-1]) if len(util_v) and np.isfinite(last["cpu_cores_used"]) else None,
+                                       slo_breached=bool(breached) and (state == S.BAD_DEPLOY or (len(br2) == 2 and br2.all())),
+                                       mem_frac=float(mem_v[0]) if len(mem_v) and np.isfinite(mem_v[0]) else None,
+                                       forecast_q90={h: forecast[h]["p90"] for h in HORIZONS_S},
+                                       mode=mode, **common)
 
         # 6: memory risk (OOM-ahead model)
         oom = self._oom_risk(pods)
 
-        rollout, rollout_why = self._rollout_evidence(d, f.iloc[-1])
+        rollout, rollout_why = self._rollout_evidence(d, f.iloc[-1], agent_rollout_ts)
         raw_ready = float(last["replicas_ready"]) if np.isfinite(last["replicas_ready"]) else float(ready)
         actions, reasons = self._actions(state, dec, current, f.iloc[-1], pods, oom, deployment,
                                          mem=mem, ready=int(round(raw_ready)), now=eval_ts,
@@ -477,6 +531,9 @@ class DecisionEngine:
             "reasons": reasons,
             "model_version": self.version,
             "telemetry_ok": not telemetry,
+            "policy": {"mode": mode, "action": dec.action,
+                       "signals": {k: (v if v is None or isinstance(v, (str, float)) else int(v))
+                                   for k, v in dict(dec.signals).items()}},
             "inputs": {"deploy_rows": int(len(d)), "history_s": float(d["ts"].iloc[-1] - d["ts"].iloc[0]),
                        "pod_rows": int(len(pods)) if pods is not None else 0, "current_replicas": current,
                        "ready_replicas": ready},

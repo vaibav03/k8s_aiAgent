@@ -234,6 +234,12 @@ The lane budget works out like this:
 
 ### PromQL (no recording rules; validated in the smoke run)
 
+This is query **v1**, which exported the committed dataset. `runner/promexport.py` now exports **v2**: pod regex
+`loadlab-[a-z0-9]+-[a-z0-9]{5}`, kube-state-metrics pod selectors restricted to it, `hpa_desired` restricted to the
+`loadlab` HPA, and `mem growth` joined with `group by (pod)(up{namespace="NS",job="annotated-pods"})` so a deleted pod
+drops out at once. See the query-version note at the end of `data/DATASET_CARD.md` (impact on the dataset: 70 of
+4,861 mem-growth points, none by more than 100 KB/s).
+
 ```
 rps        sum(rate(http_requests_total{namespace="NS"}[20s]))
 p95        histogram_quantile(0.95, sum by (le)(rate(http_request_duration_seconds_bucket{namespace="NS"}[20s])))

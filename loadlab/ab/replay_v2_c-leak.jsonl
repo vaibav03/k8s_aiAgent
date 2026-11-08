@@ -1,0 +1,24 @@
+{"t":-45,"logged":"healthy","action":"none","v1":"healthy mg=NaNKB/s","v2":"healthy mg=NaNKB/s"}
+{"t":-30,"logged":"healthy","action":"none","v1":"healthy mg=0KB/s","v2":"healthy mg=0KB/s"}
+{"t":-15,"logged":"healthy","action":"none","v1":"healthy mg=0KB/s","v2":"healthy mg=0KB/s"}
+{"t":0,"logged":"healthy","action":"none","v1":"healthy mg=0KB/s","v2":"healthy mg=0KB/s"}
+{"t":15,"logged":"healthy","action":"none","v1":"healthy mg=116KB/s","v2":"healthy mg=116KB/s"}
+{"t":30,"logged":"healthy","action":"none","v1":"healthy mg=473KB/s","v2":"healthy mg=473KB/s"}
+{"t":45,"logged":"memory_leak","action":"restart_pod:loadlab-5965489b55-bcndf","v1":"memory_leak mg=700KB/s","v2":"memory_leak mg=700KB/s"}
+{"t":60,"logged":"memory_leak","action":"page","v1":"memory_leak mg=1027KB/s","v2":"memory_leak mg=0KB/s"}
+{"t":75,"logged":"memory_leak","action":"page","v1":"memory_leak mg=1039KB/s","v2":"memory_leak mg=0KB/s"}
+{"t":90,"logged":"memory_leak","action":"page","v1":"memory_leak mg=0KB/s","v2":"healthy scale->3 mg=0KB/s"}
+{"t":105,"logged":"memory_leak","action":"page","v1":"memory_leak mg=0KB/s","v2":"healthy scale->3 mg=0KB/s"}
+{"t":120,"logged":"healthy","action":"scale:2->3","v1":"healthy scale->3 mg=2KB/s","v2":"healthy scale->3 mg=2KB/s"}
+{"t":135,"logged":"healthy","action":"none","v1":"healthy mg=2KB/s","v2":"healthy mg=2KB/s"}
+{"t":150,"logged":"healthy","action":"none","v1":"healthy mg=2KB/s","v2":"healthy mg=2KB/s"}
+{"t":165,"logged":"healthy","action":"none","v1":"healthy mg=2KB/s","v2":"healthy mg=2KB/s"}
+{"t":180,"logged":"healthy","action":"none","v1":"healthy mg=2KB/s","v2":"healthy mg=2KB/s"}
+{"t":195,"logged":"healthy","action":"none","v1":"healthy mg=2KB/s","v2":"healthy mg=2KB/s"}
+{"t":210,"logged":"healthy","action":"none","v1":"healthy mg=0KB/s","v2":"healthy mg=0KB/s"}
+{"t":225,"logged":"healthy","action":"none","v1":"healthy mg=4KB/s","v2":"healthy mg=4KB/s"}
+{"t":240,"logged":"healthy","action":"none","v1":"healthy mg=2KB/s","v2":"healthy mg=2KB/s"}
+{"t":255,"logged":"healthy","action":"none","v1":"healthy mg=0KB/s","v2":"healthy mg=0KB/s"}
+{"t":270,"logged":"healthy","action":"none","v1":"healthy mg=0KB/s","v2":"healthy mg=0KB/s"}
+{"t":285,"logged":"healthy","action":"none","v1":"healthy mg=0KB/s","v2":"healthy mg=0KB/s"}
+{"t":300,"logged":"healthy","action":"none","v1":"healthy mg=7KB/s","v2":"healthy mg=7KB/s"}

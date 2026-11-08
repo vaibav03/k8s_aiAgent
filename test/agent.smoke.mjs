@@ -63,8 +63,9 @@ console.log("unit");
   assert.equal(good.ok, true);
   assert.deepEqual(good.argv, ["-n", "default", "set", "resources", "deployment/finalpod", "-c", "app", "--limits=memory=1024Mi"]);
   assert.equal(validateRecommendation({ action: "delete_namespace", target: "finalpod" }, ctx).ok, false);
-  assert.equal(validateRecommendation({ action: "scale", target: "other", params: { replicas: 2 } }, ctx).ok, false);
-  assert.equal(validateRecommendation({ action: "scale", target: "finalpod", params: { replicas: 99 } }, ctx).ok, false);
+  // the OOM loop can no longer scale (replica changes belong to the deployment loop's guard rails)
+  assert.equal(validateRecommendation({ action: "scale", target: "finalpod", params: { replicas: 1 } }, ctx).ok, false);
+  assert.match(validateRecommendation({ action: "scale", target: "finalpod", params: { replicas: 2 } }, ctx).error, /not in allowlist/);
   assert.equal(validateRecommendation({ action: "patch_memory_limit", target: "finalpod", params: { container: "app", memory: "512Mi" } }, ctx).ok, false);
   assert.equal(validateRecommendation({ action: "patch_memory_limit", target: "finalpod", params: { container: "app", memory: "1Gi; rm -rf /" } }, ctx).ok, false);
   const rr = validateRecommendation({ action: "rollout_restart", target: "deployment/finalpod" }, ctx, new Date("2026-01-01T00:00:00Z"));
@@ -388,7 +389,6 @@ console.log("in-process (fake LLM -> allowlist -> kubectl dry-run)");
   const ctx = { namespace: "default", deployment: "finalpod", containers: [{ name: "app", memoryLimit: "800Mi", workingSetBytes: 700 * MI }], maxMemoryBytes: 4 * 2 ** 30, maxReplicas: 10 };
   const recs = [
     { action: "rollout_restart", target: "finalpod" },
-    { action: "scale", target: "finalpod", params: { replicas: 2 } },
     { action: "patch_memory_limit", target: "finalpod", params: { container: "app", memory: "1Gi" } },
   ];
   for (const rec of recs) {
@@ -466,6 +466,51 @@ console.log("in-process (fake LLM -> allowlist -> kubectl dry-run)");
   assert.ok(v.latest_prediction.usage_fraction > 0.99);
   assert.equal(v.alert.fire_count, 1, "app container about to be OOM-killed is flagged");
   ok("sidecar with a large limit does not hide an app container at its own limit");
+}
+
+
+{
+  // OOM loop gating (review fix): ACT_MODE governs the OOM loop exactly like the deployment loop,
+  // and N alerting pods of one Deployment cause at most one LLM call + rollout restart per cooldown
+  // (shared ledger with lib/scaler.js).
+  const pods2 = [PODS[0], mkPod("finalpod-7c649c5fc-ddddd", { limits: ["800Mi"] })];
+  const mkLlm = () => ({ calls: 0, async recommend() { this.calls += 1; return { action: "rollout_restart", target: "finalpod", reason: "leak" }; } });
+  const mlX = await listen(async (req, res) => {
+    const body = JSON.parse(await readBody(req));
+    json(res, 200, { results: body.items.map((it) => ({ pod: it.pod, is_anomaly: true, p_oom: 0.95 })) });
+  });
+  let tick = 0;
+  const promX = await listen((req, res) => {
+    tick += 1;
+    json(res, 200, { status: "success", data: { result: pods2.map((p) => ({ metric: { pod: p.metadata.name, container: "app" }, value: [1_950_000_000 + tick, String(700 * MI)] })) } });
+  });
+  const base = { namespace: "default", window: 5, alertK: 2, alertN: 3, cooldownMs: 600000, maxMemoryLimit: "4Gi", maxReplicas: 10,
+    kubectl: fakeKubectl, mlUrl: `http://127.0.0.1:${port(mlX)}`, prometheusUrl: `http://127.0.0.1:${port(promX)}`, httpTimeoutMs: 1000, pollMs: 10, mlBatchMax: 500, remediationCooldownS: 300 };
+  const run = async (cfg, ledger) => {
+    const calls = [];
+    const llm = mkLlm();
+    const agent = createAgent(cfg, { kube: { listPods: async () => pods2.map((p) => summarizePod(p)) }, llm, ledger,
+      runKubectl: async (argv, dry) => { calls.push(argv); return { ok: true, dryRun: cfg.effectiveActMode !== "act", argv }; } });
+    for (let k = 0; k < 4; k++) await agent.tick();
+    return { calls, llm, agent };
+  };
+  // ALLOW_EXEC=true but ACT_MODE=observe: kubectl is never invoked
+  const obs = await run({ ...base, allowExec: true, actMode: "observe", effectiveActMode: "observe" });
+  assert.equal(obs.calls.length, 0, "observe: no kubectl at all, even with ALLOW_EXEC=true");
+  assert.equal(obs.llm.calls, 1, "observe: 2 alerting pods of one Deployment -> 1 LLM call");
+  // act: one real rollout restart for 2 alerting pods; a shared ledger entry from the other loop suppresses it
+  const act = await run({ ...base, allowExec: true, actMode: "act", effectiveActMode: "act" });
+  assert.equal(act.calls.length, 1, "act: 2 alerting pods -> exactly one rollout restart");
+  assert.deepEqual(act.calls[0], ["-n", "default", "rollout", "restart", "deployment/finalpod"]);
+  const { createRemediationLedger } = await import("../lib/remediation.js");
+  const ledger = createRemediationLedger();
+  ledger.record("default", "finalpod", "delete_pod", Date.now() / 1000); // the deployment loop just remediated
+  const shared = await run({ ...base, allowExec: true, actMode: "act", effectiveActMode: "act" }, ledger);
+  assert.equal(shared.calls.length, 0, "shared cooldown with the deployment loop");
+  assert.equal(shared.llm.calls, 0);
+  mlX.close();
+  promX.close();
+  ok("OOM loop: observe never runs kubectl; one restart per Deployment per cooldown; no LLM scale; shared ledger");
 }
 
 console.log(`\n${passed} checks passed`);

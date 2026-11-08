@@ -1,5 +1,7 @@
-# Serving (what the Docker image installs). Pinned to the versions the bundle was trained/tested with.
+# Serving (what the Docker image installs). Pinned to the versions the bundles were trained/tested with.
+# pandas: the scaling DecisionEngine (/v1/decide) builds its features with it.
 numpy==2.5.4
+pandas==3.1.1
 lightgbm==4.7.0
 fastapi==0.162.2
 pydantic==2.14.3

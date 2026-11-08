@@ -351,3 +351,20 @@ Load-state counts for `none` rows (a heuristic proxy for scale_up, scale_down an
 5. **The HPA scales out during dep_latency** (`d-dep-latency-75p600-r2`, 3 → 4 at 203 s) without any p95 benefit. This is a labelled example of scaling that does not help.
 6. **NaN in `mem_growth_bytes_per_s`** is 22–24 % in the bad_deploy runs (two rollouts, so pods are younger than 90 s). Over all rows it is 9.2 %.
 7. The lane cap still applies: HPA `max` 6 was clipped to 4.
+
+### Query version note (2026-11-08, after the live A/B review)
+
+The committed dataset was exported with PromQL **v1** (each run's `queries.json`). `runner/promexport.py` now
+exports **v2**, which `lib/promDeploy.js` (the live agent) also uses:
+
+* `mem_growth_bytes_per_s` counts only pods that are still live scrape targets (`and on(pod) group by (pod)(up{...})`).
+  v1 kept a deleted pod's last 60 s of `deriv` in the max for up to ~60 s after the deletion. In the live A/B that
+  kept a just-restarted leaking pod's 1 MB/s slope alive for ~65 s and latched the agent in `memory_leak`.
+* Pod regex `loadlab-[a-z0-9]+-[a-z0-9]{5}` instead of `loadlab-.*`; kube-state-metrics pod selectors (restarts,
+  OOM reason, CrashLoopBackOff, requests, limits, phase) restricted to it; `hpa_desired` restricted to the
+  `loadlab` HPA. In these one-Deployment namespaces this selects exactly the same series (checked live on the A/B runs).
+
+Impact on this dataset, measured by re-querying all 44 runs (`runner/check_query_v2.py`, Prometheus still had them):
+v2 changes **70 of 4,861** `mem_growth_bytes_per_s` points (1.4 %, all at scale-in, pod-kill or rollout pod
+deletions), **none by more than 100 KB/s**, because no leaking pod was ever deleted in these runs. The dataset was
+therefore not re-exported; a re-export with the current exporter would differ only in those points.

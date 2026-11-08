@@ -1,7 +1,7 @@
 {
   "name": "k8s_ai_agent",
   "version": "2.0.0",
-  "description": "Kubernetes memory/OOM agent: Prometheus working set -> ML service -> hysteresis -> allowlisted remediation",
+  "description": "Kubernetes SRE agent: per-pod OOM-ahead loop + per-Deployment decision loop (Prometheus -> ML service /v1/decide -> allowlisted scale/remediation)",
   "license": "ISC",
   "author": "",
   "type": "module",
@@ -13,7 +13,7 @@
     "start": "node index.js",
     "dev": "node --watch index.js",
     "check": "for f in index.js lib/*.js test/*.mjs; do node --check \"$f\" || exit 1; done",
-    "test": "node test/agent.smoke.mjs"
+    "test": "node test/agent.smoke.mjs && node test/scaler.smoke.mjs"
   },
   "dependencies": {
     "@langchain/core": "^0.3.45",

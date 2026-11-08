@@ -1,0 +1,53 @@
+{
+  "id": "ab-a2-load-s7-hpa300",
+  "duration_s": 720,
+  "traffic": {
+    "shape": "diurnal_spike",
+    "base_rps": 14.4,
+    "params": {
+      "period_s": 600,
+      "amplitude": 0.5,
+      "noise": 0.08,
+      "point_s": 10,
+      "spike_at_s": 560,
+      "spike_mult": 6,
+      "spike_s": 90,
+      "ramp_s": 10,
+      "seed": 7
+    }
+  },
+  "app": {
+    "cpu_ms_per_req": 25,
+    "alloc_kb": 64,
+    "env": {}
+  },
+  "faults": [],
+  "ab": {
+    "trial": "a2-load-s7",
+    "arm": "hpa300"
+  },
+  "scaling": {
+    "policy": "hpa_cpu",
+    "min": 1,
+    "max": 4,
+    "target_cpu": 70,
+    "initial": 1
+  },
+  "_run": {
+    "run_id": "ab-a2-load-s7-hpa300-1108-145014-9a0",
+    "namespace": "lab-ab-a2-load-s7-hpa300-1108-145014-9a0",
+    "scenario_file": "/Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/ab/scenarios/a2-load-s7-hpa300.yaml",
+    "image": "loadlab:v1",
+    "k6_image": "grafana/k6:0.54.0",
+    "context": "kubeai-lab",
+    "t_created": 1794174614.163578,
+    "t0": 1794174659.858777,
+    "t_end": 1794175383.93169,
+    "status": "succeeded",
+    "export_window": [
+      1794174629.858777,
+      1794175393.93169
+    ],
+    "step_s": 5
+  }
+}

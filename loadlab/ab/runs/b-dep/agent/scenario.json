@@ -1,0 +1,61 @@
+{
+  "id": "ab-b-dep-agent",
+  "duration_s": 720,
+  "traffic": {
+    "shape": "diurnal_spike",
+    "base_rps": 14.4,
+    "params": {
+      "period_s": 600,
+      "amplitude": 0.5,
+      "noise": 0.08,
+      "point_s": 10,
+      "spike_at_s": 560,
+      "spike_mult": 6,
+      "spike_s": 90,
+      "ramp_s": 10,
+      "seed": 42
+    }
+  },
+  "app": {
+    "cpu_ms_per_req": 25,
+    "alloc_kb": 64,
+    "env": {}
+  },
+  "faults": [
+    {
+      "type": "dep_latency",
+      "start_s": 180,
+      "end_s": 360,
+      "target": "all",
+      "params": {
+        "dep_latency_ms": 400,
+        "dep_fraction": 0.5
+      }
+    }
+  ],
+  "ab": {
+    "trial": "b-dep",
+    "arm": "agent"
+  },
+  "scaling": {
+    "policy": "fixed",
+    "replicas": 1
+  },
+  "_run": {
+    "run_id": "ab-b-dep-agent-1108-141026-283",
+    "namespace": "lab-ab-b-dep-agent-1108-141026-283",
+    "scenario_file": "/Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/ab/scenarios/b-dep-agent.yaml",
+    "image": "loadlab:v1",
+    "k6_image": "grafana/k6:0.54.0",
+    "context": "kubeai-lab",
+    "t_created": 1794172226.989263,
+    "t0": 1794172245.532966,
+    "t_end": 1794172968.651315,
+    "status": "succeeded",
+    "export_window": [
+      1794172215.532966,
+      1794172978.651315
+    ],
+    "step_s": 5
+  }
+}

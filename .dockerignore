@@ -7,3 +7,5 @@ ml_service
 test
 k8s
 *.md
+loadlab
+data_collection

@@ -3,8 +3,8 @@
 **Bundle:** `models/scaling/scaling-20261108194802` (`models/scaling/LATEST`). **Date:** 2026-11-08 (review-3 revision).
 **Reproduce:** `cd ml_service && PYTHONPATH=. python -m kubeai_ml.scaling.train_all` (about 14 min on 6 cores).
 To print every table below from the bundle, run `python -m kubeai_ml.scaling.report`.
-**Serve:** `kubeai_ml.scaling.engine.DecisionEngine().decide(deployment_obs, pod_obs, current_replicas, min, max, now_ts=...)`.
-**Tests:** the whole `ml_service` suite passes (69 tests). `tests/test_scaling.py` runs the shipped bundle on recorded held-out windows; `tests/test_scaling_safety.py` covers the safety interlocks on synthetic telemetry.
+**Serve:** `kubeai_ml.scaling.engine.DecisionEngine(policy_mode=None).decide(deployment_obs, pod_obs, current_replicas, min, max, now_ts=...)`.
+**Tests:** the whole `ml_service` suite passes (115 tests at this revision, including other work in progress on the branch; 4 were added after the live A/B review: own-rollout evidence, the post-restart leak latch, and `agent_rollout_ts` validation). `tests/test_scaling_policy_v2.py` covers the v2 signals, stabilisation and gate. `tests/test_scaling.py` runs the shipped bundle on recorded held-out windows; `tests/test_scaling_safety.py` covers the safety interlocks on synthetic telemetry.
 
 Every 15 s, for each deployment, the engine answers three questions:
 
@@ -14,7 +14,16 @@ Every 15 s, for each deployment, the engine answers three questions:
 
 The OOM-ahead model (`models/LATEST`) is unchanged. It is an optional per-pod memory-risk input.
 
-**Bottom line of this revision.** The earlier claim that the predictive policy "avoids SLO violations" was an artefact. It came from a wide forecast that parked the fleet near the replica cap. Once the forecast must be backed by measurements, and costs are compared at equal pod-minutes, **the predictive replica policy is not better than a stock HPA**. On held-out traces it has more violation minutes at about the same cost (section 3). The engine's demonstrated value is the **state classifier and the fault gate**:
+**Policy v2 (this revision): the engine default is now HPA_GATED** (section 3b). That is a plain CPU-70 % HPA formula with the classifier's fault gate and remediation.
+
+* On the held-out traces it **ties its HPA 70 % / 30 s twin on load**: 0.67 SLO-violation minutes at 172 vs 171 pod-minutes. It is not on the HPA Pareto frontier: the interpolated frontier at 172 pod-minutes is 0.58, and an HPA with a 100 % target reaches the same 0.67 at 137 pod-minutes (about 20 % cheaper). All held-out violations are one event (n = 1), so none of these load differences is meaningful.
+* It makes **fewer fault-time scale-ups in open-loop replay**: 2.3 % of held-out fault decisions add pods, against 16.5 % for an open-loop HPA, and 0.50 vs 3.75 wasted pod-minutes.
+* **Live closed-loop A/B** (section 3c, `loadlab/ab/AB_REPORT.md`): it ties the HPA on load; on the two faults it behaved as the replay predicts (no scale-up after detecting a slow dependency, leak pod restarted before OOM) with **zero measured SLO difference** (n = 1 run per arm), and it exposed two regressions: a ~75 s `memory_leak` latch that delayed a needed scale-up by ~60 s (a query artefact, fixed), and false `dependency_latency` pages at the spike in 2 of 3 runs.
+* No candidate, including the learned-capacity FAULT_AWARE policy and forecast pre-scaling, beat the HPA on pure load.
+
+The text below, up to section 3b, describes the previous PREDICTIVE policy, which is still selectable with `policy_mode="predictive"`.
+
+**Bottom line of the previous revision.** The earlier claim that the predictive policy "avoids SLO violations" was an artefact. It came from a wide forecast that parked the fleet near the replica cap. Once the forecast must be backed by measurements, and costs are compared at equal pod-minutes, **the predictive replica policy is not better than a stock HPA**. On held-out traces it has more violation minutes at about the same cost (section 3). The engine's demonstrated value is the **state classifier and the fault gate**:
 
 * it does not add pods during non-load faults (0 % of decisions on every held-out fault run);
 * it names the remediation (restart the right pod, page, roll back only with rollout evidence);
@@ -271,7 +280,137 @@ The previous bundle went 1→3→4 within 45 s on flat 10.8 RPS and stayed at th
 * What PREDICTIVE does well: no flapping on noisy traffic (15 vs 28 actions), no parking at the cap, about HPA-level cost, and the fault gate (section 4).
 * A CPU-target HPA cannot be tuned to the learned capacity. At a 147 % target, violation minutes are 5–7x higher.
 
-## 4. Faults: the gate against what the HPA actually did
+## 3b. Policy v2: FAULT_AWARE and HPA_GATED (engine default: **HPA_GATED**)
+
+**Why.** Section 3 shows the forecast-driven PREDICTIVE policy loses to the HPA at equal pod-minutes. Policy v2 keeps what the engine is good at (the classifier gate and the remediation) and makes the load sizing reactive and HPA-like. Code: `policy.fault_aware_replicas`; evaluation: `python -m kubeai_ml.scaling.policy_eval` (about 13 min, writes `kubeai_ml/scaling/sim_results/policy_v2_*`).
+
+**Two candidates.**
+
+* **FAULT_AWARE.** The raw recommendation is the max() of four signal groups:
+  * traffic: ⌈demand × headroom / learned safe rps per pod at N⌉ (capacity model, risk 0.1);
+  * compute: the HPA formula ⌈ready × CPU utilisation / target⌉ with the 10 % tolerance band. Missing (not-Ready) pods count as 0 % on scale-up, as in `replica_calculator.go`. The compute signal is vetoed when CPU per request is ≥ 1.3x the healthy baseline, because that CPU is cost, not load;
+  * request quality: the SLO was breached on the last two samples while all pods are Ready **and** busy (CPU ≥ target) → +1 pod. A breach on idle pods is a dependency or error problem;
+  * memory: max pod working set / limit ≥ 0.9 → +1 pod, in load states only. **No lab run exercises this signal.** Memory growth in the lab is always a leak, which the gate handles.
+
+  The forecast is **advisory**: it is reported but never sizes the fleet. A pre-scale option (`fa_fc_prescale`: forecast need only with a measured rising trend, 2 consecutive decisions, capped at +50 %) was evaluated and rejected (see below).
+* **HPA_GATED.** The compute signal alone: a plain CPU-70 % HPA.
+
+**Common to both.**
+
+* **Stabilisation.** Scale up at once (max(doubling, +4) per 15 s). Scale down to the max recommendation over the window, at most 100 % per step. There is no scale-down while pods are still starting, and none before a full window has been seen.
+* **The same fault gate.**
+  * memory_leak, dependency_latency, error_fault, noisy_pod, crashloop, pod_restart: compute, quality and memory are vetoed, and so is the forecast. Only *measured* demand above what the current fleet serves at the learned safe rate (headroom 1.0, healthy CPU cost) may add pods. Scale-down is frozen.
+  * bad_deploy: a stop-gap, sized at headroom 1.0, only while the SLO is breached.
+
+**Protocol.**
+
+* **Tuning set.** 53 candidates were tuned on the dev + synthetic traces at cap 4:
+  * PREDICTIVE;
+  * HPA_GATED with 30 s and 180 s windows;
+  * FAULT_AWARE over traffic headroom {1.0, 1.3, 1.6, 2.0, 2.5} × compute target {off, 70, 85, 100 %} × window {30, 180 s}, plus forecast pre-scale on the traffic-only variants.
+* **Baselines.** A dense HPA grid: CPU targets 25–100 % (13 values) × scale-down windows {30, 300 s}, plus fixed-2/3/4.
+* **Pick rule, per family.** Fewest violation minutes above the HPA Pareto frontier, linearly interpolated at equal pod-minutes. Ties go to fewer pod-minutes.
+* **Held-out scoring.** Held-out (cold, and with a 600 s warm start) was scored with the picks at caps 4 and 8.
+* **Held-out looks.** Held-out was looked at **twice**. The first run had a coarser HPA grid and FAULT_AWARE sized at the full headroom during faults. Both were changed after the first run: the grid because of dev-sweep coarseness, the fault sizing because of dev fault replays. The picks did not change.
+
+**Picks** (dev + synthetic only):
+
+* FAULT_AWARE = `fa-h2.5-cpu100-sd30`: headroom 2.5, 30 s window. The compute target does not matter at headroom 2.5: off, 70, 85 and 100 % give identical runs, and the shipped `fa_cpu_target` is 0.70.
+* HPA_GATED = `hpa_gated-70-sd30`.
+
+**Load: held-out, cold start** (6 traces, 45 trace-minutes). Columns are SLO-violation minutes, violation events, pod-minutes and scaling actions.
+
+| cap | policy | viol. min | events | pod-min | actions |
+|---|---|---|---|---|---|
+| 4 | **HPA_GATED 70 %, 30 s** | 0.67 | 1 | 172.0 | 33 |
+| 4 | HPA 70 %, 30 s | 0.67 | 1 | 170.8 | 32 |
+| 4 | HPA 70 %, 300 s (stock) | 0.67 | 1 | 200.6 | 13 |
+| 4 | HPA_GATED 70 %, 180 s | 0.67 | 1 | 194.2 | 19 |
+| 4 | FAULT_AWARE h2.5, 30 s | 0.50 | 1 | 209.2 | 36 |
+| 4 | HPA 50 %, 30 s | 0.50 | 1 | 210.0 | 33 |
+| 4 | FAULT_AWARE h1.3, traffic only, 180 s | 2.17 | 2 | 149.7 | 17 |
+| 4 | the same + forecast pre-scale | 2.17 | 2 | 176.2 | 31 |
+| 4 | PREDICTIVE (v1) | 2.17 | 2 | 179.2 | 29 |
+| 8 | **HPA_GATED 70 %, 30 s** | 0.67 | 1 | 183.0 | 35 |
+| 8 | HPA 70 %, 30 s | 0.67 | 1 | 185.1 | 35 |
+| 8 | HPA 70 %, 300 s | 0.67 | 1 | 227.8 | 15 |
+| 8 | FAULT_AWARE h2.5, 30 s | 0.50 | 1 | 274.7 | 66 |
+| 8 | HPA 50 %, 30 s | 0.50 | 1 | 248.7 | 48 |
+| 8 | PREDICTIVE (v1) | 2.17 | 2 | 223.6 | 37 |
+
+**Load: cost-matched summary** (violation minutes / pod-minutes, each next to the HPA twin with the closest cost). "Frontier" is the interpolated HPA Pareto frontier at the candidate's pod-minutes.
+
+| traces | cap | HPA_GATED-70-30s | HPA 70 % 30 s | FAULT_AWARE h2.5 | closest HPA | frontier at FA cost | PREDICTIVE | frontier at PRED cost |
+|---|---|---|---|---|---|---|---|---|
+| held-out | 4 | 0.67 / 172.0 | 0.67 / 170.8 | 0.50 / 209.2 | HPA 50 %: 0.50 / 210.0 | 0.43 | 2.17 / 179.2 | 0.56 |
+| held-out | 8 | 0.67 / 183.0 | 0.67 / 185.1 | 0.50 / 274.7 | HPA 45 %: 0.50 / 274.3 | 0.31 | 2.17 / 223.6 | 0.52 |
+| held-out, warm | 4 | 0.67 / 293.4 | 0.67 / 292.2 | 0.50 / 380.6 | HPA 50 %: 0.50 / 382.1 | 0.48 | 2.17 / 269.4 | 0.64 |
+| held-out, warm | 8 | 0.67 / 304.4 | 0.67 / 306.5 | 0.50 / 446.0 | HPA 55 % 300 s: 0.50 / 458.8 | 0.38 | 2.17 / 318.0 | 0.60 |
+| dev (tuned) | 4 | 3.50 / 503.6 | 3.50 / 502.1 | 0.58 / 561.8 | HPA 50 %: 0.58 / 564.3 | 0.84 | 4.92 / 523.5 | 3.09 |
+| dev (tuned) | 8 | 3.17 / 619.9 | 3.17 / 620.2 | 0.58 / 857.7 | HPA 45 %: 0.00 / 854.2 | 0.00 | 4.50 / 774.3 | 1.53 |
+| synthetic (tuned) | 4 | 3.42 / 490.5 | 3.58 / 491.0 | 2.50 / 525.5 | HPA 55 %: 3.17 / 516.8 | 2.74 | 4.92 / 478.5 | 3.49 |
+| synthetic (tuned) | 8 | 3.42 / 663.5 | 3.50 / 656.8 | 2.33 / 882.0 | HPA 50 %: 2.33 / 863.0 | 2.24 | 4.58 / 732.2 | 2.96 |
+
+**Reading the load results.**
+
+* **Nothing beats the HPA on pure load.**
+  * HPA_GATED reproduces its HPA twin within about 1 % of pod-minutes on every split. It is the same formula; it reads the 20 s app CPU signal instead of the lagged metrics-server one.
+  * Under this card's own pick rule HPA_GATED is **above** the HPA frontier, like FAULT_AWARE: held-out cap 4 is 0.67 at 172.0 pod-minutes against an interpolated frontier of 0.58 (cap 8: 0.67 at 183.0 vs 0.59; `policy_v2_cost_matched_holdout.csv`, `hpa_frontier_interp_viol_min`). HPA 100 %, 30 s reaches 0.67 at 137.1 pod-minutes. "Ties the HPA" holds only against its 70 % twin, and with n = 1 violation event none of these differences is meaningful.
+  * FAULT_AWARE at headroom 2.5 operates at the point of an HPA with a 45–55 % target and ties it: held-out cap 4 is 0.50 / 209 vs 0.50 / 210. Against the *interpolated* frontier it is slightly worse: 0.50 vs 0.31–0.48 violation minutes at equal cost.
+  * At lower headroom (1.0–1.6), the learned-capacity traffic signal is cheaper but has more violations than the HPA frontier. The learned safe rate (about 13 RPS per pod) leaves no room for a 10 s pod start during a x4 spike, whereas the 70 % CPU target (about 6.7 RPS per pod) does.
+  * All held-out violations are **one event** (the x4 spike run). That is n = 1, which cannot separate the policies statistically.
+* **Forecast pre-scale: rejected.**
+  * On the tuning set, with a 180 s window, it lowered violation minutes at +2–5 % pod-minutes. At headroom 1.3: 12.33 → 9.83 at 943 → 979 pod-minutes. At headroom 2.0: 6.42 → 3.75 at 1065 → 1079.
+  * With a 30 s window it changed nothing (for example 3.08 → 3.08 at headroom 2.5).
+  * On held-out it changed nothing (2.17 → 2.17) and cost +18 % pod-minutes at cap 4.
+  * The forecast therefore stays advisory. The engine reports its sizing in `policy.signals.forecast_advisory` and in the reasons.
+* **Composition.** With a 70 % compute target, the compute signal dominates the traffic signal at headroom ≤ 2.0. `fa-h1.3-cpu70-sd30` is identical to HPA_GATED on every load split.
+
+**Faults.** This is an open-loop replay on the 27 recorded fault windows, every 15 s, against the replica count the lab actually had (`policy_v2_fault_replay.csv`).
+
+* "Upscale" is the share of decisions in the fault window that recommend more pods than the lab had.
+* "Wasted" is the extra pods × 15 s, in pod-minutes.
+* "Pre-fault upscale" is the same share in the 2 minutes before the fault. It exposes a policy whose steady operating point simply differs from the lab's.
+* HPA 70 % is the open-loop HPA formula on the recorded CPU, without stabilisation.
+* pod_kill windows are reported separately.
+
+| split (windows) | policy | upscale % | wasted pod-min | pre-fault upscale % | HPA 70 % upscale % | HPA 70 % wasted |
+|---|---|---|---|---|---|---|
+| held-out (6) | PREDICTIVE | 0.0 | 0.00 | 10.4 | 16.5 | 3.75 |
+| held-out (6) | **HPA_GATED-70-30s** | **2.3** | **0.50** | 0.0 | 16.5 | 3.75 |
+| held-out (6) | FAULT_AWARE h1.3 cpu70 | 3.3 | 0.75 | 0.0 | 16.5 | 3.75 |
+| held-out (6) | FAULT_AWARE h2.5 (pick) | 9.3 | 2.50 | **83.3** | 16.5 | 3.75 |
+| dev (14) | PREDICTIVE | 6.2 | 3.50 | 1.8 | 13.4 | 7.25 |
+| dev (14) | **HPA_GATED-70-30s** | **7.7** | **4.25** | 1.8 | 13.4 | 7.25 |
+| dev (14) | FAULT_AWARE h2.5 (pick) | 16.8 | 10.25 | 90.2 | 13.4 | 7.25 |
+
+* **The open-loop HPA columns cover the CPU-visible faults only.** Open-loop HPA 70 % adds pods on the CPU-visible faults: held-out cpu_hog 86.7 %, dev cpu_hog 80 %, dep_latency 12.5 %. It adds none on leak, error or crashloop windows, whose CPU does not rise. The "24 % false scale-up" in section 2.1 is the HPA rule scored on classifier rows, which is a different metric.
+* **Where HPA_GATED's remaining scale-ups come from.**
+  * Dev: the bad_deploy-x3 stop-gap, while the SLO was breached 91 % of the time (80 % of that window). Also the real x4 spike in e-spike-dep-latency, and diurnal load in e-diurnal-leak.
+  * Held-out: **one decision each** on d-bad-deploy-x2 and d-cpu-hog-p2, 27–32 s after the fault started. At that point the classifier still said scale_down, and the 60 s-median CPU per request had not moved yet (ratio 0.996 and 1.031), so the 1.3x veto could not fire. This is the detection-delay window.
+* **Closed loop would keep that pod.** In closed loop, the pod added in that window stays until the fault clears, because scale-down is frozen in fault states. "Wasted pod-min" counts only the decision itself and understates this.
+* **FAULT_AWARE h2.5's fault numbers are mostly its operating point.** It wants more pods than the lab ran even before the fault (83–90 % pre-fault).
+
+**Choice: HPA_GATED-70-30s is the engine default** (`Stabilization.mode = "hpa_gated"`, `fa_down_window_s = 30`).
+
+* **Load.** It ties its HPA 70 % / 30 s twin on load: held-out 0.67 viol-min at 172 vs 171 pod-minutes. It is not on the frontier (0.58 at that cost; HPA 100 % gets 0.67 at 137 pod-minutes), with n = 1 violation event.
+* **Faults.** Fewer fault-time scale-ups in open-loop replay: held-out 2.3 % of fault decisions add pods vs 16.5 % for the HPA, and 0.50 vs 3.75 wasted pod-minutes. Remediation is unchanged: restart the right pod, page, roll back with evidence. The live A/B (section 3c) found no SLO benefit from this.
+* **Why not FAULT_AWARE.** It did not earn the default. It only ties an HPA with a 50 % target, slightly worse than the interpolated frontier, and its higher operating point muddies the fault comparison. It remains selectable with `DecisionEngine(policy_mode="fault_aware")`. Its default parameters are the pick, with stop-gap and fault-time sizing at headroom 1.0. That sizing change was made after the scored run, so it affects only the bad_deploy rows of its fault numbers.
+* **PREDICTIVE** remains selectable with `policy_mode="predictive"`. Its section 3 and 4 numbers are unchanged.
+
+**No retraining was needed.** v2 adds only policy parameters with code defaults. The shipped bundle's `policy.json` has no `mode` key, so it now loads as HPA_GATED. The bundle's `fault_replay_decisions.csv.gz` and the section 3–4 tables still describe PREDICTIVE.
+
+### 3c. Live closed-loop A/B (`loadlab/ab/AB_REPORT.md`)
+
+The in-cluster agent (`ACT_MODE=act`, this bundle, HPA_GATED) drove a Deployment on kubeai-lab against a stock HPA (CPU 70 %, 30 s and 300 s scale-down windows) on the same 720 s diurnal + ×6 flash-spike trace, in three trials: pure load, a 180 s slow dependency, and a 1 MB/s memory leak. One run per arm and trial (the second-seed repeat failed on API-server stalls).
+
+* **Load: a tie.** Violation-minutes agent vs HPA-30s 1.00 vs 1.25, 3.75 vs 4.00, 1.50 vs 1.25; pod-minutes within about ±6 %. Client-side (k6) p95 is 1.1–2.8 s in 8 of 10 runs, far above what the server-side grid metric shows; it favours the agent over HPA-30s in all 3 paired runs (n = 1 each) and the unpaired HPA-300s runs of one slot over everything.
+* **Faults: the behaviour the replay predicts, with zero measured SLO benefit.** Dependency latency cost 3.0 violation-minutes in every arm; the agent added one pod 4 s into the fault (load-driven, before detection) and none after it detected the fault at +45 s, while HPA-30s added a second pod at +113 s. The leak caused no violations anywhere; the agent restarted the leaking pod at +44.7 s, the HPA arms were OOMKilled at +221–222 s (2–4 failed requests).
+* **Regressions it exposed.**
+  * After the leak restart the state stayed `memory_leak` for ~75 s and froze a needed scale-up by ~60 s. Cause: the `mem_growth_bytes_per_s` query kept the deleted pod's slope for ~60 s. Fixed in query v2 (live scrape targets only); an offline replay of the recorded inputs leaves the state 2 decisions after the restart instead of 4. The training export is unaffected in substance: re-querying all 44 dataset runs (still in Prometheus retention), v2 changes 70 of 4,861 `mem_growth` points (1.4 %), none by more than 100 KB/s (`loadlab/runner/check_query_v2.py`; no leaking pod was ever deleted in the dataset), so the bundle was not retrained and the dataset was not re-exported.
+  * In 2 of 3 runs the spike overload was labelled `dependency_latency` (p = 0.91) once, 15 s after scaling to the cap, with a false page. Below the cap that would freeze scale-up during real overload.
+
+## 4. Faults: the gate against what the HPA actually did (PREDICTIVE policy)
 
 This is an open-loop replay of the engine every 15 s on every recorded fault run. Its recommendation is recorded, not applied. The HPA columns are what actually happened in the lab.
 
@@ -333,9 +472,38 @@ The design is sound, but its held-out validation needs a fresh crashloop run. In
     * crashloop with OOMKills is routed to the memory remediation (raise the limit or fix the leak).
 * **Latency.** About 15–30 ms per decision.
 
+### Engine API (policy v2)
+
+`DecisionEngine(bundle_dir=None, oom_model_dir="auto", policy_mode=None)`:
+
+* `policy_mode` is one of `"hpa_gated"`, `"fault_aware"` or `"predictive"`.
+* `None` uses the bundle's `stabilization.mode`, which defaults to `"hpa_gated"`.
+* Any other value raises `ValueError`.
+* The `engine.mode` property gives the active mode.
+
+`decide(...)` keeps its input schema and every existing output field. It adds one output field:
+
+```
+"policy": {"mode": "hpa_gated" | "fault_aware" | "predictive",
+           "action": "scale_up" | "scale_down" | "hold" | "do_not_scale",
+           "signals": {...}}
+```
+
+* `signals` is empty for `predictive`. For the v2 modes it holds the per-signal recommendations, in pods (None = no opinion):
+  * `traffic`: learned capacity × `fa_headroom`. It is advisory in `hpa_gated`.
+  * `compute`: the HPA formula.
+  * `quality`, `memory`, `forecast_advisory`.
+  * `driver`: the signal that set the recommendation.
+  * `cpr_ratio`: CPU per request / healthy baseline.
+* Optional keys:
+  * `compute_vetoed`: present when the CPU rise was attributed to cost, not load;
+  * `traffic_fault`: present in fault states, the measured-load need at headroom 1.0.
+* v2 reads the optional inputs `cpu_util_vs_request` (derived from `cpu_cores_used` when absent) and `mem_ws_max_pod_frac_of_limit`.
+* The parameters are `Stabilization.fa_*` and `Stabilization.mode` (`policy.py`). They are serialised into `policy.json` by the next `train_all`.
+
 ## 6. Limitations
 
-1. **The predictive policy has no demonstrated advantage over the HPA** (section 3). Ship the engine for its state, gate and remediation output. Use its replica count as advice, next to the HPA, until closed-loop cluster runs say otherwise.
+1. **No policy beats the HPA on load** (sections 3 and 3b). The default, HPA_GATED, *is* the HPA formula plus the fault gate. Its advantage is the faults it does not scale for, measured open loop on 6 held-out and 14 dev fault windows. Inside the classifier's detection delay (about 30–50 s), the compute signal can still add a pod on a CPU-visible fault: 1 decision on each of 2 held-out windows. That pod then stays until the fault clears, because scale-down is frozen. One small closed-loop A/B exists (section 3c): one run per arm on three trials, one app, one node. It showed the predicted fault behaviour but no SLO benefit, a ~75 s post-restart freeze (fixed) and false dependency pages at overload. That is far too little to rank policies closed loop.
 2. **Not blind.** The held-out set influenced 4 decisions (section 1). The blind classifier figure is 0.803 settled / 0.761 strict.
 3. **One lab, one app, one node.** The capacity model is clamped to 1–4 replicas, and the simulator is extrapolated beyond 3 pods.
 4. **Forecaster prior.** On flat traffic the p90 at +60 s is 1.2–1.9x the current rate and at +120 s 1.8–3.7x. This is now level-invariant but still wide. The policy only uses the forecast when a measurement backs it.
@@ -348,7 +516,7 @@ The design is sound, but its held-out validation needs a fresh crashloop run. In
 ## 7. What to collect next
 
 1. **A frozen round 3**: new crashloop, error, hog and pod-kill runs, plus surges at unseen times, shapes and base rates. Score all of it once, after this bundle.
-2. **Closed-loop cluster runs** where the engine drives replicas, to check the simulator's ranking and violation bias.
+2. **More closed-loop cluster runs** where the engine drives replicas: the A/B of section 3c has n = 1 per arm. Needed: several seeds per trial, a client-side SLO metric, faults below the replica cap (to measure the cost of the overload → `dependency_latency` misread), a recurring code leak, and a re-run with the post-review agent (query v2, rollback and eviction guards).
 3. Benign rollouts; 5–8 replica step ramps; long flat and diurnal runs without surges, to retrain the forecaster's prior.
 
 ## 8. Files
@@ -357,7 +525,9 @@ The design is sound, but its held-out validation needs a fresh crashloop run. In
 |---|---|
 | `kubeai_ml/scaling/train_all.py` | the pipeline: per-fold relabelled LORO, blind held-out variants, forecaster with a flat probe, capacity with per-run breach counts, simulator with warm-start, cost-matched and oracle-need metrics, fault replay |
 | `kubeai_ml/scaling/engine.py` | `DecisionEngine`, input schema, interlocks |
-| `kubeai_ml/scaling/policy.py` | replica policy (evidence-gated forecast, stop-gap bad deploy, telemetry freeze) |
+| `kubeai_ml/scaling/policy.py` | replica policies: `fault_aware_replicas` (v2: HPA_GATED default, FAULT_AWARE) and `desired_replicas` (v1 PREDICTIVE) |
+| `kubeai_ml/scaling/policy_eval.py` | simulator comparison; `python -m kubeai_ml.scaling.policy_eval` runs the v2 sweep, the dense HPA frontier, cost-matched tables and the fault replay |
+| `kubeai_ml/scaling/sim_results/policy_v2_*` | v2 results: sweep, per-split tables, cost-matched, per-trace, fault replay and summary |
 | `kubeai_ml/scaling/hpa.py` | simulated HPA (`replica_calculator.go` grouping) |
 | `kubeai_ml/scaling/split.py` | held-out runs and their caveats |
 | `models/scaling/<version>/` | manifest, metrics, specs, policy, models, `fault_replay_decisions.csv.gz` |

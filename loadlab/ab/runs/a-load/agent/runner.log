@@ -1,0 +1,8 @@
+13:57:01 [ab-a-load-agent-1108-135701-42a] scenario ab-a-load-agent -> namespace lab-ab-a-load-agent-1108-135701-42a
+13:57:07 [ab-a-load-agent-1108-135701-42a] app ready: 1 replica(s), policy fixed
+13:57:09 [ab-a-load-agent-1108-135701-42a] agent pointed at lab-ab-a-load-agent-1108-135701-42a {"ACT_MODE": "act", "ALLOW_EXEC": "true", "OOM_LOOP": "false", "DEPLOY_SELECTOR": "", "DEPLOYMENTS": "loadlab", "SCALE_MIN": "1", "SCALE_MAX": "4", "DECIDE_INTERVAL_S": "15", "HISTORY_S": "900", "NAMESPACE": "lab-ab-a-load-agent-1108-135701-42a"}
+13:57:25 [ab-a-load-agent-1108-135701-42a] k6 started: diurnal_spike base_rps 14.4 pod k6-pk4vb
+14:09:29 [ab-a-load-agent-1108-135701-42a] load finished: succeeded
+14:09:29 [ab-a-load-agent-1108-135701-42a] agent decision log: 50 lines
+14:09:49 [ab-a-load-agent-1108-135701-42a] exported deploy.csv (146 rows) pods.csv (447 rows) -> /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/ab-a-load-agent-1108-135701-42a
+14:09:49 [ab-a-load-agent-1108-135701-42a] namespace deleted

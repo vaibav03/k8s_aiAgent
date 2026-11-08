@@ -1,0 +1,9 @@
+15:16:36 [ab-a2-load-s7-agent-1108-151636-d0f] scenario ab-a2-load-s7-agent -> namespace lab-ab-a2-load-s7-agent-1108-151636-d0f
+15:17:01 [ab-a2-load-s7-agent-1108-151636-d0f] app ready: 1 replica(s), policy fixed
+15:17:03 [ab-a2-load-s7-agent-1108-151636-d0f] agent pointed at lab-ab-a2-load-s7-agent-1108-151636-d0f {"ACT_MODE": "act", "ALLOW_EXEC": "true", "OOM_LOOP": "false", "DEPLOY_SELECTOR": "", "DEPLOYMENTS": "loadlab", "SCALE_MIN": "1", "SCALE_MAX": "4", "DECIDE_INTERVAL_S": "15", "HISTORY_S": "900", "NAMESPACE": "lab-ab-a2-load-s7-agent-1108-151636-d0f"}
+15:17:14 [ab-a2-load-s7-agent-1108-151636-d0f] k6 started: diurnal_spike base_rps 14.4 pod k6-z297r
+15:21:40 [ab-a2-load-s7-agent-1108-151636-d0f] RUN FAILED: RuntimeError('kubectl --context kubeai-lab -n lab-ab-a2-load-s7-agent-1108-151636-d0f get job k6 -o json failed: Unable to connect to the server: net/http: TLS handshake timeout')
+15:21:41 [ab-a2-load-s7-agent-1108-151636-d0f] WARN: no k6 summary found in logs
+15:21:42 [ab-a2-load-s7-agent-1108-151636-d0f] agent decision log: 19 lines
+15:21:42 [ab-a2-load-s7-agent-1108-151636-d0f] WARN: no k6 summary found in logs
+15:21:42 [ab-a2-load-s7-agent-1108-151636-d0f] agent decision log: 19 lines

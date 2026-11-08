@@ -325,6 +325,14 @@ class Run:
             for pod, rc in cand.items():
                 if seen.get(pod) == rc:
                     continue
+                if pod in seen and not rec.get("reapply_on_restart", True):
+                    # fault spec `reapply_on_restart: false`: a restart clears the fault for good
+                    # (state-triggered leak); record it once and stop following that pod
+                    seen[pod] = rc
+                    rec.setdefault("cleared_by_restart", []).append(
+                        {"pod": pod, "restart_count": rc, "ts": time.time(), "rel_s": round(time.time() - self.t0, 3)})
+                    self.log(f"FAULT CLEARED f{i} {rec['type']} on {pod} by container restart (no re-apply)")
+                    continue
                 try:
                     resp = self.chaos(pod, body)
                 except Exception as e:  # noqa: BLE001  (not reachable yet - next tick)
@@ -390,7 +398,7 @@ class Run:
         typ, params = f["type"], f["params"]
         rec = {"fault_id": f"{self.run_id}-f{i}", "idx": i, "type": typ, "target": f["target"], "params": params,
                "scheduled_start_s": f["start_s"], "scheduled_end_s": f["end_s"], "run_id": self.run_id,
-               "namespace": self.ns}
+               "namespace": self.ns, "reapply_on_restart": bool(f.get("reapply_on_restart", True))}
         pods = self.app_pods()
         if f["target"] == "one-pod":
             idx = int(f.get("pod_index", 0)) % max(1, len(pods))

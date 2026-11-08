@@ -61,6 +61,23 @@ function shapePoints() {
       }
       break;
     }
+    case 'diurnal_spike': { // diurnal (as above) x a flash spike envelope (A/B trace, loadlab/ab)
+      const period = P.period_s ?? 600, amp = P.amplitude ?? 0.6, noise = P.noise ?? 0.08;
+      const dt = P.point_s ?? 10, rand = rng(P.seed ?? 42);
+      const at = P.spike_at_s ?? Math.round(D * 0.75), mult = P.spike_mult ?? 4;
+      const dur = P.spike_s ?? 90, ramp = P.ramp_s ?? 10;
+      const env = (t) => (t <= at || t >= at + 2 * ramp + dur) ? 1
+        : t < at + ramp ? 1 + (mult - 1) * (t - at) / ramp
+          : t <= at + ramp + dur ? mult : 1 + (mult - 1) * (at + 2 * ramp + dur - t) / ramp;
+      const base = (t) => B * (1 - amp * Math.cos((2 * Math.PI * t) / period));
+      const ts = [];
+      for (let t = 0; t <= D; t += dt) ts.push(t);
+      for (const e of [at, at + ramp, at + ramp + dur, at + 2 * ramp + dur]) if (e < D && !ts.includes(e)) ts.push(e);
+      ts.sort((a, b) => a - b);
+      // noise drawn once per grid point in time order, so the same seed gives the same trace
+      for (const t of ts) pts.push([t, Math.max(0.5, base(t) * env(t) * (1 + noise * (2 * rand() - 1)))]);
+      break;
+    }
     case 'spike': { // baseline then mult x for spike_s
       const at = P.spike_at_s ?? Math.round(D * 0.35), mult = P.spike_mult ?? 4;
       const dur = P.spike_s ?? 120, ramp = P.ramp_s ?? 10;

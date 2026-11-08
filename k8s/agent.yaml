@@ -1,13 +1,14 @@
-# KubeAI agent. Build + load the image first, e.g.:
-#   docker build -t kubeai-agent:latest . && minikube image load kubeai-agent:latest
+# KubeAI agent. Build the image straight into the minikube node first:
+#   minikube -p kubeai-lab image build -t kubeai-agent:latest .
+# (or: docker build -t kubeai-agent:latest . && minikube image load kubeai-agent:latest)
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: kubeai-agent-config
   namespace: kubeai
 data:
-  # kube-prometheus-stack default; adjust to your Prometheus service
-  PROMETHEUS_URL: "http://prometheus-operated.monitoring.svc:9090"
+  # loadlab Prometheus (loadlab/monitoring); kube-prometheus-stack: prometheus-operated.monitoring.svc
+  PROMETHEUS_URL: "http://prometheus.monitoring.svc:9090"
   KUBE_API: "https://kubernetes.default.svc"
   NAMESPACE: "default"
   POD_SELECTOR: "app=server"
@@ -23,6 +24,32 @@ data:
   MAX_MEMORY_LIMIT: "4Gi"
   MAX_REPLICAS: "10"
   PORT: "3001"
+  # ---- per-pod OOM loop (lib/agent.js). Empty = on only when the deployment loop is off
+  # (DEPLOYMENTS / DEPLOY_SELECTOR empty). It obeys ACT_MODE like the deployment loop, cannot
+  # scale, and shares one per-Deployment remediation cooldown with it when both are on.
+  OOM_LOOP: ""
+  # ---- deployment-level decision loop (lib/scaler.js -> POST /v1/decide)
+  # Targets in NAMESPACE: a comma list, or a label selector on Deployments. Both empty = loop off.
+  # Default: opt-in per Deployment with `kubectl label deploy <d> kubeai.io/managed=true`.
+  DEPLOYMENTS: ""
+  DEPLOY_SELECTOR: "kubeai.io/managed=true"
+  # observe = log decisions only | dryrun = kubectl --dry-run=server | act = real (needs ALLOW_EXEC=true)
+  ACT_MODE: "observe"
+  DECIDE_INTERVAL_S: "15"
+  HISTORY_S: "900"
+  SCALE_MIN: "1"
+  SCALE_MAX: "10"
+  SCALE_UP_COOLDOWN_S: "15"
+  SCALE_DOWN_COOLDOWN_S: "60"
+  REMEDIATION_COOLDOWN_S: "300"
+  HPA_OVERRIDE: "false"
+  # every decision is also appended here as one JSON line (emptyDir; read with kubectl exec / cp)
+  DECISION_LOG: "/tmp/decisions.jsonl"
+  APP_CONTAINER: "app"
+  APP_JOB: "annotated-pods"
+  # per-Deployment template for the app-level metrics, e.g. 'app="{deployment}"'. Empty =
+  # namespace-wide; the loop then refuses to decide in a namespace with several Deployments.
+  APP_METRIC_MATCHER: ""
 ---
 # The LLM key Secret is NOT part of this directory, so re-running
 # `kubectl apply -f k8s/` can never reset it. Create it once, out of band:
