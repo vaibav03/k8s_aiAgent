@@ -1,0 +1,20 @@
+# generated from scenarios/matrix.yaml by runner/matrix.py - edit matrix.yaml instead
+id: b-hpa-spike-sd30-b06-r2
+group: B
+heavy: true
+duration_s: 600
+traffic:
+  shape: spike
+  base_load_pods: 0.6
+  params:
+    spike_at_s: 150
+    spike_mult: 4
+    spike_s: 150
+    ramp_s: 8
+scaling:
+  policy: hpa_cpu
+  min: 1
+  max: 6
+  target_cpu: 70
+  scale_down_window_s: 30
+faults: []

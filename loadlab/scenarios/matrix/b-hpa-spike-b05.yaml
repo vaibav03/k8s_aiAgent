@@ -1,0 +1,19 @@
+# generated from scenarios/matrix.yaml by runner/matrix.py - edit matrix.yaml instead
+id: b-hpa-spike-b05
+group: B
+heavy: false
+duration_s: 540
+traffic:
+  shape: spike
+  base_load_pods: 0.5
+  params:
+    spike_at_s: 150
+    spike_mult: 4
+    spike_s: 120
+    ramp_s: 5
+scaling:
+  policy: hpa_cpu
+  min: 1
+  max: 6
+  target_cpu: 70
+faults: []

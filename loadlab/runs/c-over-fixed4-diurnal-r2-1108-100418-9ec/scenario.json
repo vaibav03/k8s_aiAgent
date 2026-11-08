@@ -1,0 +1,45 @@
+{
+  "id": "c-over-fixed4-diurnal-r2",
+  "group": "C",
+  "heavy": false,
+  "duration_s": 600,
+  "traffic": {
+    "shape": "diurnal",
+    "base_load_pods": 0.4,
+    "params": {
+      "period_s": 300,
+      "amplitude": 0.5,
+      "noise": 0.08,
+      "seed": 13
+    },
+    "base_rps": 7.2,
+    "_capacity_ref_rps_per_pod": 18
+  },
+  "scaling": {
+    "policy": "fixed",
+    "replicas": 4,
+    "_lane_cap": 4
+  },
+  "faults": [],
+  "app": {
+    "cpu_ms_per_req": 25,
+    "alloc_kb": 64
+  },
+  "_run": {
+    "run_id": "c-over-fixed4-diurnal-r2-1108-100418-9ec",
+    "namespace": "lab-c-over-fixed4-diurnal-r2-1108-100418-9ec",
+    "scenario_file": "/Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/scenarios/matrix_round2/c-over-fixed4-diurnal-r2.yaml",
+    "image": "loadlab:v1",
+    "k6_image": "grafana/k6:0.54.0",
+    "context": "kubeai-lab",
+    "t_created": 1794157458.879882,
+    "t0": 1794157488.757621,
+    "t_end": 1794158091.152839,
+    "status": "succeeded",
+    "export_window": [
+      1794157458.757621,
+      1794158101.152839
+    ],
+    "step_s": 5
+  }
+}

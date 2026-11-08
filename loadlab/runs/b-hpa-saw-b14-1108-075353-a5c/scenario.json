@@ -1,0 +1,48 @@
+{
+  "id": "b-hpa-saw-b14",
+  "group": "B",
+  "heavy": false,
+  "duration_s": 540,
+  "traffic": {
+    "shape": "sawtooth",
+    "base_load_pods": 1.4,
+    "params": {
+      "period_s": 180,
+      "low_mult": 0.5,
+      "high_mult": 2.0
+    },
+    "base_rps": 25.2,
+    "_capacity_ref_rps_per_pod": 18
+  },
+  "scaling": {
+    "policy": "hpa_cpu",
+    "min": 1,
+    "max": 4,
+    "target_cpu": 70,
+    "initial": 1,
+    "_uncapped_max": 6,
+    "_lane_cap": 4
+  },
+  "faults": [],
+  "app": {
+    "cpu_ms_per_req": 25,
+    "alloc_kb": 64
+  },
+  "_run": {
+    "run_id": "b-hpa-saw-b14-1108-075353-a5c",
+    "namespace": "lab-b-hpa-saw-b14-1108-075353-a5c",
+    "scenario_file": "/Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/scenarios/matrix/b-hpa-saw-b14.yaml",
+    "image": "loadlab:v1",
+    "k6_image": "grafana/k6:0.54.0",
+    "context": "kubeai-lab",
+    "t_created": 1794149633.658262,
+    "t0": 1794149675.993175,
+    "t_end": 1794150218.3645709,
+    "status": "succeeded",
+    "export_window": [
+      1794149645.993175,
+      1794150228.3645709
+    ],
+    "step_s": 5
+  }
+}

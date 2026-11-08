@@ -1,0 +1,1426 @@
+{
+ "runs": [
+  {
+   "scenario": "a-cap-fixed1",
+   "run_id": "a-cap-fixed1-1108-070434-095",
+   "group": "A",
+   "round": 1,
+   "overall": "PASS",
+   "integrity": "PASS",
+   "labels": "PASS",
+   "baseline": "PASS",
+   "signature": "PASS",
+   "integrity_ev": [
+    "rows 85, gaps 0, dups 0/0, monotonic True, span 4-424s of 400s (105%)",
+    "mem_growth NaN 15.3%; worst pod NaN cpu 0.0%",
+    "ready-pod rows vs replicas_ready mismatch 0.0%",
+    "out-of-range rows 0; pod rows with mem_ws==0 0"
+   ],
+   "label_ev": [],
+   "baseline_ev": [],
+   "signature_ev": [
+    "last SLO-ok step 18.0 RPS/pod (p95 38 ms), first breach 20.0 RPS/pod, final p95 10.0s, max achieved 22.7 RPS/pod, final err 0.90"
+   ],
+   "nan_mem_growth": 0.15294117647058825,
+   "gaps": 0,
+   "ready_mismatch": 0.0,
+   "zero_mem_pod_rows": 0
+  },
+  {
+   "scenario": "b-hpa-diurnal-s7",
+   "run_id": "b-hpa-diurnal-s7-1108-070454-27f",
+   "group": "B",
+   "round": 1,
+   "overall": "PASS",
+   "integrity": "PASS",
+   "labels": "PASS",
+   "baseline": "PASS",
+   "signature": "PASS",
+   "integrity_ev": [
+    "rows 159, gaps 0, dups 0/0, monotonic True, span 1-791s of 780s (101%)",
+    "mem_growth NaN 5.7%; worst pod NaN cpu 1.2%",
+    "ready-pod rows vs replicas_ready mismatch 0.0%",
+    "out-of-range rows 0; pod rows with mem_ws==0 0"
+   ],
+   "label_ev": [],
+   "baseline_ev": [],
+   "signature_ev": [
+    "replicas 1->4, scale-in seen False (0 steps down), min replicas after peak 4, viol rows 0, longest breach 0s, corr(rps,hpa_desired) 0.49, end p95 120 ms"
+   ],
+   "nan_mem_growth": 0.05660377358490566,
+   "gaps": 0,
+   "ready_mismatch": 0.0,
+   "zero_mem_pod_rows": 0
+  },
+  {
+   "scenario": "a-cap-fixed2",
+   "run_id": "a-cap-fixed2-1108-071215-0ef",
+   "group": "A",
+   "round": 1,
+   "overall": "WARN",
+   "integrity": "PASS",
+   "labels": "PASS",
+   "baseline": "PASS",
+   "signature": "WARN",
+   "integrity_ev": [
+    "rows 85, gaps 0, dups 0/0, monotonic True, span 4-424s of 400s (105%)",
+    "mem_growth NaN 15.3%; worst pod NaN cpu 0.0%",
+    "ready-pod rows vs replicas_ready mismatch 0.0%",
+    "out-of-range rows 0; pod rows with mem_ws==0 0"
+   ],
+   "label_ev": [],
+   "baseline_ev": [],
+   "signature_ev": [
+    "last SLO-ok step 16.0 RPS/pod (p95 227 ms), first breach 18.0 RPS/pod, final p95 10.0s, max achieved 22.8 RPS/pod, final err 0.73"
+   ],
+   "nan_mem_growth": 0.15294117647058825,
+   "gaps": 0,
+   "ready_mismatch": 0.0,
+   "zero_mem_pod_rows": 0
+  },
+  {
+   "scenario": "a-cap-fixed3",
+   "run_id": "a-cap-fixed3-1108-072000-e7a",
+   "group": "A",
+   "round": 1,
+   "overall": "WARN",
+   "integrity": "PASS",
+   "labels": "PASS",
+   "baseline": "PASS",
+   "signature": "WARN",
+   "integrity_ev": [
+    "rows 84, gaps 0, dups 0/0, monotonic True, span 6-421s of 400s (104%)",
+    "mem_growth NaN 15.5%; worst pod NaN cpu 0.0%",
+    "ready-pod rows vs replicas_ready mismatch 0.0%",
+    "out-of-range rows 0; pod rows with mem_ws==0 0"
+   ],
+   "label_ev": [],
+   "baseline_ev": [],
+   "signature_ev": [
+    "last SLO-ok step 14.0 RPS/pod (p95 244 ms), first breach 16.0 RPS/pod, final p95 10.0s, max achieved 22.6 RPS/pod, final err 0.75"
+   ],
+   "nan_mem_growth": 0.15476190476190477,
+   "gaps": 0,
+   "ready_mismatch": 0.0,
+   "zero_mem_pod_rows": 0
+  },
+  {
+   "scenario": "b-hpa-diurnal-s23",
+   "run_id": "b-hpa-diurnal-s23-1108-071905-bb4",
+   "group": "B",
+   "round": 1,
+   "overall": "PASS",
+   "integrity": "PASS",
+   "labels": "PASS",
+   "baseline": "PASS",
+   "signature": "PASS",
+   "integrity_ev": [
+    "rows 158, gaps 0, dups 0/0, monotonic True, span 7-792s of 780s (101%)",
+    "mem_growth NaN 5.1%; worst pod NaN throttle 1.5%",
+    "ready-pod rows vs replicas_ready mismatch 0.0%",
+    "out-of-range rows 0; pod rows with mem_ws==0 0"
+   ],
+   "label_ev": [],
+   "baseline_ev": [],
+   "signature_ev": [
+    "replicas 1->4, scale-in seen False (0 steps down), min replicas after peak 4, viol rows 0, longest breach 0s, corr(rps,hpa_desired) 0.45, end p95 30 ms"
+   ],
+   "nan_mem_growth": 0.05063291139240506,
+   "gaps": 0,
+   "ready_mismatch": 0.0,
+   "zero_mem_pod_rows": 0
+  },
+  {
+   "scenario": "b-hpa-spike-b08",
+   "run_id": "b-hpa-spike-b08-1108-072742-044",
+   "group": "B",
+   "round": 1,
+   "overall": "PASS",
+   "integrity": "PASS",
+   "labels": "PASS",
+   "baseline": "PASS",
+   "signature": "PASS",
+   "integrity_ev": [
+    "rows 111, gaps 0, dups 0/0, monotonic True, span 1-551s of 540s (102%)",
+    "mem_growth NaN 5.4%; worst pod NaN throttle 2.3%",
+    "ready-pod rows vs replicas_ready mismatch 0.0%",
+    "out-of-range rows 0; pod rows with mem_ws==0 0"
+   ],
+   "label_ev": [],
+   "baseline_ev": [],
+   "signature_ev": [
+    "replicas 1->4, scale-in seen False (0 steps down), min replicas after peak 4, viol rows 11, longest breach 40s, corr(rps,hpa_desired) 0.31, end p95 30 ms"
+   ],
+   "nan_mem_growth": 0.05405405405405406,
+   "gaps": 0,
+   "ready_mismatch": 0.0,
+   "zero_mem_pod_rows": 0
+  },
+  {
+   "scenario": "b-hpa-spike-b05",
+   "run_id": "b-hpa-spike-b05-1108-073319-1bf",
+   "group": "B",
+   "round": 1,
+   "overall": "PASS",
+   "integrity": "PASS",
+   "labels": "PASS",
+   "baseline": "PASS",
+   "signature": "PASS",
+   "integrity_ev": [
+    "rows 110, gaps 0, dups 0/0, monotonic True, span 6-550s of 540s (101%)",
+    "mem_growth NaN 7.3%; worst pod NaN throttle 2.7%",
+    "ready-pod rows vs replicas_ready mismatch 0.0%",
+    "out-of-range rows 0; pod rows with mem_ws==0 0"
+   ],
+   "label_ev": [],
+   "baseline_ev": [],
+   "signature_ev": [
+    "replicas 1->4, scale-in seen False (0 steps down), min replicas after peak 4, viol rows 3, longest breach 15s, corr(rps,hpa_desired) 0.33, end p95 30 ms"
+   ],
+   "nan_mem_growth": 0.07272727272727272,
+   "gaps": 0,
+   "ready_mismatch": 0.0,
+   "zero_mem_pod_rows": 0
+  },
+  {
+   "scenario": "b-hpa-flash-b06",
+   "run_id": "b-hpa-flash-b06-1108-073812-80c",
+   "group": "B",
+   "round": 1,
+   "overall": "PASS",
+   "integrity": "PASS",
+   "labels": "PASS",
+   "baseline": "PASS",
+   "signature": "PASS",
+   "integrity_ev": [
+    "rows 111, gaps 0, dups 0/0, monotonic True, span 4-554s of 540s (102%)",
+    "mem_growth NaN 4.5%; worst pod NaN throttle 2.4%",
+    "ready-pod rows vs replicas_ready mismatch 0.0%",
+    "out-of-range rows 0; pod rows with mem_ws==0 0"
+   ],
+   "label_ev": [],
+   "baseline_ev": [],
+   "signature_ev": [
+    "replicas 1->4, scale-in seen False (0 steps down), min replicas after peak 4, viol rows 0, longest breach 0s, corr(rps,hpa_desired) 0.88, end p95 66 ms"
+   ],
+   "nan_mem_growth": 0.04504504504504504,
+   "gaps": 0,
+   "ready_mismatch": 0.0,
+   "zero_mem_pod_rows": 0
+  },
+  {
+   "scenario": "b-hpa-flash-b09",
+   "run_id": "b-hpa-flash-b09-1108-074329-b3e",
+   "group": "B",
+   "round": 1,
+   "overall": "PASS",
+   "integrity": "PASS",
+   "labels": "PASS",
+   "baseline": "PASS",
+   "signature": "PASS",
+   "integrity_ev": [
+    "rows 111, gaps 0, dups 0/0, monotonic True, span 0-550s of 540s (102%)",
+    "mem_growth NaN 5.4%; worst pod NaN cpu 2.5%",
+    "ready-pod rows vs replicas_ready mismatch 0.0%",
+    "out-of-range rows 0; pod rows with mem_ws==0 0"
+   ],
+   "label_ev": [],
+   "baseline_ev": [],
+   "signature_ev": [
+    "replicas 1->4, scale-in seen False (0 steps down), min replicas after peak 4, viol rows 9, longest breach 25s, corr(rps,hpa_desired) 0.82, end p95 121 ms"
+   ],
+   "nan_mem_growth": 0.05405405405405406,
+   "gaps": 0,
+   "ready_mismatch": 0.0,
+   "zero_mem_pod_rows": 0
+  },
+  {
+   "scenario": "b-hpa-saw-b10",
+   "run_id": "b-hpa-saw-b10-1108-074841-c6e",
+   "group": "B",
+   "round": 1,
+   "overall": "PASS",
+   "integrity": "PASS",
+   "labels": "PASS",
+   "baseline": "PASS",
+   "signature": "PASS",
+   "integrity_ev": [
+    "rows 110, gaps 0, dups 0/0, monotonic True, span 7-552s of 540s (101%)",
+    "mem_growth NaN 8.2%; worst pod NaN throttle 2.4%",
+    "ready-pod rows vs replicas_ready mismatch 0.0%",
+    "out-of-range rows 0; pod rows with mem_ws==0 0"
+   ],
+   "label_ev": [],
+   "baseline_ev": [],
+   "signature_ev": [
+    "replicas 1->4, scale-in seen False (0 steps down), min replicas after peak 4, viol rows 4, longest breach 20s, corr(rps,hpa_desired) 0.39, end p95 30 ms"
+   ],
+   "nan_mem_growth": 0.08181818181818182,
+   "gaps": 0,
+   "ready_mismatch": 0.0,
+   "zero_mem_pod_rows": 0
+  },
+  {
+   "scenario": "b-hpa-saw-b14",
+   "run_id": "b-hpa-saw-b14-1108-075353-a5c",
+   "group": "B",
+   "round": 1,
+   "overall": "PASS",
+   "integrity": "PASS",
+   "labels": "PASS",
+   "baseline": "PASS",
+   "signature": "PASS",
+   "integrity_ev": [
+    "rows 110, gaps 0, dups 0/0, monotonic True, span 4-549s of 540s (101%)",
+    "mem_growth NaN 8.2%; worst pod NaN throttle 2.1%",
+    "ready-pod rows vs replicas_ready mismatch 0.0%",
+    "out-of-range rows 0; pod rows with mem_ws==0 0"
+   ],
+   "label_ev": [],
+   "baseline_ev": [],
+   "signature_ev": [
+    "replicas 1->4, scale-in seen False (0 steps down), min replicas after peak 4, viol rows 0, longest breach 0s, corr(rps,hpa_desired) 0.53, end p95 107 ms"
+   ],
+   "nan_mem_growth": 0.08181818181818182,
+   "gaps": 0,
+   "ready_mismatch": 0.0,
+   "zero_mem_pod_rows": 0
+  },
+  {
+   "scenario": "c-under-fixed1-diurnal",
+   "run_id": "c-under-fixed1-diurnal-1108-075847-410",
+   "group": "C",
+   "round": 1,
+   "overall": "PASS",
+   "integrity": "PASS",
+   "labels": "PASS",
+   "baseline": "PASS",
+   "signature": "PASS",
+   "integrity_ev": [
+    "rows 149, gaps 0, dups 0/0, monotonic True, span 2-742s of 720s (103%)",
+    "mem_growth NaN 9.4%; worst pod NaN cpu 0.0%",
+    "ready-pod rows vs replicas_ready mismatch 0.0%",
+    "out-of-range rows 0; pod rows with mem_ws==0 0"
+   ],
+   "label_ev": [],
+   "baseline_ev": [],
+   "signature_ev": [
+    "top-20% load rows: p95 9.75s, cpu/request 2.00, throttle 1.00; SLO-violating rows 39%"
+   ],
+   "nan_mem_growth": 0.09395973154362416,
+   "gaps": 0,
+   "ready_mismatch": 0.0,
+   "zero_mem_pod_rows": 0
+  },
+  {
+   "scenario": "c-over-fixed4-steady",
+   "run_id": "c-over-fixed4-steady-1108-080359-929",
+   "group": "C",
+   "round": 1,
+   "overall": "PASS",
+   "integrity": "PASS",
+   "labels": "PASS",
+   "baseline": "PASS",
+   "signature": "PASS",
+   "integrity_ev": [
+    "rows 98, gaps 0, dups 0/0, monotonic True, span 6-492s of 480s (101%)",
+    "mem_growth NaN 13.3%; worst pod NaN cpu 0.0%",
+    "ready-pod rows vs replicas_ready mismatch 0.0%",
+    "out-of-range rows 0; pod rows with mem_ws==0 0"
+   ],
+   "label_ev": [],
+   "baseline_ev": [],
+   "signature_ev": [
+    "cpu/request median 0.24 (HPA target 0.70), p95 30 ms, rps/pod 2.2 (cap 18)"
+   ],
+   "nan_mem_growth": 0.1326530612244898,
+   "gaps": 0,
+   "ready_mismatch": 0.0,
+   "zero_mem_pod_rows": 0
+  },
+  {
+   "scenario": "c-under-fixed2-spike",
+   "run_id": "c-under-fixed2-spike-1108-081142-093",
+   "group": "C",
+   "round": 1,
+   "overall": "PASS",
+   "integrity": "PASS",
+   "labels": "PASS",
+   "baseline": "PASS",
+   "signature": "PASS",
+   "integrity_ev": [
+    "rows 111, gaps 0, dups 0/0, monotonic True, span 3-553s of 540s (102%)",
+    "mem_growth NaN 12.6%; worst pod NaN cpu 0.0%",
+    "ready-pod rows vs replicas_ready mismatch 0.0%",
+    "out-of-range rows 0; pod rows with mem_ws==0 0"
+   ],
+   "label_ev": [],
+   "baseline_ev": [],
+   "signature_ev": [
+    "top-20% load rows: p95 10.00s, cpu/request 2.00, throttle 1.00; SLO-violating rows 29%"
+   ],
+   "nan_mem_growth": 0.12612612612612611,
+   "gaps": 0,
+   "ready_mismatch": 0.0,
+   "zero_mem_pod_rows": 0
+  },
+  {
+   "scenario": "d-leak-oom",
+   "run_id": "d-leak-oom-1108-081244-c2e",
+   "group": "D",
+   "round": 1,
+   "overall": "PASS",
+   "integrity": "PASS",
+   "labels": "PASS",
+   "baseline": "PASS",
+   "signature": "PASS",
+   "integrity_ev": [
+    "rows 147, gaps 0, dups 0/0, monotonic True, span 1-731s of 720s (101%)",
+    "mem_growth NaN 6.1%; worst pod NaN p95 0.5%",
+    "ready-pod rows vs replicas_ready mismatch 0.0%",
+    "out-of-range rows 0; pod rows with mem_ws==0 0"
+   ],
+   "label_ev": [
+    "memory_leak: 84/84 rows in window labelled, 0 outside"
+   ],
+   "baseline_ev": [
+    "pre-fault baseline: p95 30 ms, cpu/request 0.63, SLO-violating rows 0"
+   ],
+   "signature_ev": [
+    "target pod slope 753 KB/s (injected 768), mem frac 0.14->0.96, OOM expected True / seen 1 (at 481s), pod restarts 1, p95 ratio 0.96"
+   ],
+   "nan_mem_growth": 0.061224489795918366,
+   "gaps": 0,
+   "ready_mismatch": 0.0,
+   "zero_mem_pod_rows": 0
+  },
+  {
+   "scenario": "d-leak-slow",
+   "run_id": "d-leak-slow-1108-082126-2e4",
+   "group": "D",
+   "round": 1,
+   "overall": "WARN",
+   "integrity": "PASS",
+   "labels": "PASS",
+   "baseline": "WARN",
+   "signature": "PASS",
+   "integrity_ev": [
+    "rows 147, gaps 0, dups 0/0, monotonic True, span 4-734s of 720s (101%)",
+    "mem_growth NaN 6.1%; worst pod NaN p95 0.2%",
+    "ready-pod rows vs replicas_ready mismatch 0.0%",
+    "out-of-range rows 0; pod rows with mem_ws==0 0"
+   ],
+   "label_ev": [
+    "memory_leak: 84/84 rows in window labelled, 0 outside"
+   ],
+   "baseline_ev": [
+    "pre-fault baseline: p95 30 ms, cpu/request 0.64, SLO-violating rows 3"
+   ],
+   "signature_ev": [
+    "target pod slope 95 KB/s (injected 96), mem frac 0.14->0.29, OOM expected False / seen 0 (at Nones), pod restarts 0, p95 ratio 1.01"
+   ],
+   "nan_mem_growth": 0.061224489795918366,
+   "gaps": 0,
+   "ready_mismatch": 0.0,
+   "zero_mem_pod_rows": 0
+  },
+  {
+   "scenario": "d-dep-latency",
+   "run_id": "d-dep-latency-1108-082554-5cd",
+   "group": "D",
+   "round": 1,
+   "overall": "PASS",
+   "integrity": "PASS",
+   "labels": "PASS",
+   "baseline": "PASS",
+   "signature": "PASS",
+   "integrity_ev": [
+    "rows 122, gaps 0, dups 0/0, monotonic True, span 7-612s of 600s (101%)",
+    "mem_growth NaN 6.6%; worst pod NaN cpu 0.0%",
+    "ready-pod rows vs replicas_ready mismatch 0.0%",
+    "out-of-range rows 0; pod rows with mem_ws==0 0"
+   ],
+   "label_ev": [
+    "dep_latency: 44/44 rows in window labelled, 0 outside"
+   ],
+   "baseline_ev": [
+    "pre-fault baseline: p95 30 ms, cpu/request 0.63, SLO-violating rows 0"
+   ],
+   "signature_ev": [
+    "p95 30->490 ms (x16.3), cpu/request 0.63->0.63 (x1.00), inflight 0->4, replicas 3->3, err 0.000"
+   ],
+   "nan_mem_growth": 0.06557377049180328,
+   "gaps": 0,
+   "ready_mismatch": 0.0,
+   "zero_mem_pod_rows": 0
+  },
+  {
+   "scenario": "d-error-burst",
+   "run_id": "d-error-burst-1108-083437-087",
+   "group": "D",
+   "round": 1,
+   "overall": "PASS",
+   "integrity": "PASS",
+   "labels": "PASS",
+   "baseline": "PASS",
+   "signature": "PASS",
+   "integrity_ev": [
+    "rows 123, gaps 0, dups 0/0, monotonic True, span 2-612s of 600s (102%)",
+    "mem_growth NaN 7.3%; worst pod NaN p95 0.3%",
+    "ready-pod rows vs replicas_ready mismatch 0.0%",
+    "out-of-range rows 0; pod rows with mem_ws==0 0"
+   ],
+   "label_ev": [
+    "error_rate: 44/44 rows in window labelled, 0 outside"
+   ],
+   "baseline_ev": [
+    "pre-fault baseline: p95 30 ms, cpu/request 0.63, SLO-violating rows 0"
+   ],
+   "signature_ev": [
+    "error_rate 0.000->0.189 (injected 0.2), p95 x1.05, cpu x1.02"
+   ],
+   "nan_mem_growth": 0.07317073170731707,
+   "gaps": 0,
+   "ready_mismatch": 0.0,
+   "zero_mem_pod_rows": 0
+  },
+  {
+   "scenario": "d-cpu-hog",
+   "run_id": "d-cpu-hog-1108-083701-80d",
+   "group": "D",
+   "round": 1,
+   "overall": "PASS",
+   "integrity": "PASS",
+   "labels": "PASS",
+   "baseline": "PASS",
+   "signature": "PASS",
+   "integrity_ev": [
+    "rows 122, gaps 0, dups 0/0, monotonic True, span 3-608s of 600s (101%)",
+    "mem_growth NaN 4.9%; worst pod NaN cpu 0.5%",
+    "ready-pod rows vs replicas_ready mismatch 0.0%",
+    "out-of-range rows 0; pod rows with mem_ws==0 0"
+   ],
+   "label_ev": [
+    "cpu_hog: 44/44 rows in window labelled, 0 outside"
+   ],
+   "baseline_ev": [
+    "pre-fault baseline: p95 30 ms, cpu/request 0.63, SLO-violating rows 0"
+   ],
+   "signature_ev": [
+    "target pod throttle 0.03->0.90 vs others 0.03; cpu 0.49 vs others 0.12 cores; deploy cpu/request 0.63->0.86, replicas 3->4, p95 134 ms"
+   ],
+   "nan_mem_growth": 0.04918032786885246,
+   "gaps": 0,
+   "ready_mismatch": 0.0,
+   "zero_mem_pod_rows": 0
+  },
+  {
+   "scenario": "d-pod-kill",
+   "run_id": "d-pod-kill-1108-084547-75d",
+   "group": "D",
+   "round": 1,
+   "overall": "PASS",
+   "integrity": "PASS",
+   "labels": "PASS",
+   "baseline": "PASS",
+   "signature": "PASS",
+   "integrity_ev": [
+    "rows 123, gaps 0, dups 0/0, monotonic True, span 3-613s of 600s (102%)",
+    "mem_growth NaN 4.9%; worst pod NaN mem_frac_limit 2.7%",
+    "ready-pod rows vs replicas_ready mismatch 1.6%",
+    "out-of-range rows 0; pod rows with mem_ws==0 0"
+   ],
+   "label_ev": [
+    "pod_kill: 6/6 rows in window labelled, 0 outside",
+    "pod_kill: 6/6 rows in window labelled, 0 outside"
+   ],
+   "baseline_ev": [
+    "pre-fault baseline: p95 30 ms, cpu/request 0.63, SLO-violating rows 0"
+   ],
+   "signature_ev": [
+    "kill @200s: replicas_ready 3->2, recovered within 60s True, pod churn (victim gone + 1 new pod) True, p95 max 34 ms",
+    "kill @380s: replicas_ready 3->2, recovered within 60s True, pod churn (victim gone + 1 new pod) True, p95 max 72 ms"
+   ],
+   "nan_mem_growth": 0.04878048780487805,
+   "gaps": 0,
+   "ready_mismatch": 0.016260162601626018,
+   "zero_mem_pod_rows": 0
+  },
+  {
+   "scenario": "d-bad-deploy",
+   "run_id": "d-bad-deploy-1108-084824-d38",
+   "group": "D",
+   "round": 1,
+   "overall": "WARN",
+   "integrity": "WARN",
+   "labels": "PASS",
+   "baseline": "PASS",
+   "signature": "PASS",
+   "integrity_ev": [
+    "rows 122, gaps 0, dups 0/0, monotonic True, span 6-611s of 600s (101%)",
+    "mem_growth NaN 20.5%; worst pod NaN mem_frac_limit 10.1%",
+    "ready-pod rows vs replicas_ready mismatch 0.8%",
+    "out-of-range rows 0; pod rows with mem_ws==0 0"
+   ],
+   "label_ev": [
+    "bad_deploy: 44/44 rows in window labelled, 0 outside"
+   ],
+   "baseline_ev": [
+    "pre-fault baseline: p95 34 ms, cpu/request 0.63, SLO-violating rows 0"
+   ],
+   "signature_ev": [
+    "cpu ms/request 26.4->78.7 (x2.98, injected x3.0; process CPU understates under throttle), throttle 0.04->0.55, p95 0.52s, replicas 3->4, post-rollback p95 30 ms"
+   ],
+   "nan_mem_growth": 0.20491803278688525,
+   "gaps": 0,
+   "ready_mismatch": 0.00819672131147541,
+   "zero_mem_pod_rows": 0
+  },
+  {
+   "scenario": "d-crashloop",
+   "run_id": "d-crashloop-1108-085711-263",
+   "group": "D",
+   "round": 1,
+   "overall": "WARN",
+   "integrity": "WARN",
+   "labels": "PASS",
+   "baseline": "PASS",
+   "signature": "PASS",
+   "integrity_ev": [
+    "rows 122, gaps 0, dups 0/0, monotonic True, span 4-609s of 600s (101%)",
+    "mem_growth NaN 7.4%; worst pod NaN p95 11.4%",
+    "ready-pod rows vs replicas_ready mismatch 0.0%",
+    "out-of-range rows 0; pod rows with mem_ws==0 0"
+   ],
+   "label_ev": [
+    "crashloop: 44/44 rows in window labelled, 0 outside"
+   ],
+   "baseline_ev": [
+    "pre-fault baseline: p95 30 ms, cpu/request 0.63, SLO-violating rows 0"
+   ],
+   "signature_ev": [
+    "crashloop_pods max 1, restarts 0->5, pods_not_ready max 1 (none rows max 0), unready new-RS pod rows 44, replicas_ready min 3 (pre 3), rows ready<desired 0%, p95 30 ms"
+   ],
+   "nan_mem_growth": 0.07377049180327869,
+   "gaps": 0,
+   "ready_mismatch": 0.0,
+   "zero_mem_pod_rows": 0
+  },
+  {
+   "scenario": "e-spike-dep-latency",
+   "run_id": "e-spike-dep-latency-1108-085933-36c",
+   "group": "E",
+   "round": 1,
+   "overall": "PASS",
+   "integrity": "PASS",
+   "labels": "PASS",
+   "baseline": "PASS",
+   "signature": "PASS",
+   "integrity_ev": [
+    "rows 135, gaps 0, dups 0/0, monotonic True, span 2-672s of 660s (102%)",
+    "mem_growth NaN 4.4%; worst pod NaN throttle 1.9%",
+    "ready-pod rows vs replicas_ready mismatch 0.0%",
+    "out-of-range rows 0; pod rows with mem_ws==0 0"
+   ],
+   "label_ev": [
+    "dep_latency: 54/54 rows in window labelled, 0 outside"
+   ],
+   "baseline_ev": [
+    "pre-fault baseline: p95 30 ms, cpu/request 0.51, SLO-violating rows 0"
+   ],
+   "signature_ev": [
+    "p95 30->489 ms (x16.4), cpu/request 0.51->0.52 (x1.02), inflight 0->4, replicas 3->3, err 0.000",
+    "spike+dep phase: cpu/request 1.56, p95 0.68s, replicas 4"
+   ],
+   "nan_mem_growth": 0.044444444444444446,
+   "gaps": 0,
+   "ready_mismatch": 0.0,
+   "zero_mem_pod_rows": 0
+  },
+  {
+   "scenario": "e-diurnal-leak",
+   "run_id": "e-diurnal-leak-1108-090819-f65",
+   "group": "E",
+   "round": 1,
+   "overall": "PASS",
+   "integrity": "PASS",
+   "labels": "PASS",
+   "baseline": "PASS",
+   "signature": "PASS",
+   "integrity_ev": [
+    "rows 159, gaps 0, dups 0/0, monotonic True, span 4-794s of 780s (101%)",
+    "mem_growth NaN 5.7%; worst pod NaN throttle 1.7%",
+    "ready-pod rows vs replicas_ready mismatch 0.0%",
+    "out-of-range rows 0; pod rows with mem_ws==0 0"
+   ],
+   "label_ev": [
+    "memory_leak: 114/114 rows in window labelled, 0 outside"
+   ],
+   "baseline_ev": [
+    "pre-fault baseline: p95 30 ms, cpu/request 0.63, SLO-violating rows 0"
+   ],
+   "signature_ev": [
+    "target pod slope 627 KB/s (injected 640), mem frac 0.14->0.98, OOM expected True / seen 1 (at 484s), pod restarts 1, p95 ratio 1.41"
+   ],
+   "nan_mem_growth": 0.05660377358490566,
+   "gaps": 0,
+   "ready_mismatch": 0.0,
+   "zero_mem_pod_rows": 0
+  },
+  {
+   "scenario": "b-hpa-diurnal-sd30-s41-r2",
+   "run_id": "b-hpa-diurnal-sd30-s41-r2-1108-093648-7ae",
+   "group": "B",
+   "round": 2,
+   "overall": "PASS",
+   "integrity": "PASS",
+   "labels": "PASS",
+   "baseline": "PASS",
+   "signature": "PASS",
+   "integrity_ev": [
+    "rows 159, gaps 0, dups 0/0, monotonic True, span 2-792s of 780s (101%)",
+    "mem_growth NaN 5.7%; worst pod NaN mem_frac_limit 6.4%",
+    "ready-pod rows vs replicas_ready mismatch 0.6%",
+    "out-of-range rows 0; pod rows with mem_ws==0 0"
+   ],
+   "label_ev": [],
+   "baseline_ev": [],
+   "signature_ev": [
+    "replicas 1->4, scale-in seen True (4 steps down, scaleDown window 30s), min replicas after peak 2, viol rows 0, longest breach 0s, corr(rps,hpa_desired) 0.83, end p95 30 ms"
+   ],
+   "nan_mem_growth": 0.05660377358490566,
+   "gaps": 0,
+   "ready_mismatch": 0.006289308176100629,
+   "zero_mem_pod_rows": 0
+  },
+  {
+   "scenario": "b-hpa-diurnal-sd30-s59-r2",
+   "run_id": "b-hpa-diurnal-sd30-s59-r2-1108-093708-036",
+   "group": "B",
+   "round": 2,
+   "overall": "PASS",
+   "integrity": "PASS",
+   "labels": "PASS",
+   "baseline": "PASS",
+   "signature": "PASS",
+   "integrity_ev": [
+    "rows 159, gaps 0, dups 0/0, monotonic True, span 4-794s of 780s (101%)",
+    "mem_growth NaN 5.7%; worst pod NaN mem_frac_limit 7.4%",
+    "ready-pod rows vs replicas_ready mismatch 0.0%",
+    "out-of-range rows 0; pod rows with mem_ws==0 0"
+   ],
+   "label_ev": [],
+   "baseline_ev": [],
+   "signature_ev": [
+    "replicas 1->4, scale-in seen True (4 steps down, scaleDown window 30s), min replicas after peak 2, viol rows 0, longest breach 0s, corr(rps,hpa_desired) 0.83, end p95 66 ms"
+   ],
+   "nan_mem_growth": 0.05660377358490566,
+   "gaps": 0,
+   "ready_mismatch": 0.0,
+   "zero_mem_pod_rows": 0
+  },
+  {
+   "scenario": "b-hpa-spike-sd30-b06-r2",
+   "run_id": "b-hpa-spike-sd30-b06-r2-1108-095119-524",
+   "group": "B",
+   "round": 2,
+   "overall": "PASS",
+   "integrity": "PASS",
+   "labels": "PASS",
+   "baseline": "PASS",
+   "signature": "PASS",
+   "integrity_ev": [
+    "rows 122, gaps 0, dups 0/0, monotonic True, span 7-612s of 600s (101%)",
+    "mem_growth NaN 6.6%; worst pod NaN mem_frac_limit 5.0%",
+    "ready-pod rows vs replicas_ready mismatch 0.8%",
+    "out-of-range rows 0; pod rows with mem_ws==0 0"
+   ],
+   "label_ev": [],
+   "baseline_ev": [],
+   "signature_ev": [
+    "replicas 1->4, scale-in seen True (1 steps down, scaleDown window 30s), min replicas after peak 2, viol rows 15, longest breach 45s, corr(rps,hpa_desired) 0.88, end p95 30 ms"
+   ],
+   "nan_mem_growth": 0.06557377049180328,
+   "gaps": 0,
+   "ready_mismatch": 0.00819672131147541,
+   "zero_mem_pod_rows": 0
+  },
+  {
+   "scenario": "b-hpa-saw-sd30-b12-r2",
+   "run_id": "b-hpa-saw-sd30-b12-r2-1108-095103-b0a",
+   "group": "B",
+   "round": 2,
+   "overall": "PASS",
+   "integrity": "PASS",
+   "labels": "PASS",
+   "baseline": "PASS",
+   "signature": "PASS",
+   "integrity_ev": [
+    "rows 146, gaps 0, dups 0/0, monotonic True, span 9-734s of 720s (101%)",
+    "mem_growth NaN 4.8%; worst pod NaN mem_frac_limit 4.5%",
+    "ready-pod rows vs replicas_ready mismatch 1.4%",
+    "out-of-range rows 0; pod rows with mem_ws==0 0"
+   ],
+   "label_ev": [],
+   "baseline_ev": [],
+   "signature_ev": [
+    "replicas 1->4, scale-in seen True (2 steps down, scaleDown window 30s), min replicas after peak 3, viol rows 3, longest breach 15s, corr(rps,hpa_desired) 0.70, end p95 82 ms"
+   ],
+   "nan_mem_growth": 0.04794520547945205,
+   "gaps": 0,
+   "ready_mismatch": 0.0136986301369863,
+   "zero_mem_pod_rows": 0
+  },
+  {
+   "scenario": "c-under-fixed1-flash-r2",
+   "run_id": "c-under-fixed1-flash-r2-1108-100232-262",
+   "group": "C",
+   "round": 2,
+   "overall": "PASS",
+   "integrity": "PASS",
+   "labels": "PASS",
+   "baseline": "PASS",
+   "signature": "PASS",
+   "integrity_ev": [
+    "rows 100, gaps 0, dups 0/0, monotonic True, span 6-501s of 480s (103%)",
+    "mem_growth NaN 12.0%; worst pod NaN cpu 0.0%",
+    "ready-pod rows vs replicas_ready mismatch 0.0%",
+    "out-of-range rows 0; pod rows with mem_ws==0 0"
+   ],
+   "label_ev": [],
+   "baseline_ev": [],
+   "signature_ev": [
+    "top-20% load rows: p95 10.00s, cpu/request 2.00, throttle 1.00; SLO-violating rows 69%"
+   ],
+   "nan_mem_growth": 0.12,
+   "gaps": 0,
+   "ready_mismatch": 0.0,
+   "zero_mem_pod_rows": 0
+  },
+  {
+   "scenario": "c-over-fixed4-diurnal-r2",
+   "run_id": "c-over-fixed4-diurnal-r2-1108-100418-9ec",
+   "group": "C",
+   "round": 2,
+   "overall": "PASS",
+   "integrity": "PASS",
+   "labels": "PASS",
+   "baseline": "PASS",
+   "signature": "PASS",
+   "integrity_ev": [
+    "rows 122, gaps 0, dups 0/0, monotonic True, span 6-611s of 600s (101%)",
+    "mem_growth NaN 9.0%; worst pod NaN p95 0.2%",
+    "ready-pod rows vs replicas_ready mismatch 0.0%",
+    "out-of-range rows 0; pod rows with mem_ws==0 0"
+   ],
+   "label_ev": [],
+   "baseline_ev": [],
+   "signature_ev": [
+    "cpu/request median 0.22 (HPA target 0.70), p95 30 ms, rps/pod 1.8 (cap 18)"
+   ],
+   "nan_mem_growth": 0.09016393442622951,
+   "gaps": 0,
+   "ready_mismatch": 0.0,
+   "zero_mem_pod_rows": 0
+  },
+  {
+   "scenario": "d-error10-hpa-diurnal-r2",
+   "run_id": "d-error10-hpa-diurnal-r2-1108-101137-aee",
+   "group": "D",
+   "round": 2,
+   "overall": "PASS",
+   "integrity": "PASS",
+   "labels": "PASS",
+   "baseline": "PASS",
+   "signature": "PASS",
+   "integrity_ev": [
+    "rows 122, gaps 0, dups 0/0, monotonic True, span 6-611s of 600s (101%)",
+    "mem_growth NaN 6.6%; worst pod NaN cpu 0.0%",
+    "ready-pod rows vs replicas_ready mismatch 0.0%",
+    "out-of-range rows 0; pod rows with mem_ws==0 0"
+   ],
+   "label_ev": [
+    "error_rate: 42/42 rows in window labelled, 0 outside"
+   ],
+   "baseline_ev": [
+    "pre-fault baseline: p95 30 ms, cpu/request 0.60, SLO-violating rows 0"
+   ],
+   "signature_ev": [
+    "error_rate 0.000->0.104 (injected 0.1), p95 x0.75, cpu x0.66"
+   ],
+   "nan_mem_growth": 0.06557377049180328,
+   "gaps": 0,
+   "ready_mismatch": 0.0,
+   "zero_mem_pod_rows": 0
+  },
+  {
+   "scenario": "d-error30-fixed3-r2",
+   "run_id": "d-error30-fixed3-r2-1108-101512-c7c",
+   "group": "D",
+   "round": 2,
+   "overall": "PASS",
+   "integrity": "PASS",
+   "labels": "PASS",
+   "baseline": "PASS",
+   "signature": "PASS",
+   "integrity_ev": [
+    "rows 111, gaps 0, dups 0/0, monotonic True, span 2-552s of 540s (102%)",
+    "mem_growth NaN 12.6%; worst pod NaN p95 0.6%",
+    "ready-pod rows vs replicas_ready mismatch 0.0%",
+    "out-of-range rows 0; pod rows with mem_ws==0 0"
+   ],
+   "label_ev": [
+    "error_rate: 36/36 rows in window labelled, 0 outside"
+   ],
+   "baseline_ev": [
+    "pre-fault baseline: p95 30 ms, cpu/request 0.53, SLO-violating rows 0"
+   ],
+   "signature_ev": [
+    "error_rate 0.000->0.308 (injected 0.3), p95 x1.00, cpu x1.00"
+   ],
+   "nan_mem_growth": 0.12612612612612611,
+   "gaps": 0,
+   "ready_mismatch": 0.0,
+   "zero_mem_pod_rows": 0
+  },
+  {
+   "scenario": "d-cpu-hog-fixed3-p0-r2",
+   "run_id": "d-cpu-hog-fixed3-p0-r2-1108-102249-eeb",
+   "group": "D",
+   "round": 2,
+   "overall": "PASS",
+   "integrity": "PASS",
+   "labels": "PASS",
+   "baseline": "PASS",
+   "signature": "PASS",
+   "integrity_ev": [
+    "rows 110, gaps 0, dups 0/0, monotonic True, span 6-551s of 540s (101%)",
+    "mem_growth NaN 12.7%; worst pod NaN cpu 0.0%",
+    "ready-pod rows vs replicas_ready mismatch 0.0%",
+    "out-of-range rows 0; pod rows with mem_ws==0 0"
+   ],
+   "label_ev": [
+    "cpu_hog: 43/43 rows in window labelled, 0 outside"
+   ],
+   "baseline_ev": [
+    "pre-fault baseline: p95 30 ms, cpu/request 0.46, SLO-violating rows 0"
+   ],
+   "signature_ev": [
+    "target pod throttle 0.00->0.42 vs others 0.00; cpu 0.45 vs others 0.11 cores; deploy cpu/request 0.46->0.90, replicas 3->3, p95 88 ms"
+   ],
+   "nan_mem_growth": 0.12727272727272726,
+   "gaps": 0,
+   "ready_mismatch": 0.0,
+   "zero_mem_pod_rows": 0
+  },
+  {
+   "scenario": "d-cpu-hog-fixed3-p2-r2",
+   "run_id": "d-cpu-hog-fixed3-p2-r2-1108-102458-364",
+   "group": "D",
+   "round": 2,
+   "overall": "PASS",
+   "integrity": "PASS",
+   "labels": "PASS",
+   "baseline": "PASS",
+   "signature": "PASS",
+   "integrity_ev": [
+    "rows 111, gaps 0, dups 0/0, monotonic True, span 2-552s of 540s (102%)",
+    "mem_growth NaN 12.6%; worst pod NaN p95 0.3%",
+    "ready-pod rows vs replicas_ready mismatch 0.0%",
+    "out-of-range rows 0; pod rows with mem_ws==0 0"
+   ],
+   "label_ev": [
+    "cpu_hog: 43/43 rows in window labelled, 0 outside"
+   ],
+   "baseline_ev": [
+    "pre-fault baseline: p95 30 ms, cpu/request 0.56, SLO-violating rows 0"
+   ],
+   "signature_ev": [
+    "target pod throttle 0.03->0.98 vs others 0.02; cpu 0.50 vs others 0.14 cores; deploy cpu/request 0.56->1.04, replicas 3->3, p95 179 ms"
+   ],
+   "nan_mem_growth": 0.12612612612612611,
+   "gaps": 0,
+   "ready_mismatch": 0.0,
+   "zero_mem_pod_rows": 0
+  },
+  {
+   "scenario": "d-bad-deploy-x2-hpa-r2",
+   "run_id": "d-bad-deploy-x2-hpa-r2-1108-103233-bb0",
+   "group": "D",
+   "round": 2,
+   "overall": "WARN",
+   "integrity": "WARN",
+   "labels": "PASS",
+   "baseline": "PASS",
+   "signature": "PASS",
+   "integrity_ev": [
+    "rows 123, gaps 0, dups 0/0, monotonic True, span 2-612s of 600s (102%)",
+    "mem_growth NaN 22.0%; worst pod NaN mem_frac_limit 10.0%",
+    "ready-pod rows vs replicas_ready mismatch 0.8%",
+    "out-of-range rows 0; pod rows with mem_ws==0 0"
+   ],
+   "label_ev": [
+    "bad_deploy: 44/44 rows in window labelled, 0 outside"
+   ],
+   "baseline_ev": [
+    "pre-fault baseline: p95 30 ms, cpu/request 0.56, SLO-violating rows 0"
+   ],
+   "signature_ev": [
+    "cpu ms/request 26.3->52.2 (x1.98, injected x2.0; process CPU understates under throttle), throttle 0.03->0.26, p95 0.16s, replicas 3->4, post-rollback p95 30 ms"
+   ],
+   "nan_mem_growth": 0.21951219512195122,
+   "gaps": 0,
+   "ready_mismatch": 0.008130081300813009,
+   "zero_mem_pod_rows": 0
+  },
+  {
+   "scenario": "d-bad-deploy-x3-fixed3-r2",
+   "run_id": "d-bad-deploy-x3-fixed3-r2-1108-103441-b62",
+   "group": "D",
+   "round": 2,
+   "overall": "WARN",
+   "integrity": "WARN",
+   "labels": "PASS",
+   "baseline": "PASS",
+   "signature": "PASS",
+   "integrity_ev": [
+    "rows 123, gaps 0, dups 0/0, monotonic True, span 3-613s of 600s (102%)",
+    "mem_growth NaN 24.4%; worst pod NaN mem_frac_limit 9.5%",
+    "ready-pod rows vs replicas_ready mismatch 0.8%",
+    "out-of-range rows 0; pod rows with mem_ws==0 0"
+   ],
+   "label_ev": [
+    "bad_deploy: 44/44 rows in window labelled, 0 outside"
+   ],
+   "baseline_ev": [
+    "pre-fault baseline: p95 30 ms, cpu/request 0.53, SLO-violating rows 0"
+   ],
+   "signature_ev": [
+    "cpu ms/request 26.5->79.1 (x2.99, injected x3.0; process CPU understates under throttle), throttle 0.00->0.63, p95 0.60s, replicas 3->3, post-rollback p95 30 ms"
+   ],
+   "nan_mem_growth": 0.24390243902439024,
+   "gaps": 0,
+   "ready_mismatch": 0.008130081300813009,
+   "zero_mem_pod_rows": 0
+  },
+  {
+   "scenario": "d-crashloop-fixed3-r2",
+   "run_id": "d-crashloop-fixed3-r2-1108-104342-e12",
+   "group": "D",
+   "round": 2,
+   "overall": "WARN",
+   "integrity": "WARN",
+   "labels": "PASS",
+   "baseline": "PASS",
+   "signature": "PASS",
+   "integrity_ev": [
+    "rows 110, gaps 0, dups 0/0, monotonic True, span 2-548s of 540s (101%)",
+    "mem_growth NaN 12.7%; worst pod NaN p95 14.1%",
+    "ready-pod rows vs replicas_ready mismatch 0.0%",
+    "out-of-range rows 0; pod rows with mem_ws==0 0"
+   ],
+   "label_ev": [
+    "crashloop: 48/48 rows in window labelled, 0 outside"
+   ],
+   "baseline_ev": [
+    "pre-fault baseline: p95 30 ms, cpu/request 0.49, SLO-violating rows 0"
+   ],
+   "signature_ev": [
+    "crashloop_pods max 1, restarts 0->5, pods_not_ready max 1 (none rows max 1), unready new-RS pod rows 47, replicas_ready min 3 (pre 3), rows ready<desired 0%, p95 30 ms"
+   ],
+   "nan_mem_growth": 0.12727272727272726,
+   "gaps": 0,
+   "ready_mismatch": 0.0,
+   "zero_mem_pod_rows": 0
+  },
+  {
+   "scenario": "d-dep-latency-25p300-r2",
+   "run_id": "d-dep-latency-25p300-r2-1108-104525-c23",
+   "group": "D",
+   "round": 2,
+   "overall": "PASS",
+   "integrity": "PASS",
+   "labels": "PASS",
+   "baseline": "PASS",
+   "signature": "PASS",
+   "integrity_ev": [
+    "rows 111, gaps 0, dups 0/0, monotonic True, span 2-552s of 540s (102%)",
+    "mem_growth NaN 12.6%; worst pod NaN p95 0.3%",
+    "ready-pod rows vs replicas_ready mismatch 0.0%",
+    "out-of-range rows 0; pod rows with mem_ws==0 0"
+   ],
+   "label_ev": [
+    "dep_latency: 42/42 rows in window labelled, 0 outside"
+   ],
+   "baseline_ev": [
+    "pre-fault baseline: p95 30 ms, cpu/request 0.53, SLO-violating rows 0"
+   ],
+   "signature_ev": [
+    "p95 30->340 ms (x11.4), cpu/request 0.53->0.53 (x1.00), inflight 0->1, replicas 3->3, err 0.000"
+   ],
+   "nan_mem_growth": 0.12612612612612611,
+   "gaps": 0,
+   "ready_mismatch": 0.0,
+   "zero_mem_pod_rows": 0
+  },
+  {
+   "scenario": "d-dep-latency-75p600-r2",
+   "run_id": "d-dep-latency-75p600-r2-1108-105325-7af",
+   "group": "D",
+   "round": 2,
+   "overall": "PASS",
+   "integrity": "PASS",
+   "labels": "PASS",
+   "baseline": "PASS",
+   "signature": "PASS",
+   "integrity_ev": [
+    "rows 111, gaps 0, dups 0/0, monotonic True, span 3-553s of 540s (102%)",
+    "mem_growth NaN 8.1%; worst pod NaN p95 1.0%",
+    "ready-pod rows vs replicas_ready mismatch 0.0%",
+    "out-of-range rows 0; pod rows with mem_ws==0 0"
+   ],
+   "label_ev": [
+    "dep_latency: 48/48 rows in window labelled, 0 outside"
+   ],
+   "baseline_ev": [
+    "pre-fault baseline: p95 45 ms, cpu/request 0.68, SLO-violating rows 0"
+   ],
+   "signature_ev": [
+    "p95 45->740 ms (x16.4), cpu/request 0.68->0.54 (x0.79), inflight 0->9, replicas 3->4, err 0.000"
+   ],
+   "nan_mem_growth": 0.08108108108108109,
+   "gaps": 0,
+   "ready_mismatch": 0.0,
+   "zero_mem_pod_rows": 0
+  },
+  {
+   "scenario": "d-leak-fast-oom-r2",
+   "run_id": "d-leak-fast-oom-r2-1108-105515-0e5",
+   "group": "D",
+   "round": 2,
+   "overall": "PASS",
+   "integrity": "PASS",
+   "labels": "PASS",
+   "baseline": "PASS",
+   "signature": "PASS",
+   "integrity_ev": [
+    "rows 111, gaps 0, dups 0/0, monotonic True, span -1-549s of 540s (102%)",
+    "mem_growth NaN 12.6%; worst pod NaN p95 1.5%",
+    "ready-pod rows vs replicas_ready mismatch 0.0%",
+    "out-of-range rows 0; pod rows with mem_ws==0 0"
+   ],
+   "label_ev": [
+    "memory_leak: 66/66 rows in window labelled, 0 outside"
+   ],
+   "baseline_ev": [
+    "pre-fault baseline: p95 80 ms, cpu/request 0.62, SLO-violating rows 0"
+   ],
+   "signature_ev": [
+    "target pod slope 1491 KB/s (injected 2048), mem frac 0.14->0.96, OOM expected True / seen 2 (at 244s), pod restarts 2, p95 ratio 0.62"
+   ],
+   "nan_mem_growth": 0.12612612612612611,
+   "gaps": 0,
+   "ready_mismatch": 0.0,
+   "zero_mem_pod_rows": 0
+  },
+  {
+   "scenario": "d-pod-kill-fixed2-r2",
+   "run_id": "d-pod-kill-fixed2-r2-1108-110504-d8b",
+   "group": "D",
+   "round": 2,
+   "overall": "PASS",
+   "integrity": "PASS",
+   "labels": "PASS",
+   "baseline": "PASS",
+   "signature": "PASS",
+   "integrity_ev": [
+    "rows 110, gaps 0, dups 0/0, monotonic True, span 5-550s of 540s (101%)",
+    "mem_growth NaN 12.7%; worst pod NaN mem_frac_limit 6.2%",
+    "ready-pod rows vs replicas_ready mismatch 0.0%",
+    "out-of-range rows 0; pod rows with mem_ws==0 0"
+   ],
+   "label_ev": [
+    "pod_kill: 6/6 rows in window labelled, 0 outside",
+    "pod_kill: 6/6 rows in window labelled, 0 outside"
+   ],
+   "baseline_ev": [
+    "pre-fault baseline: p95 30 ms, cpu/request 0.83, SLO-violating rows 0"
+   ],
+   "signature_ev": [
+    "kill @150s: replicas_ready 2->1, recovered within 60s True, pod churn (victim gone + 1 new pod) True, p95 max 30 ms",
+    "kill @330s: replicas_ready 2->1, recovered within 60s True, pod churn (victim gone + 1 new pod) True, p95 max 30 ms"
+   ],
+   "nan_mem_growth": 0.12727272727272726,
+   "gaps": 0,
+   "ready_mismatch": 0.0,
+   "zero_mem_pod_rows": 0
+  },
+  {
+   "scenario": "d-leak-medium-r2",
+   "run_id": "d-leak-medium-r2-1108-110336-3c8",
+   "group": "D",
+   "round": 2,
+   "overall": "PASS",
+   "integrity": "PASS",
+   "labels": "PASS",
+   "baseline": "PASS",
+   "signature": "PASS",
+   "integrity_ev": [
+    "rows 146, gaps 0, dups 0/0, monotonic True, span 5-730s of 720s (101%)",
+    "mem_growth NaN 5.5%; worst pod NaN cpu 0.5%",
+    "ready-pod rows vs replicas_ready mismatch 0.0%",
+    "out-of-range rows 0; pod rows with mem_ws==0 0"
+   ],
+   "label_ev": [
+    "memory_leak: 102/102 rows in window labelled, 0 outside"
+   ],
+   "baseline_ev": [
+    "pre-fault baseline: p95 30 ms, cpu/request 0.63, SLO-violating rows 0"
+   ],
+   "signature_ev": [
+    "target pod slope 554 KB/s (injected 560), mem frac 0.14->0.98, OOM expected True / seen 1 (at 535s), pod restarts 1, p95 ratio 1.00"
+   ],
+   "nan_mem_growth": 0.0547945205479452,
+   "gaps": 0,
+   "ready_mismatch": 0.0,
+   "zero_mem_pod_rows": 0
+  },
+  {
+   "scenario": "d-pod-kill-hpa-r2",
+   "run_id": "d-pod-kill-hpa-r2-1108-111444-615",
+   "group": "D",
+   "round": 2,
+   "overall": "WARN",
+   "integrity": "PASS",
+   "labels": "PASS",
+   "baseline": "PASS",
+   "signature": "WARN",
+   "integrity_ev": [
+    "rows 123, gaps 0, dups 0/0, monotonic True, span 2-612s of 600s (102%)",
+    "mem_growth NaN 7.3%; worst pod NaN mem_frac_limit 4.7%",
+    "ready-pod rows vs replicas_ready mismatch 0.0%",
+    "out-of-range rows 0; pod rows with mem_ws==0 0"
+   ],
+   "label_ev": [
+    "pod_kill: 6/6 rows in window labelled, 0 outside",
+    "pod_kill: 6/6 rows in window labelled, 0 outside",
+    "pod_kill: 6/6 rows in window labelled, 0 outside"
+   ],
+   "baseline_ev": [
+    "pre-fault baseline: p95 30 ms, cpu/request 0.57, SLO-violating rows 0"
+   ],
+   "signature_ev": [
+    "kill @140s: replicas_ready 3->3, recovered within 60s True, pod churn (victim gone + 1 new pod) True, p95 max 30 ms -- no replicas_ready dip at 5 s resolution",
+    "kill @290s: replicas_ready 3->3, recovered within 60s True, pod churn (victim gone + 1 new pod) True, p95 max 30 ms -- no replicas_ready dip at 5 s resolution",
+    "kill @440s: replicas_ready 3->3, recovered within 60s True, pod churn (victim gone + 1 new pod) True, p95 max 31 ms -- no replicas_ready dip at 5 s resolution"
+   ],
+   "nan_mem_growth": 0.07317073170731707,
+   "gaps": 0,
+   "ready_mismatch": 0.0,
+   "zero_mem_pod_rows": 0
+  },
+  {
+   "scenario": "a-cap-fixed2-solo-r2",
+   "run_id": "a-cap-fixed2-solo-r2-1108-112553-1f0",
+   "group": "A",
+   "round": 2,
+   "overall": "WARN",
+   "integrity": "PASS",
+   "labels": "PASS",
+   "baseline": "PASS",
+   "signature": "WARN",
+   "integrity_ev": [
+    "rows 124, gaps 0, dups 0/0, monotonic True, span 3-618s of 600s (102%)",
+    "mem_growth NaN 11.3%; worst pod NaN p95 0.4%",
+    "ready-pod rows vs replicas_ready mismatch 0.0%",
+    "out-of-range rows 0; pod rows with mem_ws==0 0"
+   ],
+   "label_ev": [],
+   "baseline_ev": [],
+   "signature_ev": [
+    "last SLO-ok step 17.0 RPS/pod (p95 284 ms), first breach 18.0 RPS/pod, final p95 10.0s, max achieved 20.2 RPS/pod, final err 0.20"
+   ],
+   "nan_mem_growth": 0.11290322580645161,
+   "gaps": 0,
+   "ready_mismatch": 0.0,
+   "zero_mem_pod_rows": 0
+  }
+ ],
+ "unlabelled_anomalies": [
+  {
+   "run_id": "d-bad-deploy-1108-084824-d38",
+   "t": 421.3,
+   "ts": 1794153370,
+   "p95": 0.5620867383219061,
+   "kind": "post-fault tail (<=40 s)"
+  },
+  {
+   "run_id": "d-bad-deploy-1108-084824-d38",
+   "t": 426.3,
+   "ts": 1794153375,
+   "p95": 0.5958114504966762,
+   "kind": "post-fault tail (<=40 s)"
+  },
+  {
+   "run_id": "d-bad-deploy-1108-084824-d38",
+   "t": 431.3,
+   "ts": 1794153380,
+   "p95": 0.7398329264902727,
+   "kind": "post-fault tail (<=40 s)"
+  },
+  {
+   "run_id": "d-bad-deploy-1108-084824-d38",
+   "t": 436.3,
+   "ts": 1794153385,
+   "p95": 0.7579412862751163,
+   "kind": "post-fault tail (<=40 s)"
+  },
+  {
+   "run_id": "d-bad-deploy-1108-084824-d38",
+   "t": 441.3,
+   "ts": 1794153390,
+   "p95": 0.7916037665576643,
+   "kind": "post-fault tail (<=40 s)"
+  },
+  {
+   "run_id": "d-bad-deploy-x3-fixed3-r2-1108-103441-b62",
+   "t": 403.0,
+   "ts": 1794159705,
+   "p95": 0.5704687597578488,
+   "kind": "post-fault tail (<=40 s)"
+  },
+  {
+   "run_id": "d-bad-deploy-x3-fixed3-r2-1108-103441-b62",
+   "t": 408.0,
+   "ts": 1794159710,
+   "p95": 0.6310011109236511,
+   "kind": "post-fault tail (<=40 s)"
+  },
+  {
+   "run_id": "d-bad-deploy-x3-fixed3-r2-1108-103441-b62",
+   "t": 413.0,
+   "ts": 1794159715,
+   "p95": 0.6861809621331134,
+   "kind": "post-fault tail (<=40 s)"
+  },
+  {
+   "run_id": "d-bad-deploy-x3-fixed3-r2-1108-103441-b62",
+   "t": 418.0,
+   "ts": 1794159720,
+   "p95": 0.6243476727962114,
+   "kind": "post-fault tail (<=40 s)"
+  },
+  {
+   "run_id": "d-dep-latency-1108-082554-5cd",
+   "t": 422.2,
+   "ts": 1794152020,
+   "p95": 0.490714225462981,
+   "kind": "post-fault tail (<=40 s)"
+  },
+  {
+   "run_id": "d-dep-latency-1108-082554-5cd",
+   "t": 427.2,
+   "ts": 1794152025,
+   "p95": 0.48824787313256396,
+   "kind": "post-fault tail (<=40 s)"
+  },
+  {
+   "run_id": "d-dep-latency-1108-082554-5cd",
+   "t": 432.2,
+   "ts": 1794152030,
+   "p95": 0.4793077645544595,
+   "kind": "post-fault tail (<=40 s)"
+  },
+  {
+   "run_id": "d-dep-latency-1108-082554-5cd",
+   "t": 437.2,
+   "ts": 1794152035,
+   "p95": 0.4413008668800152,
+   "kind": "post-fault tail (<=40 s)"
+  },
+  {
+   "run_id": "d-dep-latency-25p300-r2-1108-104525-c23",
+   "t": 391.8,
+   "ts": 1794160340,
+   "p95": 0.34070826545989225,
+   "kind": "post-fault tail (<=40 s)"
+  },
+  {
+   "run_id": "d-dep-latency-25p300-r2-1108-104525-c23",
+   "t": 396.8,
+   "ts": 1794160345,
+   "p95": 0.3370455268612572,
+   "kind": "post-fault tail (<=40 s)"
+  },
+  {
+   "run_id": "d-dep-latency-25p300-r2-1108-104525-c23",
+   "t": 401.8,
+   "ts": 1794160350,
+   "p95": 0.3214990449486677,
+   "kind": "post-fault tail (<=40 s)"
+  },
+  {
+   "run_id": "d-dep-latency-75p600-r2-1108-105325-7af",
+   "t": 393.3,
+   "ts": 1794160845,
+   "p95": 0.7397938329809493,
+   "kind": "post-fault tail (<=40 s)"
+  },
+  {
+   "run_id": "d-dep-latency-75p600-r2-1108-105325-7af",
+   "t": 398.3,
+   "ts": 1794160850,
+   "p95": 0.7352678631379895,
+   "kind": "post-fault tail (<=40 s)"
+  },
+  {
+   "run_id": "d-dep-latency-75p600-r2-1108-105325-7af",
+   "t": 403.3,
+   "ts": 1794160855,
+   "p95": 0.7191046914454794,
+   "kind": "post-fault tail (<=40 s)"
+  },
+  {
+   "run_id": "d-leak-oom-1108-081244-c2e",
+   "t": 636.4,
+   "ts": 1794151445,
+   "p95": 0.5953331466716443,
+   "kind": "post-fault tail (<=40 s)"
+  },
+  {
+   "run_id": "d-leak-oom-1108-081244-c2e",
+   "t": 641.4,
+   "ts": 1794151450,
+   "p95": 0.5993333214137136,
+   "kind": "UNEXPLAINED"
+  },
+  {
+   "run_id": "d-leak-oom-1108-081244-c2e",
+   "t": 646.4,
+   "ts": 1794151455,
+   "p95": 0.5857735611865573,
+   "kind": "UNEXPLAINED"
+  },
+  {
+   "run_id": "d-leak-slow-1108-082126-2e4",
+   "t": 113.6,
+   "ts": 1794151445,
+   "p95": 0.6647631304811279,
+   "kind": "UNEXPLAINED"
+  },
+  {
+   "run_id": "d-leak-slow-1108-082126-2e4",
+   "t": 118.6,
+   "ts": 1794151450,
+   "p95": 0.6565820213075413,
+   "kind": "UNEXPLAINED"
+  },
+  {
+   "run_id": "d-leak-slow-1108-082126-2e4",
+   "t": 123.6,
+   "ts": 1794151455,
+   "p95": 0.6591134325252948,
+   "kind": "UNEXPLAINED"
+  }
+ ]
+}

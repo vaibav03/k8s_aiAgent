@@ -1,0 +1,8 @@
+07:43:29 [b-hpa-flash-b09-1108-074329-b3e] scenario b-hpa-flash-b09 -> namespace lab-b-hpa-flash-b09-1108-074329-b3e
+07:43:36 [b-hpa-flash-b09-1108-074329-b3e] app ready: 1 replica(s), policy hpa_cpu
+07:44:17 [b-hpa-flash-b09-1108-074329-b3e] HPA has metrics: {'averageUtilization': 1, 'averageValue': '4m'}
+07:44:29 [b-hpa-flash-b09-1108-074329-b3e] k6 started: flash_crowd base_rps 16.2 pod k6-dkppm
+07:53:32 [b-hpa-flash-b09-1108-074329-b3e] load finished: succeeded
+07:53:53 [b-hpa-flash-b09-1108-074329-b3e] exported deploy.csv (111 rows) pods.csv (393 rows) -> /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/b-hpa-flash-b09-1108-074329-b3e
+07:53:53 [b-hpa-flash-b09-1108-074329-b3e] namespace deleted
+/Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/b-hpa-flash-b09-1108-074329-b3e

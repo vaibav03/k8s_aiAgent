@@ -1,0 +1,7 @@
+07:53:53 [b-hpa-saw-b14-1108-075353-a5c] scenario b-hpa-saw-b14 -> namespace lab-b-hpa-saw-b14-1108-075353-a5c
+07:53:56 [b-hpa-saw-b14-1108-075353-a5c] app ready: 1 replica(s), policy hpa_cpu
+07:54:24 [b-hpa-saw-b14-1108-075353-a5c] HPA has metrics: {'averageUtilization': 0, 'averageValue': '1m'}
+07:54:35 [b-hpa-saw-b14-1108-075353-a5c] k6 started: sawtooth base_rps 25.2 pod k6-k6tt7
+08:03:38 [b-hpa-saw-b14-1108-075353-a5c] load finished: succeeded
+08:03:58 [b-hpa-saw-b14-1108-075353-a5c] exported deploy.csv (110 rows) pods.csv (419 rows) -> /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/b-hpa-saw-b14-1108-075353-a5c
+08:03:58 [b-hpa-saw-b14-1108-075353-a5c] namespace deleted

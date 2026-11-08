@@ -1,0 +1,27 @@
+{
+ "risk": 0.1,
+ "stabilization": {
+  "max_up_step": 4,
+  "down_window_s": 180.0,
+  "down_cooldown_s": 60.0,
+  "max_down_step": 1,
+  "down_headroom": 0.85,
+  "up_horizons_s": [
+   60
+  ],
+  "down_horizons_s": [
+   60,
+   120,
+   300
+  ],
+  "trend_min_ratio": 1.2,
+  "fc_max_mult": 1.5,
+  "up_persist": 2,
+  "up_headroom": 1.3
+ },
+ "decision_period_s": 15.0,
+ "default_cpu_per_req_s": 0.02675,
+ "cpu_limit_cores": 0.5,
+ "cpu_request_cores": 0.25,
+ "history_s": 1800.0
+}

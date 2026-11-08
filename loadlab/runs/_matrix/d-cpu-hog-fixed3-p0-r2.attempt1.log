@@ -1,0 +1,9 @@
+10:22:49 [d-cpu-hog-fixed3-p0-r2-1108-102249-eeb] scenario d-cpu-hog-fixed3-p0-r2 -> namespace lab-d-cpu-hog-fixed3-p0-r2-1108-102249-eeb
+10:22:52 [d-cpu-hog-fixed3-p0-r2-1108-102249-eeb] app ready: 3 replica(s), policy fixed
+10:23:09 [d-cpu-hog-fixed3-p0-r2-1108-102249-eeb] k6 started: steady base_rps 13 pod k6-6bf8q
+10:26:09 [d-cpu-hog-fixed3-p0-r2-1108-102249-eeb] FAULT START f0 cpu_hog target=one-pod pods=['loadlab-5965489b55-8t69t'] params={'cpu_hog_millicores': 350}
+10:29:41 [d-cpu-hog-fixed3-p0-r2-1108-102249-eeb] FAULT END   f0 cpu_hog
+10:32:12 [d-cpu-hog-fixed3-p0-r2-1108-102249-eeb] load finished: succeeded
+10:32:33 [d-cpu-hog-fixed3-p0-r2-1108-102249-eeb] exported deploy.csv (110 rows) pods.csv (330 rows) -> /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/d-cpu-hog-fixed3-p0-r2-1108-102249-eeb
+10:32:33 [d-cpu-hog-fixed3-p0-r2-1108-102249-eeb] namespace deleted
+/Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/d-cpu-hog-fixed3-p0-r2-1108-102249-eeb

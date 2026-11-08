@@ -1,0 +1,208 @@
+# Full scenario matrix for the loadlab dataset (run with runner/matrix.py, 2 lanes).
+#
+# Capacity reference (calibration.json): 1 pod = 18 RPS at the SLO (p95 < 300 ms, err < 1 %),
+# 19.6 RPS max throughput, 0.026 core-s per request. HPA 70 % of a 250m request ~ 6.7 RPS/pod.
+# base_load_pods is expressed in pods-worth of SLO capacity (x 18 RPS).
+#
+# Lane budget: 2 lanes run concurrently, each capped at 4 app pods (LANE_MAX_REPLICAS) so HPA max 6
+# is clipped to 4 (recorded in scenario.json as scaling._uncapped_max). The over-provisioned fixed run
+# therefore uses 4 replicas, not 5. `heavy: true` marks runs that drive pods into deep overload or
+# large connection churn; matrix.py never runs two heavy runs at the same time (README limitation 9).
+#
+# Groups:
+#   A capacity        fixed 1/2/3 replicas, step_ramp past saturation (latency/CPU vs rps-per-pod curve)
+#   B reactive        hpa_cpu on diurnal / spike / flash_crowd / sawtooth, two seeds/base rates each
+#   C fixed mis-size  under-provisioned (1 pod diurnal, 2 pods spike) and over-provisioned (4 pods steady)
+#   D faults          hpa_cpu, moderate steady traffic (1 pod-worth = 18 RPS over 3 pods), fault mid-run
+#   E combinations    spike + dep_latency, diurnal + memory_leak
+#
+# Fault windows are scheduled relative to k6 start (t0); the exact applied times are in faults.jsonl.
+runs:
+  # ------------------------------------------------------------------ A. capacity
+  - id: a-cap-fixed1
+    group: A
+    heavy: true
+    duration_s: 400
+    traffic: {shape: step_ramp, base_rps: 6, params: {start_rps: 6, step_rps: 2, step_s: 40, ramp_s: 3}}   # 6 -> 24 RPS (1.33x SLO cap)
+    scaling: {policy: fixed, replicas: 1}
+    faults: []
+  - id: a-cap-fixed2
+    group: A
+    heavy: true
+    duration_s: 400
+    traffic: {shape: step_ramp, base_rps: 12, params: {start_rps: 12, step_rps: 4, step_s: 40, ramp_s: 3}}  # 12 -> 48 RPS
+    scaling: {policy: fixed, replicas: 2}
+    faults: []
+  - id: a-cap-fixed3
+    group: A
+    heavy: true
+    duration_s: 400
+    traffic: {shape: step_ramp, base_rps: 18, params: {start_rps: 18, step_rps: 6, step_s: 40, ramp_s: 3}}  # 18 -> 72 RPS
+    scaling: {policy: fixed, replicas: 3}
+    faults: []
+
+  # ------------------------------------------------------------------ B. reactive baseline (HPA)
+  - id: b-hpa-diurnal-s7
+    group: B
+    heavy: false
+    duration_s: 780
+    traffic: {shape: diurnal, base_load_pods: 1.5, params: {period_s: 520, amplitude: 0.6, noise: 0.08, seed: 7}}   # 10.8 - 43 RPS
+    scaling: {policy: hpa_cpu, min: 1, max: 6, target_cpu: 70}
+    faults: []
+  - id: b-hpa-diurnal-s23
+    group: B
+    heavy: false
+    duration_s: 780
+    traffic: {shape: diurnal, base_load_pods: 1.0, params: {period_s: 400, amplitude: 0.5, noise: 0.12, seed: 23}}  # 9 - 27 RPS
+    scaling: {policy: hpa_cpu, min: 1, max: 6, target_cpu: 70}
+    faults: []
+  - id: b-hpa-spike-b08
+    group: B
+    heavy: true
+    duration_s: 540
+    traffic: {shape: spike, base_load_pods: 0.8, params: {spike_at_s: 180, spike_mult: 4, spike_s: 120, ramp_s: 10}}  # 14.4 -> 57.6 RPS
+    scaling: {policy: hpa_cpu, min: 1, max: 6, target_cpu: 70}
+    faults: []
+  - id: b-hpa-spike-b05
+    group: B
+    heavy: false
+    duration_s: 540
+    traffic: {shape: spike, base_load_pods: 0.5, params: {spike_at_s: 150, spike_mult: 4, spike_s: 120, ramp_s: 5}}   # 9 -> 36 RPS
+    scaling: {policy: hpa_cpu, min: 1, max: 6, target_cpu: 70}
+    faults: []
+  - id: b-hpa-flash-b06
+    group: B
+    heavy: false
+    duration_s: 540
+    traffic: {shape: flash_crowd, base_load_pods: 0.6, params: {at_s: 150, mult: 3, ramp_s: 5}}   # 10.8 -> 32.4 RPS
+    scaling: {policy: hpa_cpu, min: 1, max: 6, target_cpu: 70}
+    faults: []
+  - id: b-hpa-flash-b09
+    group: B
+    heavy: true
+    duration_s: 540
+    traffic: {shape: flash_crowd, base_load_pods: 0.9, params: {at_s: 180, mult: 3, ramp_s: 3}}   # 16.2 -> 48.6 RPS
+    scaling: {policy: hpa_cpu, min: 1, max: 6, target_cpu: 70}
+    faults: []
+  - id: b-hpa-saw-b10
+    group: B
+    heavy: false
+    duration_s: 540
+    traffic: {shape: sawtooth, base_load_pods: 1.0, params: {period_s: 120, low_mult: 0.5, high_mult: 2.0}}   # 9 -> 36 RPS
+    scaling: {policy: hpa_cpu, min: 1, max: 6, target_cpu: 70}
+    faults: []
+  - id: b-hpa-saw-b14
+    group: B
+    heavy: false
+    duration_s: 540
+    traffic: {shape: sawtooth, base_load_pods: 1.4, params: {period_s: 180, low_mult: 0.5, high_mult: 2.0}}   # 12.6 -> 50.4 RPS
+    scaling: {policy: hpa_cpu, min: 1, max: 6, target_cpu: 70}
+    faults: []
+
+  # ------------------------------------------------------------------ C. fixed under / over provisioned
+  - id: c-under-fixed1-diurnal
+    group: C
+    heavy: true
+    duration_s: 720
+    traffic: {shape: diurnal, base_load_pods: 0.8, params: {period_s: 480, amplitude: 0.6, noise: 0.08, seed: 5}}  # 5.8 - 23 RPS on 1 pod (cap 18)
+    scaling: {policy: fixed, replicas: 1}
+    faults: []
+  - id: c-under-fixed2-spike
+    group: C
+    heavy: true
+    duration_s: 540
+    traffic: {shape: spike, base_load_pods: 0.8, params: {spike_at_s: 180, spike_mult: 4, spike_s: 120, ramp_s: 10}}  # 14.4 -> 57.6 RPS on 2 pods (cap 36)
+    scaling: {policy: fixed, replicas: 2}
+    faults: []
+  - id: c-over-fixed4-steady
+    group: C
+    heavy: false
+    duration_s: 480
+    traffic: {shape: steady, base_load_pods: 0.5}   # 9 RPS on 4 pods (2.25 RPS/pod, ~12 % of SLO cap)
+    scaling: {policy: fixed, replicas: 4}
+    faults: []
+
+  # ------------------------------------------------------------------ D. faults under HPA (18 RPS, starts at 3 pods)
+  - id: d-leak-oom
+    group: D
+    heavy: false
+    duration_s: 720
+    traffic: {shape: steady, base_load_pods: 1.0}
+    scaling: {policy: hpa_cpu, min: 1, max: 6, target_cpu: 70, initial: 3}
+    faults:   # ~768 KB/s: OOMKill ~270 s after start, re-leaks after restart; freed at end -> clean tail
+      - {type: memory_leak, start_s: 180, end_s: 600, target: one-pod, params: {leak_kb_per_s: 768, free_on_end: true}}
+  - id: d-leak-slow
+    group: D
+    heavy: false
+    duration_s: 720
+    traffic: {shape: steady, base_load_pods: 1.0}
+    scaling: {policy: hpa_cpu, min: 1, max: 6, target_cpu: 70, initial: 3}
+    faults:   # 96 KB/s for 420 s = ~40 MB: working set ~0.15 -> ~0.32 of limit, never OOMs; leaked memory retained
+      - {type: memory_leak, start_s: 180, end_s: 600, target: one-pod, params: {leak_kb_per_s: 96}}
+  - id: d-dep-latency
+    group: D
+    heavy: false
+    duration_s: 600
+    traffic: {shape: steady, base_load_pods: 1.0}
+    scaling: {policy: hpa_cpu, min: 1, max: 6, target_cpu: 70, initial: 3}
+    faults:
+      - {type: dep_latency, start_s: 200, end_s: 420, target: all, params: {dep_latency_ms: 400, dep_fraction: 0.5}}
+  - id: d-error-burst
+    group: D
+    heavy: false
+    duration_s: 600
+    traffic: {shape: steady, base_load_pods: 1.0}
+    scaling: {policy: hpa_cpu, min: 1, max: 6, target_cpu: 70, initial: 3}
+    faults:
+      - {type: error_rate, start_s: 200, end_s: 420, target: all, params: {error_rate: 0.2}}
+  - id: d-cpu-hog
+    group: D
+    heavy: false
+    duration_s: 600
+    traffic: {shape: steady, base_load_pods: 1.0}
+    scaling: {policy: hpa_cpu, min: 1, max: 6, target_cpu: 70, initial: 3}
+    faults:   # noisy neighbour: 450m burner in one pod's 500m cgroup
+      - {type: cpu_hog, start_s: 200, end_s: 420, target: one-pod, params: {cpu_hog_millicores: 450}}
+  - id: d-pod-kill
+    group: D
+    heavy: false
+    duration_s: 600
+    traffic: {shape: steady, base_load_pods: 1.0}
+    scaling: {policy: hpa_cpu, min: 1, max: 6, target_cpu: 70, initial: 3}
+    faults:
+      - {type: pod_kill, start_s: 200}
+      - {type: pod_kill, start_s: 380, pod_index: 1}
+  - id: d-bad-deploy
+    group: D
+    heavy: true
+    duration_s: 600
+    traffic: {shape: steady, base_load_pods: 1.0}
+    scaling: {policy: hpa_cpu, min: 1, max: 6, target_cpu: 70, initial: 3}
+    faults:   # CPU_MS_PER_REQ 25 -> 75 (x3): 3 pods = ~19 RPS cap vs 18 offered -> HPA must add pods; rollback at 420
+      - {type: bad_deploy, start_s: 200, end_s: 420, params: {cpu_ms_per_req: 75}}
+  - id: d-crashloop
+    group: D
+    heavy: false
+    duration_s: 600
+    traffic: {shape: steady, base_load_pods: 1.0}
+    scaling: {policy: hpa_cpu, min: 1, max: 6, target_cpu: 70, initial: 3}
+    faults:   # rollout of CRASH_ON_START=1 -> CrashLoopBackOff; old pods keep serving; rollback at 420
+      - {type: crashloop, start_s: 200, end_s: 420}
+
+  # ------------------------------------------------------------------ E. combinations
+  - id: e-spike-dep-latency
+    group: E
+    heavy: true
+    duration_s: 660
+    traffic: {shape: spike, base_load_pods: 0.8, params: {spike_at_s: 240, spike_mult: 4, spike_s: 120, ramp_s: 10}}
+    scaling: {policy: hpa_cpu, min: 1, max: 6, target_cpu: 70}
+    faults:   # slow dependency starts before the spike and outlasts it
+      - {type: dep_latency, start_s: 180, end_s: 450, target: all, params: {dep_latency_ms: 400, dep_fraction: 0.5}}
+  - id: e-diurnal-leak
+    group: E
+    heavy: false
+    duration_s: 780
+    traffic: {shape: diurnal, base_load_pods: 1.2, params: {period_s: 520, amplitude: 0.5, noise: 0.08, seed: 31}}
+    scaling: {policy: hpa_cpu, min: 1, max: 6, target_cpu: 70}
+    faults:   # 640 KB/s: OOM ~330 s after start while traffic swings; freed at end
+      - {type: memory_leak, start_s: 120, end_s: 690, target: one-pod, params: {leak_kb_per_s: 640, free_on_end: true}}

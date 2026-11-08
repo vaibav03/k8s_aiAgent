@@ -1,0 +1,48 @@
+{
+  "id": "d-error30-fixed3-r2",
+  "group": "D",
+  "heavy": false,
+  "duration_s": 540,
+  "traffic": {
+    "shape": "steady",
+    "base_rps": 15,
+    "params": {}
+  },
+  "scaling": {
+    "policy": "fixed",
+    "replicas": 3,
+    "_lane_cap": 4
+  },
+  "faults": [
+    {
+      "type": "error_rate",
+      "start_s": 180,
+      "end_s": 360,
+      "target": "all",
+      "params": {
+        "error_rate": 0.3
+      }
+    }
+  ],
+  "app": {
+    "cpu_ms_per_req": 25,
+    "alloc_kb": 64
+  },
+  "_run": {
+    "run_id": "d-error30-fixed3-r2-1108-101512-c7c",
+    "namespace": "lab-d-error30-fixed3-r2-1108-101512-c7c",
+    "scenario_file": "/Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/scenarios/matrix_round2/d-error30-fixed3-r2.yaml",
+    "image": "loadlab:v1",
+    "k6_image": "grafana/k6:0.54.0",
+    "context": "kubeai-lab",
+    "t_created": 1794158112.25876,
+    "t0": 1794158133.540438,
+    "t_end": 1794158678.208456,
+    "status": "succeeded",
+    "export_window": [
+      1794158103.540438,
+      1794158688.208456
+    ],
+    "step_s": 5
+  }
+}

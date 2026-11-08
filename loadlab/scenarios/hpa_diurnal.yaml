@@ -1,0 +1,9 @@
+# Healthy autoscaling reference: diurnal traffic, HPA on CPU. Label: needs_scale_out / scale_in.
+id: hpa-diurnal
+duration_s: 1200
+traffic:
+  shape: diurnal
+  base_load_pods: 1.5
+  params: {period_s: 600, amplitude: 0.6, noise: 0.08, seed: 7}
+scaling: {policy: hpa_cpu, min: 1, max: 6, target_cpu: 70}
+faults: []

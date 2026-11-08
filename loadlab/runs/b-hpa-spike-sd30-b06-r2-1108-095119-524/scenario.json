@@ -1,0 +1,50 @@
+{
+  "id": "b-hpa-spike-sd30-b06-r2",
+  "group": "B",
+  "heavy": true,
+  "duration_s": 600,
+  "traffic": {
+    "shape": "spike",
+    "base_load_pods": 0.6,
+    "params": {
+      "spike_at_s": 150,
+      "spike_mult": 4,
+      "spike_s": 150,
+      "ramp_s": 8
+    },
+    "base_rps": 10.8,
+    "_capacity_ref_rps_per_pod": 18
+  },
+  "scaling": {
+    "policy": "hpa_cpu",
+    "min": 1,
+    "max": 4,
+    "target_cpu": 70,
+    "scale_down_window_s": 30,
+    "initial": 1,
+    "_uncapped_max": 6,
+    "_lane_cap": 4
+  },
+  "faults": [],
+  "app": {
+    "cpu_ms_per_req": 25,
+    "alloc_kb": 64
+  },
+  "_run": {
+    "run_id": "b-hpa-spike-sd30-b06-r2-1108-095119-524",
+    "namespace": "lab-b-hpa-spike-sd30-b06-r2-1108-095119-524",
+    "scenario_file": "/Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/scenarios/matrix_round2/b-hpa-spike-sd30-b06-r2.yaml",
+    "image": "loadlab:v1",
+    "k6_image": "grafana/k6:0.54.0",
+    "context": "kubeai-lab",
+    "t_created": 1794156679.177842,
+    "t0": 1794156723.244749,
+    "t_end": 1794157329.598717,
+    "status": "succeeded",
+    "export_window": [
+      1794156693.244749,
+      1794157339.598717
+    ],
+    "step_s": 5
+  }
+}

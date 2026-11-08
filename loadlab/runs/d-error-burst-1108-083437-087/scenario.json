@@ -1,0 +1,54 @@
+{
+  "id": "d-error-burst",
+  "group": "D",
+  "heavy": false,
+  "duration_s": 600,
+  "traffic": {
+    "shape": "steady",
+    "base_load_pods": 1.0,
+    "params": {},
+    "base_rps": 18.0,
+    "_capacity_ref_rps_per_pod": 18
+  },
+  "scaling": {
+    "policy": "hpa_cpu",
+    "min": 1,
+    "max": 4,
+    "target_cpu": 70,
+    "initial": 3,
+    "_uncapped_max": 6,
+    "_lane_cap": 4
+  },
+  "faults": [
+    {
+      "type": "error_rate",
+      "start_s": 200,
+      "end_s": 420,
+      "target": "all",
+      "params": {
+        "error_rate": 0.2
+      }
+    }
+  ],
+  "app": {
+    "cpu_ms_per_req": 25,
+    "alloc_kb": 64
+  },
+  "_run": {
+    "run_id": "d-error-burst-1108-083437-087",
+    "namespace": "lab-d-error-burst-1108-083437-087",
+    "scenario_file": "/Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/scenarios/matrix/d-error-burst.yaml",
+    "image": "loadlab:v1",
+    "k6_image": "grafana/k6:0.54.0",
+    "context": "kubeai-lab",
+    "t_created": 1794152077.978635,
+    "t0": 1794152122.63402,
+    "t_end": 1794152727.14863,
+    "status": "succeeded",
+    "export_window": [
+      1794152092.63402,
+      1794152737.14863
+    ],
+    "step_s": 5
+  }
+}

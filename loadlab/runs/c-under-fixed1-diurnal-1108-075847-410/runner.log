@@ -1,0 +1,6 @@
+07:58:47 [c-under-fixed1-diurnal-1108-075847-410] scenario c-under-fixed1-diurnal -> namespace lab-c-under-fixed1-diurnal-1108-075847-410
+07:58:50 [c-under-fixed1-diurnal-1108-075847-410] app ready: 1 replica(s), policy fixed
+07:59:07 [c-under-fixed1-diurnal-1108-075847-410] k6 started: diurnal base_rps 14.4 pod k6-47pbt
+08:11:21 [c-under-fixed1-diurnal-1108-075847-410] load finished: succeeded
+08:11:42 [c-under-fixed1-diurnal-1108-075847-410] exported deploy.csv (149 rows) pods.csv (149 rows) -> /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/c-under-fixed1-diurnal-1108-075847-410
+08:11:42 [c-under-fixed1-diurnal-1108-075847-410] namespace deleted

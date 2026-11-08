@@ -1,0 +1,21 @@
+# generated from scenarios/matrix.yaml by runner/matrix.py - edit matrix.yaml instead
+id: d-error-burst
+group: D
+heavy: false
+duration_s: 600
+traffic:
+  shape: steady
+  base_load_pods: 1.0
+scaling:
+  policy: hpa_cpu
+  min: 1
+  max: 6
+  target_cpu: 70
+  initial: 3
+faults:
+- type: error_rate
+  start_s: 200
+  end_s: 420
+  target: all
+  params:
+    error_rate: 0.2

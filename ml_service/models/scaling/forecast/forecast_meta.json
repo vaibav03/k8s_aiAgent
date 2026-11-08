@@ -1,0 +1,61 @@
+{
+  "horizons_s": [
+    60,
+    120,
+    300
+  ],
+  "quantiles": [
+    0.5,
+    0.9
+  ],
+  "step_s": 5,
+  "hist_steps": 60,
+  "features": [
+    "z_last",
+    "d_1",
+    "d_3",
+    "d_6",
+    "d_12",
+    "d_24",
+    "d_60",
+    "mean_rel_6",
+    "std_6",
+    "max_rel_6",
+    "min_rel_6",
+    "mean_rel_12",
+    "std_12",
+    "max_rel_12",
+    "min_rel_12",
+    "mean_rel_24",
+    "std_24",
+    "max_rel_24",
+    "min_rel_24",
+    "mean_rel_60",
+    "std_60",
+    "max_rel_60",
+    "min_rel_60",
+    "slope_6",
+    "slope_12",
+    "slope_24",
+    "pos_60",
+    "curv",
+    "hist_frac"
+  ],
+  "target": "log1p(rps)",
+  "q90_margin": {
+    "60": 0.08979567741358582,
+    "120": 0.31110835437728246,
+    "300": 0.30831436565617354
+  },
+  "info": {
+    "rounds": [
+      1
+    ],
+    "runs": 24,
+    "q90_outer_correction": {
+      "60": 0.03450983836878496,
+      "120": 0.16003925951544962,
+      "300": 0.1603315793261117
+    }
+  }
+}

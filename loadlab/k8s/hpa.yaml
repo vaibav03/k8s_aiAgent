@@ -1,0 +1,19 @@
+# HPA (autoscaling/v2) on CPU utilisation vs request. Default scaling behaviour (no behavior block).
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: loadlab
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: loadlab
+  minReplicas: ${min_replicas}
+  maxReplicas: ${max_replicas}
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: ${target_cpu}

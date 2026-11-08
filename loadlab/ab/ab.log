@@ -1,0 +1,21 @@
+13:57:01 slot 1: [('a-load', 'agent'), ('a-load', 'hpa30')]
+14:09:49 slot 1 ('a-load', 'agent') rc=0
+14:10:26 slot 1 ('a-load', 'hpa30') rc=0
+14:10:26 slot 2: [('b-dep', 'agent'), ('b-dep', 'hpa30')]
+14:23:08 slot 2 ('b-dep', 'agent') rc=0
+14:23:36 slot 2 ('b-dep', 'hpa30') rc=0
+14:23:36 slot 3: [('c-leak', 'agent'), ('c-leak', 'hpa30')]
+14:36:20 slot 3 ('c-leak', 'agent') rc=0
+14:36:47 slot 3 ('c-leak', 'hpa30') rc=0
+14:36:47 slot 4: [('a-load', 'hpa300'), ('b-dep', 'hpa300')]
+14:50:11 slot 4 ('b-dep', 'hpa300') rc=0
+14:50:13 slot 4 ('a-load', 'hpa300') rc=0
+14:50:13 slot 5: [('c-leak', 'hpa300'), ('a2-load-s7', 'hpa300')]
+15:03:21 slot 5 ('c-leak', 'hpa300') rc=0
+15:03:24 slot 5 ('a2-load-s7', 'hpa300') rc=0
+15:03:24 slot 6: [('a2-load-s7', 'agent'), ('a2-load-s7', 'hpa30')]
+15:15:54 slot 6 ('a2-load-s7', 'hpa30') rc=1
+15:16:06 slot 6 ('a2-load-s7', 'agent') rc=1
+15:16:34 slot 6: [('a2-load-s7', 'agent'), ('a2-load-s7', 'hpa30')]
+15:21:42 slot 6 ('a2-load-s7', 'hpa30') rc=1
+15:21:42 slot 6 ('a2-load-s7', 'agent') rc=1

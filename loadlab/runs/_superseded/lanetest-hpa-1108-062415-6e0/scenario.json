@@ -1,0 +1,53 @@
+{
+  "id": "lanetest-hpa",
+  "duration_s": 300,
+  "traffic": {
+    "shape": "flash_crowd",
+    "base_load_pods": 0.5,
+    "params": {
+      "at_s": 40,
+      "mult": 3
+    },
+    "base_rps": 9.0,
+    "_capacity_ref_rps_per_pod": 18
+  },
+  "scaling": {
+    "policy": "hpa_cpu",
+    "min": 1,
+    "max": 4,
+    "target_cpu": 70,
+    "initial": 1
+  },
+  "faults": [
+    {
+      "type": "bad_deploy",
+      "start_s": 200,
+      "end_s": 260,
+      "params": {
+        "cpu_ms_per_req": 50
+      },
+      "target": "one-pod"
+    }
+  ],
+  "app": {
+    "cpu_ms_per_req": 25,
+    "alloc_kb": 64
+  },
+  "_run": {
+    "run_id": "lanetest-hpa-1108-062415-6e0",
+    "namespace": "lab-lanetest-hpa-1108-062415-6e0",
+    "scenario_file": "/private/tmp/claude-501/-Users-vaibav/b155b9b2-0093-4183-9ec8-6e25afc7280b/scratchpad/lane_a.yaml",
+    "image": "loadlab:v1",
+    "k6_image": "grafana/k6:0.54.0",
+    "context": "kubeai-lab",
+    "t_created": 1794144255.7884648,
+    "t0": 1794144302.026486,
+    "t_end": 1794144605.8981838,
+    "status": "succeeded",
+    "export_window": [
+      1794144272.026486,
+      1794144615.8981838
+    ],
+    "step_s": 5
+  }
+}

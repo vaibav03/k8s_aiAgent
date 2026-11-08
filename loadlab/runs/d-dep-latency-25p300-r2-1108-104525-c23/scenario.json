@@ -1,0 +1,49 @@
+{
+  "id": "d-dep-latency-25p300-r2",
+  "group": "D",
+  "heavy": false,
+  "duration_s": 540,
+  "traffic": {
+    "shape": "steady",
+    "base_rps": 15,
+    "params": {}
+  },
+  "scaling": {
+    "policy": "fixed",
+    "replicas": 3,
+    "_lane_cap": 4
+  },
+  "faults": [
+    {
+      "type": "dep_latency",
+      "start_s": 180,
+      "end_s": 390,
+      "target": "all",
+      "params": {
+        "dep_latency_ms": 300,
+        "dep_fraction": 0.25
+      }
+    }
+  ],
+  "app": {
+    "cpu_ms_per_req": 25,
+    "alloc_kb": 64
+  },
+  "_run": {
+    "run_id": "d-dep-latency-25p300-r2-1108-104525-c23",
+    "namespace": "lab-d-dep-latency-25p300-r2-1108-104525-c23",
+    "scenario_file": "/Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/scenarios/matrix_round2/d-dep-latency-25p300-r2.yaml",
+    "image": "loadlab:v1",
+    "k6_image": "grafana/k6:0.54.0",
+    "context": "kubeai-lab",
+    "t_created": 1794159925.900403,
+    "t0": 1794159948.235955,
+    "t_end": 1794160492.45247,
+    "status": "succeeded",
+    "export_window": [
+      1794159918.235955,
+      1794160502.45247
+    ],
+    "step_s": 5
+  }
+}

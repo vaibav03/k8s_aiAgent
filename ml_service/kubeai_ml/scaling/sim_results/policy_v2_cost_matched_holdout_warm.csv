@@ -1,0 +1,15 @@
+max_cap,policy,viol_min,pod_min,actions,closest_baseline,closest_viol_min,closest_pod_min,best_hpa_not_costlier,best_hpa_viol_min,delta_frontier,hpa_frontier_interp_viol_min
+4,predictive,2.17,269.41,29,hpa-80-sd30,0.67,272.74,hpa-100-sd30,0.67,1.5,0.642
+4,fa-h2.5-cpu100-sd30,0.5,380.59,32,hpa-50-sd30,0.5,382.09,hpa-55-sd30,0.5,0.0,0.477
+4,hpa_gated-70-sd30,0.67,293.41,32,hpa-70-sd30,0.67,292.16,hpa-100-sd30,0.67,0.0,0.61
+4,hpa_gated-70-sd180,0.67,315.66,18,hpa-70-sd300,0.67,322.0,hpa-100-sd30,0.67,0.0,0.581
+4,fa-h1.3-cpuoff-sd180,2.17,241.83,17,hpa-100-sd30,0.67,248.25,-,inf,,
+4,fa-h1.3-cpuoff-sd180-fc,2.17,265.66,31,hpa-90-sd30,0.67,263.08,hpa-100-sd30,0.67,1.5,0.647
+4,fa-h1.3-cpu70-sd30,0.67,293.41,32,hpa-70-sd30,0.67,292.16,hpa-100-sd30,0.67,0.0,0.61
+8,predictive,2.17,318.01,37,hpa-80-sd300,0.67,316.74,hpa-100-sd30,0.67,1.5,0.596
+8,fa-h2.5-cpu100-sd30,0.5,446.01,62,hpa-55-sd300,0.5,458.82,hpa-55-sd30,0.5,0.0,0.379
+8,hpa_gated-70-sd30,0.67,304.41,34,hpa-70-sd30,0.67,306.5,hpa-100-sd30,0.67,0.0,0.611
+8,hpa_gated-70-sd180,0.67,338.08,19,hpa-65-sd30,0.67,340.68,hpa-100-sd30,0.67,0.0,0.574
+8,fa-h1.3-cpuoff-sd180,2.17,260.83,22,hpa-90-sd30,0.67,266.08,hpa-100-sd30,0.67,1.5,0.659
+8,fa-h1.3-cpuoff-sd180-fc,2.17,300.83,37,hpa-90-sd300,0.67,297.83,hpa-100-sd30,0.67,1.5,0.615
+8,fa-h1.3-cpu70-sd30,0.67,304.41,34,hpa-70-sd30,0.67,306.5,hpa-100-sd30,0.67,0.0,0.611

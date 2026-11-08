@@ -1,0 +1,10 @@
+08:37:01 [d-cpu-hog-1108-083701-80d] scenario d-cpu-hog -> namespace lab-d-cpu-hog-1108-083701-80d
+08:37:03 [d-cpu-hog-1108-083701-80d] app ready: 3 replica(s), policy hpa_cpu
+08:37:50 [d-cpu-hog-1108-083701-80d] HPA has metrics: {'averageUtilization': 0, 'averageValue': '1m'}
+08:38:01 [d-cpu-hog-1108-083701-80d] k6 started: steady base_rps 18.0 pod k6-7zrpl
+08:41:21 [d-cpu-hog-1108-083701-80d] FAULT START f0 cpu_hog target=one-pod pods=['loadlab-5965489b55-bwq6j'] params={'cpu_hog_millicores': 450}
+08:45:03 [d-cpu-hog-1108-083701-80d] FAULT END   f0 cpu_hog
+08:48:03 [d-cpu-hog-1108-083701-80d] load finished: succeeded
+08:48:24 [d-cpu-hog-1108-083701-80d] exported deploy.csv (122 rows) pods.csv (443 rows) -> /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/d-cpu-hog-1108-083701-80d
+08:48:24 [d-cpu-hog-1108-083701-80d] namespace deleted
+/Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/d-cpu-hog-1108-083701-80d

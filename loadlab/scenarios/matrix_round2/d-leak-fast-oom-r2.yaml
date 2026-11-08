@@ -1,0 +1,20 @@
+# generated from scenarios/matrix.yaml by runner/matrix.py - edit matrix.yaml instead
+id: d-leak-fast-oom-r2
+group: D
+heavy: false
+duration_s: 540
+traffic:
+  shape: steady
+  base_rps: 15
+scaling:
+  policy: fixed
+  replicas: 3
+faults:
+- type: memory_leak
+  start_s: 120
+  end_s: 450
+  target: one-pod
+  pod_index: 1
+  params:
+    leak_kb_per_s: 2048
+    free_on_end: true

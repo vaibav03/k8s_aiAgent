@@ -1,0 +1,55 @@
+{
+  "id": "d-pod-kill-fixed2-r2",
+  "group": "D",
+  "heavy": false,
+  "duration_s": 540,
+  "traffic": {
+    "shape": "steady",
+    "base_rps": 16,
+    "params": {}
+  },
+  "scaling": {
+    "policy": "fixed",
+    "replicas": 2,
+    "_lane_cap": 4
+  },
+  "faults": [
+    {
+      "type": "pod_kill",
+      "start_s": 150,
+      "pod_index": 0,
+      "target": "one-pod",
+      "params": {},
+      "end_s": 150
+    },
+    {
+      "type": "pod_kill",
+      "start_s": 330,
+      "pod_index": 1,
+      "target": "one-pod",
+      "params": {},
+      "end_s": 330
+    }
+  ],
+  "app": {
+    "cpu_ms_per_req": 25,
+    "alloc_kb": 64
+  },
+  "_run": {
+    "run_id": "d-pod-kill-fixed2-r2-1108-110504-d8b",
+    "namespace": "lab-d-pod-kill-fixed2-r2-1108-110504-d8b",
+    "scenario_file": "/Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/scenarios/matrix_round2/d-pod-kill-fixed2-r2.yaml",
+    "image": "loadlab:v1",
+    "k6_image": "grafana/k6:0.54.0",
+    "context": "kubeai-lab",
+    "t_created": 1794161104.492084,
+    "t0": 1794161120.253632,
+    "t_end": 1794161663.942795,
+    "status": "succeeded",
+    "export_window": [
+      1794161090.253632,
+      1794161673.942795
+    ],
+    "step_s": 5
+  }
+}

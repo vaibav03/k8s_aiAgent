@@ -1,0 +1,26 @@
+# generated from scenarios/matrix.yaml by runner/matrix.py - edit matrix.yaml instead
+id: e-spike-dep-latency
+group: E
+heavy: true
+duration_s: 660
+traffic:
+  shape: spike
+  base_load_pods: 0.8
+  params:
+    spike_at_s: 240
+    spike_mult: 4
+    spike_s: 120
+    ramp_s: 10
+scaling:
+  policy: hpa_cpu
+  min: 1
+  max: 6
+  target_cpu: 70
+faults:
+- type: dep_latency
+  start_s: 180
+  end_s: 450
+  target: all
+  params:
+    dep_latency_ms: 400
+    dep_fraction: 0.5

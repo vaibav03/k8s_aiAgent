@@ -1,0 +1,44 @@
+{
+  "id": "c-under-fixed1-flash-r2",
+  "group": "C",
+  "heavy": true,
+  "duration_s": 480,
+  "traffic": {
+    "shape": "flash_crowd",
+    "base_load_pods": 0.6,
+    "params": {
+      "at_s": 150,
+      "mult": 2.5,
+      "ramp_s": 5
+    },
+    "base_rps": 10.8,
+    "_capacity_ref_rps_per_pod": 18
+  },
+  "scaling": {
+    "policy": "fixed",
+    "replicas": 1,
+    "_lane_cap": 4
+  },
+  "faults": [],
+  "app": {
+    "cpu_ms_per_req": 25,
+    "alloc_kb": 64
+  },
+  "_run": {
+    "run_id": "c-under-fixed1-flash-r2-1108-100232-262",
+    "namespace": "lab-c-under-fixed1-flash-r2-1108-100232-262",
+    "scenario_file": "/Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/scenarios/matrix_round2/c-under-fixed1-flash-r2.yaml",
+    "image": "loadlab:v1",
+    "k6_image": "grafana/k6:0.54.0",
+    "context": "kubeai-lab",
+    "t_created": 1794157352.499878,
+    "t0": 1794157379.299864,
+    "t_end": 1794157874.807519,
+    "status": "succeeded",
+    "export_window": [
+      1794157349.299864,
+      1794157884.807519
+    ],
+    "step_s": 5
+  }
+}

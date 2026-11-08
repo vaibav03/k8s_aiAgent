@@ -1,0 +1,8 @@
+11:05:04 [d-pod-kill-fixed2-r2-1108-110504-d8b] scenario d-pod-kill-fixed2-r2 -> namespace lab-d-pod-kill-fixed2-r2-1108-110504-d8b
+11:05:06 [d-pod-kill-fixed2-r2-1108-110504-d8b] app ready: 2 replica(s), policy fixed
+11:05:20 [d-pod-kill-fixed2-r2-1108-110504-d8b] k6 started: steady base_rps 16 pod k6-nbnvs
+11:07:50 [d-pod-kill-fixed2-r2-1108-110504-d8b] FAULT START f0 pod_kill target=one-pod pods=['loadlab-5965489b55-hn2n2'] params={}
+11:10:50 [d-pod-kill-fixed2-r2-1108-110504-d8b] FAULT START f1 pod_kill target=one-pod pods=['loadlab-5965489b55-qzrxh'] params={}
+11:14:23 [d-pod-kill-fixed2-r2-1108-110504-d8b] load finished: succeeded
+11:14:44 [d-pod-kill-fixed2-r2-1108-110504-d8b] exported deploy.csv (110 rows) pods.csv (227 rows) -> /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/d-pod-kill-fixed2-r2-1108-110504-d8b
+11:14:44 [d-pod-kill-fixed2-r2-1108-110504-d8b] namespace deleted

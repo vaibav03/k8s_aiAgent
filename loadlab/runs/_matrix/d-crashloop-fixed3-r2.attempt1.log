@@ -1,0 +1,9 @@
+10:43:42 [d-crashloop-fixed3-r2-1108-104342-e12] scenario d-crashloop-fixed3-r2 -> namespace lab-d-crashloop-fixed3-r2-1108-104342-e12
+10:43:44 [d-crashloop-fixed3-r2-1108-104342-e12] app ready: 3 replica(s), policy fixed
+10:44:02 [d-crashloop-fixed3-r2-1108-104342-e12] k6 started: steady base_rps 14 pod k6-qlkt4
+10:46:32 [d-crashloop-fixed3-r2-1108-104342-e12] FAULT START f0 crashloop target=one-pod pods=rollout params={}
+10:50:32 [d-crashloop-fixed3-r2-1108-104342-e12] FAULT END   f0 crashloop
+10:53:04 [d-crashloop-fixed3-r2-1108-104342-e12] load finished: succeeded
+10:53:25 [d-crashloop-fixed3-r2-1108-104342-e12] exported deploy.csv (110 rows) pods.csv (383 rows) -> /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/d-crashloop-fixed3-r2-1108-104342-e12
+10:53:25 [d-crashloop-fixed3-r2-1108-104342-e12] namespace deleted
+/Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/d-crashloop-fixed3-r2-1108-104342-e12

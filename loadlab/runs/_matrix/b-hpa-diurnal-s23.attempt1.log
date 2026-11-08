@@ -1,0 +1,8 @@
+07:19:05 [b-hpa-diurnal-s23-1108-071905-bb4] scenario b-hpa-diurnal-s23 -> namespace lab-b-hpa-diurnal-s23-1108-071905-bb4
+07:19:15 [b-hpa-diurnal-s23-1108-071905-bb4] app ready: 1 replica(s), policy hpa_cpu
+07:19:39 [b-hpa-diurnal-s23-1108-071905-bb4] HPA has metrics: {'averageUtilization': 1, 'averageValue': '4m'}
+07:19:52 [b-hpa-diurnal-s23-1108-071905-bb4] k6 started: diurnal base_rps 18.0 pod k6-5dqf8
+07:32:58 [b-hpa-diurnal-s23-1108-071905-bb4] load finished: succeeded
+07:33:18 [b-hpa-diurnal-s23-1108-071905-bb4] exported deploy.csv (158 rows) pods.csv (584 rows) -> /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/b-hpa-diurnal-s23-1108-071905-bb4
+07:33:18 [b-hpa-diurnal-s23-1108-071905-bb4] namespace deleted
+/Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/b-hpa-diurnal-s23-1108-071905-bb4

@@ -1,0 +1,1982 @@
+{
+  "capacity": {
+    "table": {
+      "1": 17.0,
+      "2": 17.0,
+      "3": 13.0
+    },
+    "fallback": 13.0
+  },
+  "label_counts": {
+    "healthy": 1635,
+    "scale_down": 1293,
+    "scale_up": 478,
+    "memory_leak": 282,
+    "bad_deploy": 132,
+    "noisy_pod": 130,
+    "error_fault": 122,
+    "dependency_latency": 98,
+    "crashloop": 44,
+    "pod_restart": 12
+  },
+  "masked_rows": 196,
+  "results": {
+    "rules": {
+      "macro_f1_strict": 0.822,
+      "accuracy_strict": 0.836,
+      "macro_f1_settled": 0.906,
+      "accuracy_settled": 0.883,
+      "per_class_settled": {
+        "healthy": {
+          "precision": 0.898,
+          "recall": 0.844,
+          "f1": 0.87,
+          "n": 1540
+        },
+        "scale_up": {
+          "precision": 0.765,
+          "recall": 0.868,
+          "f1": 0.813,
+          "n": 401
+        },
+        "scale_down": {
+          "precision": 0.865,
+          "recall": 0.92,
+          "f1": 0.891,
+          "n": 1195
+        },
+        "memory_leak": {
+          "precision": 0.938,
+          "recall": 0.973,
+          "f1": 0.955,
+          "n": 264
+        },
+        "dependency_latency": {
+          "precision": 0.902,
+          "recall": 0.64,
+          "f1": 0.748,
+          "n": 86
+        },
+        "error_fault": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "n": 104
+        },
+        "noisy_pod": {
+          "precision": 0.98,
+          "recall": 0.893,
+          "f1": 0.935,
+          "n": 112
+        },
+        "bad_deploy": {
+          "precision": 1.0,
+          "recall": 0.895,
+          "f1": 0.944,
+          "n": 114
+        },
+        "crashloop": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "n": 38
+        }
+      },
+      "confusion_settled": {
+        "labels": [
+          "healthy",
+          "scale_up",
+          "scale_down",
+          "memory_leak",
+          "dependency_latency",
+          "error_fault",
+          "noisy_pod",
+          "bad_deploy",
+          "crashloop"
+        ],
+        "matrix": [
+          [
+            1299,
+            80,
+            159,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            49,
+            348,
+            0,
+            0,
+            4,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            88,
+            0,
+            1099,
+            6,
+            0,
+            0,
+            2,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            6,
+            257,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            9,
+            22,
+            0,
+            0,
+            55,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            104,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            3,
+            9,
+            0,
+            0,
+            100,
+            0,
+            0
+          ],
+          [
+            1,
+            5,
+            4,
+            0,
+            2,
+            0,
+            0,
+            102,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            38
+          ]
+        ]
+      },
+      "false_scale_up_on_fault_rows": 0.033,
+      "false_scale_up_on_fault_rows_excl_spike_overlap": 0.007,
+      "false_scale_up_by_fault": {
+        "bad_deploy": 0.038,
+        "crashloop": 0.0,
+        "dependency_latency": 0.224,
+        "error_fault": 0.0,
+        "memory_leak": 0.0,
+        "noisy_pod": 0.0,
+        "pod_restart": 0.0
+      },
+      "false_page_rate_on_load_rows": 0.004,
+      "missed_scale_up": 0.132,
+      "detection": [
+        {
+          "fault_id": "d-leak-oom-1108-081244-c2e-f0",
+          "type": "memory_leak",
+          "delay_s": 36.22200000000001,
+          "any_fault_alert_s": 36.22200000000001,
+          "row_recall": 0.922
+        },
+        {
+          "fault_id": "d-leak-slow-1108-082126-2e4-f0",
+          "type": "memory_leak",
+          "delay_s": 58.39499999999998,
+          "any_fault_alert_s": 58.39499999999998,
+          "row_recall": 0.878
+        },
+        {
+          "fault_id": "d-dep-latency-1108-082554-5cd-f0",
+          "type": "dep_latency",
+          "delay_s": 41.958,
+          "any_fault_alert_s": 41.958,
+          "row_recall": 0.8
+        },
+        {
+          "fault_id": "d-error-burst-1108-083437-087-f0",
+          "type": "error_rate",
+          "delay_s": 12.242999999999995,
+          "any_fault_alert_s": 12.242999999999995,
+          "row_recall": 0.92
+        },
+        {
+          "fault_id": "d-cpu-hog-1108-083701-80d-f0",
+          "type": "cpu_hog",
+          "delay_s": 58.24799999999999,
+          "any_fault_alert_s": 33.24800000000002,
+          "row_recall": 0.78
+        },
+        {
+          "fault_id": "d-pod-kill-1108-084547-75d-f0",
+          "type": "pod_kill",
+          "delay_s": 3.063999999999993,
+          "any_fault_alert_s": 3.063999999999993,
+          "row_recall": 0.167
+        },
+        {
+          "fault_id": "d-pod-kill-1108-084547-75d-f1",
+          "type": "pod_kill",
+          "delay_s": 3.0299999999999727,
+          "any_fault_alert_s": 3.0299999999999727,
+          "row_recall": 0.167
+        },
+        {
+          "fault_id": "d-bad-deploy-1108-084824-d38-f0",
+          "type": "bad_deploy",
+          "delay_s": 51.22800000000001,
+          "any_fault_alert_s": 46.22800000000001,
+          "row_recall": 0.74
+        },
+        {
+          "fault_id": "d-crashloop-1108-085711-263-f0",
+          "type": "crashloop",
+          "delay_s": 8.687000000000012,
+          "any_fault_alert_s": 8.687000000000012,
+          "row_recall": 0.86
+        },
+        {
+          "fault_id": "e-spike-dep-latency-1108-085933-36c-f0",
+          "type": "dep_latency",
+          "delay_s": 41.67100000000002,
+          "any_fault_alert_s": 41.67100000000002,
+          "row_recall": 0.367
+        },
+        {
+          "fault_id": "e-diurnal-leak-1108-090819-f65-f0",
+          "type": "memory_leak",
+          "delay_s": 38.913,
+          "any_fault_alert_s": 38.913,
+          "row_recall": 0.942
+        },
+        {
+          "fault_id": "d-error10-hpa-diurnal-r2-1108-101137-aee-f0",
+          "type": "error_rate",
+          "delay_s": 16.202999999999975,
+          "any_fault_alert_s": 16.202999999999975,
+          "row_recall": 0.896
+        },
+        {
+          "fault_id": "d-error30-fixed3-r2-1108-101512-c7c-f0",
+          "type": "error_rate",
+          "delay_s": 11.39500000000001,
+          "any_fault_alert_s": 11.39500000000001,
+          "row_recall": 0.905
+        },
+        {
+          "fault_id": "d-cpu-hog-fixed3-p0-r2-1108-102249-eeb-f0",
+          "type": "cpu_hog",
+          "delay_s": 50.502999999999986,
+          "any_fault_alert_s": 40.502999999999986,
+          "row_recall": 0.796
+        },
+        {
+          "fault_id": "d-cpu-hog-fixed3-p2-r2-1108-102458-364-f0",
+          "type": "cpu_hog",
+          "delay_s": 46.85300000000001,
+          "any_fault_alert_s": 36.85300000000001,
+          "row_recall": 0.816
+        },
+        {
+          "fault_id": "d-bad-deploy-x2-hpa-r2-1108-103233-bb0-f0",
+          "type": "bad_deploy",
+          "delay_s": 51.654000000000025,
+          "any_fault_alert_s": 51.654000000000025,
+          "row_recall": 0.68
+        },
+        {
+          "fault_id": "d-bad-deploy-x3-fixed3-r2-1108-103441-b62-f0",
+          "type": "bad_deploy",
+          "delay_s": 52.84200000000001,
+          "any_fault_alert_s": 47.84200000000001,
+          "row_recall": 0.68
+        }
+      ]
+    },
+    "lgbm": {
+      "macro_f1_strict": 0.666,
+      "accuracy_strict": 0.833,
+      "macro_f1_settled": 0.761,
+      "accuracy_settled": 0.861,
+      "per_class_settled": {
+        "healthy": {
+          "precision": 0.845,
+          "recall": 0.906,
+          "f1": 0.875,
+          "n": 1540
+        },
+        "scale_up": {
+          "precision": 0.791,
+          "recall": 0.823,
+          "f1": 0.807,
+          "n": 401
+        },
+        "scale_down": {
+          "precision": 0.921,
+          "recall": 0.833,
+          "f1": 0.875,
+          "n": 1195
+        },
+        "memory_leak": {
+          "precision": 0.887,
+          "recall": 0.83,
+          "f1": 0.857,
+          "n": 264
+        },
+        "dependency_latency": {
+          "precision": 0.857,
+          "recall": 0.558,
+          "f1": 0.676,
+          "n": 86
+        },
+        "error_fault": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "n": 104
+        },
+        "noisy_pod": {
+          "precision": 0.982,
+          "recall": 1.0,
+          "f1": 0.991,
+          "n": 112
+        },
+        "bad_deploy": {
+          "precision": 0.623,
+          "recall": 1.0,
+          "f1": 0.768,
+          "n": 114
+        },
+        "crashloop": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "n": 38
+        }
+      },
+      "confusion_settled": {
+        "labels": [
+          "healthy",
+          "scale_up",
+          "scale_down",
+          "memory_leak",
+          "dependency_latency",
+          "error_fault",
+          "noisy_pod",
+          "bad_deploy",
+          "crashloop"
+        ],
+        "matrix": [
+          [
+            1396,
+            62,
+            74,
+            6,
+            0,
+            0,
+            0,
+            2,
+            0
+          ],
+          [
+            63,
+            330,
+            0,
+            0,
+            8,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            146,
+            0,
+            996,
+            22,
+            0,
+            0,
+            2,
+            29,
+            0
+          ],
+          [
+            34,
+            0,
+            11,
+            219,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            13,
+            25,
+            0,
+            0,
+            48,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            104,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            112,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            114,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            38,
+            0
+          ]
+        ]
+      },
+      "false_scale_up_on_fault_rows": 0.035,
+      "false_scale_up_on_fault_rows_excl_spike_overlap": 0.0,
+      "false_scale_up_by_fault": {
+        "bad_deploy": 0.0,
+        "crashloop": 0.0,
+        "dependency_latency": 0.296,
+        "error_fault": 0.0,
+        "memory_leak": 0.0,
+        "noisy_pod": 0.0,
+        "pod_restart": 0.0
+      },
+      "false_page_rate_on_load_rows": 0.022,
+      "missed_scale_up": 0.177,
+      "detection": [
+        {
+          "fault_id": "d-leak-oom-1108-081244-c2e-f0",
+          "type": "memory_leak",
+          "delay_s": 11.222000000000008,
+          "any_fault_alert_s": 11.222000000000008,
+          "row_recall": 0.978
+        },
+        {
+          "fault_id": "d-leak-slow-1108-082126-2e4-f0",
+          "type": "memory_leak",
+          "delay_s": 28.394999999999982,
+          "any_fault_alert_s": 28.394999999999982,
+          "row_recall": 0.9
+        },
+        {
+          "fault_id": "d-dep-latency-1108-082554-5cd-f0",
+          "type": "dep_latency",
+          "delay_s": 11.957999999999998,
+          "any_fault_alert_s": 11.957999999999998,
+          "row_recall": 0.9
+        },
+        {
+          "fault_id": "d-error-burst-1108-083437-087-f0",
+          "type": "error_rate",
+          "delay_s": 7.242999999999995,
+          "any_fault_alert_s": 7.242999999999995,
+          "row_recall": 0.94
+        },
+        {
+          "fault_id": "d-cpu-hog-1108-083701-80d-f0",
+          "type": "cpu_hog",
+          "delay_s": 23.24800000000002,
+          "any_fault_alert_s": 8.248000000000019,
+          "row_recall": 0.92
+        },
+        {
+          "fault_id": "d-pod-kill-1108-084547-75d-f0",
+          "type": "pod_kill",
+          "delay_s": null,
+          "any_fault_alert_s": null,
+          "row_recall": 0.0
+        },
+        {
+          "fault_id": "d-pod-kill-1108-084547-75d-f1",
+          "type": "pod_kill",
+          "delay_s": null,
+          "any_fault_alert_s": null,
+          "row_recall": 0.0
+        },
+        {
+          "fault_id": "d-bad-deploy-1108-084824-d38-f0",
+          "type": "bad_deploy",
+          "delay_s": 16.22800000000001,
+          "any_fault_alert_s": 1.2280000000000086,
+          "row_recall": 0.9
+        },
+        {
+          "fault_id": "d-crashloop-1108-085711-263-f0",
+          "type": "crashloop",
+          "delay_s": null,
+          "any_fault_alert_s": 3.687000000000012,
+          "row_recall": 0.0
+        },
+        {
+          "fault_id": "e-spike-dep-latency-1108-085933-36c-f0",
+          "type": "dep_latency",
+          "delay_s": 11.67100000000002,
+          "any_fault_alert_s": 11.67100000000002,
+          "row_recall": 0.2
+        },
+        {
+          "fault_id": "e-diurnal-leak-1108-090819-f65-f0",
+          "type": "memory_leak",
+          "delay_s": 78.913,
+          "any_fault_alert_s": 78.913,
+          "row_recall": 0.567
+        },
+        {
+          "fault_id": "d-error10-hpa-diurnal-r2-1108-101137-aee-f0",
+          "type": "error_rate",
+          "delay_s": 11.203000000000003,
+          "any_fault_alert_s": 11.203000000000003,
+          "row_recall": 0.938
+        },
+        {
+          "fault_id": "d-error30-fixed3-r2-1108-101512-c7c-f0",
+          "type": "error_rate",
+          "delay_s": 1.3950000000000102,
+          "any_fault_alert_s": 1.3950000000000102,
+          "row_recall": 0.952
+        },
+        {
+          "fault_id": "d-cpu-hog-fixed3-p0-r2-1108-102249-eeb-f0",
+          "type": "cpu_hog",
+          "delay_s": 15.502999999999986,
+          "any_fault_alert_s": 10.502999999999986,
+          "row_recall": 0.939
+        },
+        {
+          "fault_id": "d-cpu-hog-fixed3-p2-r2-1108-102458-364-f0",
+          "type": "cpu_hog",
+          "delay_s": 11.853000000000009,
+          "any_fault_alert_s": 11.853000000000009,
+          "row_recall": 0.959
+        },
+        {
+          "fault_id": "d-bad-deploy-x2-hpa-r2-1108-103233-bb0-f0",
+          "type": "bad_deploy",
+          "delay_s": 1.6540000000000248,
+          "any_fault_alert_s": 1.6540000000000248,
+          "row_recall": 1.0
+        },
+        {
+          "fault_id": "d-bad-deploy-x3-fixed3-r2-1108-103441-b62-f0",
+          "type": "bad_deploy",
+          "delay_s": 2.842000000000013,
+          "any_fault_alert_s": 2.842000000000013,
+          "row_recall": 1.0
+        }
+      ]
+    },
+    "two_stage": {
+      "macro_f1_strict": 0.662,
+      "accuracy_strict": 0.836,
+      "macro_f1_settled": 0.758,
+      "accuracy_settled": 0.862,
+      "per_class_settled": {
+        "healthy": {
+          "precision": 0.844,
+          "recall": 0.926,
+          "f1": 0.883,
+          "n": 1540
+        },
+        "scale_up": {
+          "precision": 0.815,
+          "recall": 0.858,
+          "f1": 0.836,
+          "n": 401
+        },
+        "scale_down": {
+          "precision": 0.876,
+          "recall": 0.864,
+          "f1": 0.87,
+          "n": 1195
+        },
+        "memory_leak": {
+          "precision": 0.846,
+          "recall": 0.583,
+          "f1": 0.691,
+          "n": 264
+        },
+        "dependency_latency": {
+          "precision": 1.0,
+          "recall": 0.488,
+          "f1": 0.656,
+          "n": 86
+        },
+        "error_fault": {
+          "precision": 1.0,
+          "recall": 0.952,
+          "f1": 0.975,
+          "n": 104
+        },
+        "noisy_pod": {
+          "precision": 0.94,
+          "recall": 0.973,
+          "f1": 0.956,
+          "n": 112
+        },
+        "bad_deploy": {
+          "precision": 0.912,
+          "recall": 1.0,
+          "f1": 0.954,
+          "n": 114
+        },
+        "crashloop": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "n": 38
+        }
+      },
+      "confusion_settled": {
+        "labels": [
+          "healthy",
+          "scale_up",
+          "scale_down",
+          "memory_leak",
+          "dependency_latency",
+          "error_fault",
+          "noisy_pod",
+          "bad_deploy",
+          "crashloop"
+        ],
+        "matrix": [
+          [
+            1426,
+            52,
+            60,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            57,
+            344,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            136,
+            0,
+            1033,
+            23,
+            0,
+            0,
+            3,
+            0,
+            0
+          ],
+          [
+            56,
+            0,
+            54,
+            154,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            14,
+            26,
+            0,
+            0,
+            42,
+            0,
+            4,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            5,
+            0,
+            0,
+            99,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            3,
+            0,
+            0,
+            109,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            114,
+            0
+          ],
+          [
+            0,
+            0,
+            27,
+            0,
+            0,
+            0,
+            0,
+            11,
+            0
+          ]
+        ]
+      },
+      "false_scale_up_on_fault_rows": 0.037,
+      "false_scale_up_on_fault_rows_excl_spike_overlap": 0.0,
+      "false_scale_up_by_fault": {
+        "bad_deploy": 0.0,
+        "crashloop": 0.0,
+        "dependency_latency": 0.306,
+        "error_fault": 0.0,
+        "memory_leak": 0.0,
+        "noisy_pod": 0.0,
+        "pod_restart": 0.0
+      },
+      "false_page_rate_on_load_rows": 0.009,
+      "missed_scale_up": 0.142,
+      "detection": [
+        {
+          "fault_id": "d-leak-oom-1108-081244-c2e-f0",
+          "type": "memory_leak",
+          "delay_s": 11.222000000000008,
+          "any_fault_alert_s": 11.222000000000008,
+          "row_recall": 0.956
+        },
+        {
+          "fault_id": "d-leak-slow-1108-082126-2e4-f0",
+          "type": "memory_leak",
+          "delay_s": 18.394999999999982,
+          "any_fault_alert_s": 18.394999999999982,
+          "row_recall": 0.944
+        },
+        {
+          "fault_id": "d-dep-latency-1108-082554-5cd-f0",
+          "type": "dep_latency",
+          "delay_s": 11.957999999999998,
+          "any_fault_alert_s": 6.957999999999998,
+          "row_recall": 0.94
+        },
+        {
+          "fault_id": "d-error-burst-1108-083437-087-f0",
+          "type": "error_rate",
+          "delay_s": 7.242999999999995,
+          "any_fault_alert_s": 7.242999999999995,
+          "row_recall": 0.94
+        },
+        {
+          "fault_id": "d-cpu-hog-1108-083701-80d-f0",
+          "type": "cpu_hog",
+          "delay_s": 23.24800000000002,
+          "any_fault_alert_s": 8.248000000000019,
+          "row_recall": 0.86
+        },
+        {
+          "fault_id": "d-pod-kill-1108-084547-75d-f0",
+          "type": "pod_kill",
+          "delay_s": null,
+          "any_fault_alert_s": null,
+          "row_recall": 0.0
+        },
+        {
+          "fault_id": "d-pod-kill-1108-084547-75d-f1",
+          "type": "pod_kill",
+          "delay_s": null,
+          "any_fault_alert_s": null,
+          "row_recall": 0.0
+        },
+        {
+          "fault_id": "d-bad-deploy-1108-084824-d38-f0",
+          "type": "bad_deploy",
+          "delay_s": 11.228000000000009,
+          "any_fault_alert_s": 6.228000000000009,
+          "row_recall": 0.9
+        },
+        {
+          "fault_id": "d-crashloop-1108-085711-263-f0",
+          "type": "crashloop",
+          "delay_s": null,
+          "any_fault_alert_s": 3.687000000000012,
+          "row_recall": 0.0
+        },
+        {
+          "fault_id": "e-spike-dep-latency-1108-085933-36c-f0",
+          "type": "dep_latency",
+          "delay_s": 31.67100000000002,
+          "any_fault_alert_s": 31.67100000000002,
+          "row_recall": 0.067
+        },
+        {
+          "fault_id": "e-diurnal-leak-1108-090819-f65-f0",
+          "type": "memory_leak",
+          "delay_s": null,
+          "any_fault_alert_s": null,
+          "row_recall": 0.0
+        },
+        {
+          "fault_id": "d-error10-hpa-diurnal-r2-1108-101137-aee-f0",
+          "type": "error_rate",
+          "delay_s": 21.202999999999975,
+          "any_fault_alert_s": 21.202999999999975,
+          "row_recall": 0.771
+        },
+        {
+          "fault_id": "d-error30-fixed3-r2-1108-101512-c7c-f0",
+          "type": "error_rate",
+          "delay_s": 1.3950000000000102,
+          "any_fault_alert_s": 1.3950000000000102,
+          "row_recall": 0.929
+        },
+        {
+          "fault_id": "d-cpu-hog-fixed3-p0-r2-1108-102249-eeb-f0",
+          "type": "cpu_hog",
+          "delay_s": 10.502999999999986,
+          "any_fault_alert_s": 10.502999999999986,
+          "row_recall": 0.959
+        },
+        {
+          "fault_id": "d-cpu-hog-fixed3-p2-r2-1108-102458-364-f0",
+          "type": "cpu_hog",
+          "delay_s": 11.853000000000009,
+          "any_fault_alert_s": 11.853000000000009,
+          "row_recall": 0.959
+        },
+        {
+          "fault_id": "d-bad-deploy-x2-hpa-r2-1108-103233-bb0-f0",
+          "type": "bad_deploy",
+          "delay_s": 6.654000000000025,
+          "any_fault_alert_s": 6.654000000000025,
+          "row_recall": 0.96
+        },
+        {
+          "fault_id": "d-bad-deploy-x3-fixed3-r2-1108-103441-b62-f0",
+          "type": "bad_deploy",
+          "delay_s": 2.842000000000013,
+          "any_fault_alert_s": 2.842000000000013,
+          "row_recall": 0.98
+        }
+      ]
+    },
+    "hybrid": {
+      "macro_f1_strict": 0.832,
+      "accuracy_strict": 0.864,
+      "macro_f1_settled": 0.913,
+      "accuracy_settled": 0.901,
+      "per_class_settled": {
+        "healthy": {
+          "precision": 0.871,
+          "recall": 0.926,
+          "f1": 0.897,
+          "n": 1540
+        },
+        "scale_up": {
+          "precision": 0.817,
+          "recall": 0.848,
+          "f1": 0.832,
+          "n": 401
+        },
+        "scale_down": {
+          "precision": 0.939,
+          "recall": 0.879,
+          "f1": 0.908,
+          "n": 1195
+        },
+        "memory_leak": {
+          "precision": 0.938,
+          "recall": 0.973,
+          "f1": 0.955,
+          "n": 264
+        },
+        "dependency_latency": {
+          "precision": 0.902,
+          "recall": 0.64,
+          "f1": 0.748,
+          "n": 86
+        },
+        "error_fault": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "n": 104
+        },
+        "noisy_pod": {
+          "precision": 0.98,
+          "recall": 0.893,
+          "f1": 0.935,
+          "n": 112
+        },
+        "bad_deploy": {
+          "precision": 1.0,
+          "recall": 0.895,
+          "f1": 0.944,
+          "n": 114
+        },
+        "crashloop": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "n": 38
+        }
+      },
+      "confusion_settled": {
+        "labels": [
+          "healthy",
+          "scale_up",
+          "scale_down",
+          "memory_leak",
+          "dependency_latency",
+          "error_fault",
+          "noisy_pod",
+          "bad_deploy",
+          "crashloop"
+        ],
+        "matrix": [
+          [
+            1426,
+            52,
+            60,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            57,
+            340,
+            0,
+            0,
+            4,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            136,
+            0,
+            1051,
+            6,
+            0,
+            0,
+            2,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            6,
+            257,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            11,
+            20,
+            0,
+            0,
+            55,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            104,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            2,
+            9,
+            0,
+            0,
+            100,
+            0,
+            0
+          ],
+          [
+            6,
+            4,
+            0,
+            0,
+            2,
+            0,
+            0,
+            102,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            38
+          ]
+        ]
+      },
+      "false_scale_up_on_fault_rows": 0.034,
+      "false_scale_up_on_fault_rows_excl_spike_overlap": 0.005,
+      "false_scale_up_by_fault": {
+        "bad_deploy": 0.03,
+        "crashloop": 0.0,
+        "dependency_latency": 0.245,
+        "error_fault": 0.0,
+        "memory_leak": 0.0,
+        "noisy_pod": 0.0,
+        "pod_restart": 0.0
+      },
+      "false_page_rate_on_load_rows": 0.004,
+      "missed_scale_up": 0.152,
+      "detection": [
+        {
+          "fault_id": "d-leak-oom-1108-081244-c2e-f0",
+          "type": "memory_leak",
+          "delay_s": 36.22200000000001,
+          "any_fault_alert_s": 36.22200000000001,
+          "row_recall": 0.922
+        },
+        {
+          "fault_id": "d-leak-slow-1108-082126-2e4-f0",
+          "type": "memory_leak",
+          "delay_s": 58.39499999999998,
+          "any_fault_alert_s": 58.39499999999998,
+          "row_recall": 0.878
+        },
+        {
+          "fault_id": "d-dep-latency-1108-082554-5cd-f0",
+          "type": "dep_latency",
+          "delay_s": 41.958,
+          "any_fault_alert_s": 41.958,
+          "row_recall": 0.8
+        },
+        {
+          "fault_id": "d-error-burst-1108-083437-087-f0",
+          "type": "error_rate",
+          "delay_s": 12.242999999999995,
+          "any_fault_alert_s": 12.242999999999995,
+          "row_recall": 0.92
+        },
+        {
+          "fault_id": "d-cpu-hog-1108-083701-80d-f0",
+          "type": "cpu_hog",
+          "delay_s": 58.24799999999999,
+          "any_fault_alert_s": 33.24800000000002,
+          "row_recall": 0.78
+        },
+        {
+          "fault_id": "d-pod-kill-1108-084547-75d-f0",
+          "type": "pod_kill",
+          "delay_s": 3.063999999999993,
+          "any_fault_alert_s": 3.063999999999993,
+          "row_recall": 0.167
+        },
+        {
+          "fault_id": "d-pod-kill-1108-084547-75d-f1",
+          "type": "pod_kill",
+          "delay_s": 3.0299999999999727,
+          "any_fault_alert_s": 3.0299999999999727,
+          "row_recall": 0.167
+        },
+        {
+          "fault_id": "d-bad-deploy-1108-084824-d38-f0",
+          "type": "bad_deploy",
+          "delay_s": 51.22800000000001,
+          "any_fault_alert_s": 46.22800000000001,
+          "row_recall": 0.74
+        },
+        {
+          "fault_id": "d-crashloop-1108-085711-263-f0",
+          "type": "crashloop",
+          "delay_s": 8.687000000000012,
+          "any_fault_alert_s": 8.687000000000012,
+          "row_recall": 0.86
+        },
+        {
+          "fault_id": "e-spike-dep-latency-1108-085933-36c-f0",
+          "type": "dep_latency",
+          "delay_s": 41.67100000000002,
+          "any_fault_alert_s": 41.67100000000002,
+          "row_recall": 0.367
+        },
+        {
+          "fault_id": "e-diurnal-leak-1108-090819-f65-f0",
+          "type": "memory_leak",
+          "delay_s": 38.913,
+          "any_fault_alert_s": 38.913,
+          "row_recall": 0.942
+        },
+        {
+          "fault_id": "d-error10-hpa-diurnal-r2-1108-101137-aee-f0",
+          "type": "error_rate",
+          "delay_s": 16.202999999999975,
+          "any_fault_alert_s": 16.202999999999975,
+          "row_recall": 0.896
+        },
+        {
+          "fault_id": "d-error30-fixed3-r2-1108-101512-c7c-f0",
+          "type": "error_rate",
+          "delay_s": 11.39500000000001,
+          "any_fault_alert_s": 11.39500000000001,
+          "row_recall": 0.905
+        },
+        {
+          "fault_id": "d-cpu-hog-fixed3-p0-r2-1108-102249-eeb-f0",
+          "type": "cpu_hog",
+          "delay_s": 50.502999999999986,
+          "any_fault_alert_s": 40.502999999999986,
+          "row_recall": 0.796
+        },
+        {
+          "fault_id": "d-cpu-hog-fixed3-p2-r2-1108-102458-364-f0",
+          "type": "cpu_hog",
+          "delay_s": 46.85300000000001,
+          "any_fault_alert_s": 36.85300000000001,
+          "row_recall": 0.816
+        },
+        {
+          "fault_id": "d-bad-deploy-x2-hpa-r2-1108-103233-bb0-f0",
+          "type": "bad_deploy",
+          "delay_s": 51.654000000000025,
+          "any_fault_alert_s": 51.654000000000025,
+          "row_recall": 0.68
+        },
+        {
+          "fault_id": "d-bad-deploy-x3-fixed3-r2-1108-103441-b62-f0",
+          "type": "bad_deploy",
+          "delay_s": 52.84200000000001,
+          "any_fault_alert_s": 47.84200000000001,
+          "row_recall": 0.68
+        }
+      ]
+    }
+  },
+  "round_holdout": {
+    "test_round": 2,
+    "results": {
+      "rules": {
+        "macro_f1_strict": 0.865,
+        "accuracy_strict": 0.854,
+        "macro_f1_settled": 0.924,
+        "accuracy_settled": 0.9,
+        "per_class_settled": {
+          "healthy": {
+            "precision": 0.922,
+            "recall": 0.857,
+            "f1": 0.888,
+            "n": 511
+          },
+          "scale_up": {
+            "precision": 0.912,
+            "recall": 0.849,
+            "f1": 0.88,
+            "n": 86
+          },
+          "scale_down": {
+            "precision": 0.856,
+            "recall": 0.942,
+            "f1": 0.897,
+            "n": 479
+          },
+          "error_fault": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "n": 66
+          },
+          "noisy_pod": {
+            "precision": 0.971,
+            "recall": 0.905,
+            "f1": 0.937,
+            "n": 74
+          },
+          "bad_deploy": {
+            "precision": 1.0,
+            "recall": 0.895,
+            "f1": 0.944,
+            "n": 76
+          }
+        },
+        "confusion_settled": {
+          "labels": [
+            "healthy",
+            "scale_up",
+            "scale_down",
+            "memory_leak",
+            "dependency_latency",
+            "error_fault",
+            "noisy_pod",
+            "bad_deploy"
+          ],
+          "matrix": [
+            [
+              438,
+              4,
+              69,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              11,
+              73,
+              0,
+              0,
+              2,
+              0,
+              0,
+              0
+            ],
+            [
+              26,
+              0,
+              451,
+              0,
+              0,
+              0,
+              2,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              66,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              3,
+              4,
+              0,
+              0,
+              67,
+              0
+            ],
+            [
+              0,
+              3,
+              4,
+              0,
+              1,
+              0,
+              0,
+              68
+            ]
+          ]
+        },
+        "false_scale_up_on_fault_rows": 0.012,
+        "false_scale_up_on_fault_rows_excl_spike_overlap": 0.012,
+        "false_scale_up_by_fault": {
+          "bad_deploy": 0.034,
+          "error_fault": 0.0,
+          "noisy_pod": 0.0
+        },
+        "false_page_rate_on_load_rows": 0.004,
+        "missed_scale_up": 0.151,
+        "detection": [
+          {
+            "fault_id": "d-error10-hpa-diurnal-r2-1108-101137-aee-f0",
+            "type": "error_rate",
+            "delay_s": 16.202999999999975,
+            "any_fault_alert_s": 16.202999999999975,
+            "row_recall": 0.896
+          },
+          {
+            "fault_id": "d-error30-fixed3-r2-1108-101512-c7c-f0",
+            "type": "error_rate",
+            "delay_s": 11.39500000000001,
+            "any_fault_alert_s": 11.39500000000001,
+            "row_recall": 0.905
+          },
+          {
+            "fault_id": "d-cpu-hog-fixed3-p0-r2-1108-102249-eeb-f0",
+            "type": "cpu_hog",
+            "delay_s": 50.502999999999986,
+            "any_fault_alert_s": 40.502999999999986,
+            "row_recall": 0.796
+          },
+          {
+            "fault_id": "d-cpu-hog-fixed3-p2-r2-1108-102458-364-f0",
+            "type": "cpu_hog",
+            "delay_s": 46.85300000000001,
+            "any_fault_alert_s": 36.85300000000001,
+            "row_recall": 0.816
+          },
+          {
+            "fault_id": "d-bad-deploy-x2-hpa-r2-1108-103233-bb0-f0",
+            "type": "bad_deploy",
+            "delay_s": 51.654000000000025,
+            "any_fault_alert_s": 51.654000000000025,
+            "row_recall": 0.68
+          },
+          {
+            "fault_id": "d-bad-deploy-x3-fixed3-r2-1108-103441-b62-f0",
+            "type": "bad_deploy",
+            "delay_s": 52.84200000000001,
+            "any_fault_alert_s": 47.84200000000001,
+            "row_recall": 0.68
+          }
+        ]
+      },
+      "lgbm": {
+        "macro_f1_strict": 0.902,
+        "accuracy_strict": 0.867,
+        "macro_f1_settled": 0.941,
+        "accuracy_settled": 0.901,
+        "per_class_settled": {
+          "healthy": {
+            "precision": 0.869,
+            "recall": 0.892,
+            "f1": 0.88,
+            "n": 511
+          },
+          "scale_up": {
+            "precision": 0.88,
+            "recall": 0.942,
+            "f1": 0.91,
+            "n": 86
+          },
+          "scale_down": {
+            "precision": 0.915,
+            "recall": 0.858,
+            "f1": 0.886,
+            "n": 479
+          },
+          "error_fault": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "n": 66
+          },
+          "noisy_pod": {
+            "precision": 0.974,
+            "recall": 1.0,
+            "f1": 0.987,
+            "n": 74
+          },
+          "bad_deploy": {
+            "precision": 0.962,
+            "recall": 1.0,
+            "f1": 0.981,
+            "n": 76
+          }
+        },
+        "confusion_settled": {
+          "labels": [
+            "healthy",
+            "scale_up",
+            "scale_down",
+            "error_fault",
+            "noisy_pod",
+            "bad_deploy",
+            "pod_restart"
+          ],
+          "matrix": [
+            [
+              456,
+              11,
+              38,
+              0,
+              0,
+              1,
+              5
+            ],
+            [
+              5,
+              81,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              64,
+              0,
+              411,
+              0,
+              2,
+              2,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              66,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              74,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              76,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          ]
+        },
+        "false_scale_up_on_fault_rows": 0.0,
+        "false_scale_up_on_fault_rows_excl_spike_overlap": 0.0,
+        "false_scale_up_by_fault": {
+          "bad_deploy": 0.0,
+          "error_fault": 0.0,
+          "noisy_pod": 0.0
+        },
+        "false_page_rate_on_load_rows": 0.009,
+        "missed_scale_up": 0.058,
+        "detection": [
+          {
+            "fault_id": "d-error10-hpa-diurnal-r2-1108-101137-aee-f0",
+            "type": "error_rate",
+            "delay_s": 11.203000000000003,
+            "any_fault_alert_s": 11.203000000000003,
+            "row_recall": 0.917
+          },
+          {
+            "fault_id": "d-error30-fixed3-r2-1108-101512-c7c-f0",
+            "type": "error_rate",
+            "delay_s": 1.3950000000000102,
+            "any_fault_alert_s": 1.3950000000000102,
+            "row_recall": 0.952
+          },
+          {
+            "fault_id": "d-cpu-hog-fixed3-p0-r2-1108-102249-eeb-f0",
+            "type": "cpu_hog",
+            "delay_s": 30.502999999999986,
+            "any_fault_alert_s": 10.502999999999986,
+            "row_recall": 0.878
+          },
+          {
+            "fault_id": "d-cpu-hog-fixed3-p2-r2-1108-102458-364-f0",
+            "type": "cpu_hog",
+            "delay_s": 21.85300000000001,
+            "any_fault_alert_s": 11.853000000000009,
+            "row_recall": 0.918
+          },
+          {
+            "fault_id": "d-bad-deploy-x2-hpa-r2-1108-103233-bb0-f0",
+            "type": "bad_deploy",
+            "delay_s": 6.654000000000025,
+            "any_fault_alert_s": 6.654000000000025,
+            "row_recall": 0.98
+          },
+          {
+            "fault_id": "d-bad-deploy-x3-fixed3-r2-1108-103441-b62-f0",
+            "type": "bad_deploy",
+            "delay_s": 7.842000000000013,
+            "any_fault_alert_s": 2.842000000000013,
+            "row_recall": 0.98
+          }
+        ]
+      },
+      "two_stage": {
+        "macro_f1_strict": 0.775,
+        "accuracy_strict": 0.837,
+        "macro_f1_settled": 0.819,
+        "accuracy_settled": 0.875,
+        "per_class_settled": {
+          "healthy": {
+            "precision": 0.871,
+            "recall": 0.939,
+            "f1": 0.904,
+            "n": 511
+          },
+          "scale_up": {
+            "precision": 0.952,
+            "recall": 0.93,
+            "f1": 0.941,
+            "n": 86
+          },
+          "scale_down": {
+            "precision": 0.831,
+            "recall": 0.86,
+            "f1": 0.845,
+            "n": 479
+          },
+          "error_fault": {
+            "precision": 1.0,
+            "recall": 0.136,
+            "f1": 0.24,
+            "n": 66
+          },
+          "noisy_pod": {
+            "precision": 0.974,
+            "recall": 1.0,
+            "f1": 0.987,
+            "n": 74
+          },
+          "bad_deploy": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "n": 76
+          }
+        },
+        "confusion_settled": {
+          "labels": [
+            "healthy",
+            "scale_up",
+            "scale_down",
+            "error_fault",
+            "noisy_pod",
+            "bad_deploy"
+          ],
+          "matrix": [
+            [
+              480,
+              4,
+              27,
+              0,
+              0,
+              0
+            ],
+            [
+              6,
+              80,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              65,
+              0,
+              412,
+              0,
+              2,
+              0
+            ],
+            [
+              0,
+              0,
+              57,
+              9,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              74,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              76
+            ]
+          ]
+        },
+        "false_scale_up_on_fault_rows": 0.0,
+        "false_scale_up_on_fault_rows_excl_spike_overlap": 0.0,
+        "false_scale_up_by_fault": {
+          "bad_deploy": 0.0,
+          "error_fault": 0.0,
+          "noisy_pod": 0.0
+        },
+        "false_page_rate_on_load_rows": 0.002,
+        "missed_scale_up": 0.07,
+        "detection": [
+          {
+            "fault_id": "d-error10-hpa-diurnal-r2-1108-101137-aee-f0",
+            "type": "error_rate",
+            "delay_s": 61.202999999999975,
+            "any_fault_alert_s": 61.202999999999975,
+            "row_recall": 0.083
+          },
+          {
+            "fault_id": "d-error30-fixed3-r2-1108-101512-c7c-f0",
+            "type": "error_rate",
+            "delay_s": 31.39500000000001,
+            "any_fault_alert_s": 31.39500000000001,
+            "row_recall": 0.143
+          },
+          {
+            "fault_id": "d-cpu-hog-fixed3-p0-r2-1108-102249-eeb-f0",
+            "type": "cpu_hog",
+            "delay_s": 20.502999999999986,
+            "any_fault_alert_s": 10.502999999999986,
+            "row_recall": 0.918
+          },
+          {
+            "fault_id": "d-cpu-hog-fixed3-p2-r2-1108-102458-364-f0",
+            "type": "cpu_hog",
+            "delay_s": 31.85300000000001,
+            "any_fault_alert_s": 11.853000000000009,
+            "row_recall": 0.878
+          },
+          {
+            "fault_id": "d-bad-deploy-x2-hpa-r2-1108-103233-bb0-f0",
+            "type": "bad_deploy",
+            "delay_s": 16.654000000000025,
+            "any_fault_alert_s": 16.654000000000025,
+            "row_recall": 0.9
+          },
+          {
+            "fault_id": "d-bad-deploy-x3-fixed3-r2-1108-103441-b62-f0",
+            "type": "bad_deploy",
+            "delay_s": 17.842000000000013,
+            "any_fault_alert_s": 17.842000000000013,
+            "row_recall": 0.92
+          }
+        ]
+      },
+      "hybrid": {
+        "macro_f1_strict": 0.877,
+        "accuracy_strict": 0.864,
+        "macro_f1_settled": 0.932,
+        "accuracy_settled": 0.906,
+        "per_class_settled": {
+          "healthy": {
+            "precision": 0.863,
+            "recall": 0.939,
+            "f1": 0.9,
+            "n": 511
+          },
+          "scale_up": {
+            "precision": 0.918,
+            "recall": 0.907,
+            "f1": 0.912,
+            "n": 86
+          },
+          "scale_down": {
+            "precision": 0.934,
+            "recall": 0.86,
+            "f1": 0.896,
+            "n": 479
+          },
+          "error_fault": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "n": 66
+          },
+          "noisy_pod": {
+            "precision": 0.971,
+            "recall": 0.905,
+            "f1": 0.937,
+            "n": 74
+          },
+          "bad_deploy": {
+            "precision": 1.0,
+            "recall": 0.895,
+            "f1": 0.944,
+            "n": 76
+          }
+        },
+        "confusion_settled": {
+          "labels": [
+            "healthy",
+            "scale_up",
+            "scale_down",
+            "memory_leak",
+            "dependency_latency",
+            "error_fault",
+            "noisy_pod",
+            "bad_deploy"
+          ],
+          "matrix": [
+            [
+              480,
+              4,
+              27,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              6,
+              78,
+              0,
+              0,
+              2,
+              0,
+              0,
+              0
+            ],
+            [
+              65,
+              0,
+              412,
+              0,
+              0,
+              0,
+              2,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              66,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              2,
+              4,
+              0,
+              0,
+              67,
+              0
+            ],
+            [
+              4,
+              3,
+              0,
+              0,
+              1,
+              0,
+              0,
+              68
+            ]
+          ]
+        },
+        "false_scale_up_on_fault_rows": 0.012,
+        "false_scale_up_on_fault_rows_excl_spike_overlap": 0.012,
+        "false_scale_up_by_fault": {
+          "bad_deploy": 0.034,
+          "error_fault": 0.0,
+          "noisy_pod": 0.0
+        },
+        "false_page_rate_on_load_rows": 0.004,
+        "missed_scale_up": 0.093,
+        "detection": [
+          {
+            "fault_id": "d-error10-hpa-diurnal-r2-1108-101137-aee-f0",
+            "type": "error_rate",
+            "delay_s": 16.202999999999975,
+            "any_fault_alert_s": 16.202999999999975,
+            "row_recall": 0.896
+          },
+          {
+            "fault_id": "d-error30-fixed3-r2-1108-101512-c7c-f0",
+            "type": "error_rate",
+            "delay_s": 11.39500000000001,
+            "any_fault_alert_s": 11.39500000000001,
+            "row_recall": 0.905
+          },
+          {
+            "fault_id": "d-cpu-hog-fixed3-p0-r2-1108-102249-eeb-f0",
+            "type": "cpu_hog",
+            "delay_s": 50.502999999999986,
+            "any_fault_alert_s": 40.502999999999986,
+            "row_recall": 0.796
+          },
+          {
+            "fault_id": "d-cpu-hog-fixed3-p2-r2-1108-102458-364-f0",
+            "type": "cpu_hog",
+            "delay_s": 46.85300000000001,
+            "any_fault_alert_s": 36.85300000000001,
+            "row_recall": 0.816
+          },
+          {
+            "fault_id": "d-bad-deploy-x2-hpa-r2-1108-103233-bb0-f0",
+            "type": "bad_deploy",
+            "delay_s": 51.654000000000025,
+            "any_fault_alert_s": 51.654000000000025,
+            "row_recall": 0.68
+          },
+          {
+            "fault_id": "d-bad-deploy-x3-fixed3-r2-1108-103441-b62-f0",
+            "type": "bad_deploy",
+            "delay_s": 52.84200000000001,
+            "any_fault_alert_s": 47.84200000000001,
+            "row_recall": 0.68
+          }
+        ]
+      }
+    }
+  }
+}

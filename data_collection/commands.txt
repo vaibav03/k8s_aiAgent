@@ -1,0 +1,25 @@
+minikube start --driver=docker
+kubectl port-forward -n istio-system svc/prometheus 9090:9090
+kubectl port-forward -n istio-system svc/istio-ingressgateway 3000:80
+kubectl proxy
+node server-prom.js
+
+./hey.exe -n 10 -c 5 http://localhost:3000/cpu
+
+
+pod at port 3000 -> exposed to port 80 by service ->
+
+
+kubectl port-forward -n monitoring svc/prometheus-kube-prometheus-prometheus 9090:9090
+kubectl port-forward Deployment/server-image 3000:3000
+kubectl port-forward svc/server-service 3000:80
+
+
+istioctl install --set values.telemetry.v2.prometheus.enabled=true --set values.telemetry.v2.enabled=true
+
+#!/bin/sh
+
+while true; do
+  curl -s http://server-service/memory > /dev/null
+  sleep 0.1
+donei

@@ -1,0 +1,60 @@
+{
+  "id": "d-leak-medium-r2",
+  "group": "D",
+  "heavy": false,
+  "duration_s": 720,
+  "traffic": {
+    "shape": "diurnal",
+    "base_load_pods": 0.8,
+    "params": {
+      "period_s": 360,
+      "amplitude": 0.3,
+      "noise": 0.06,
+      "seed": 29
+    },
+    "base_rps": 14.4,
+    "_capacity_ref_rps_per_pod": 18
+  },
+  "scaling": {
+    "policy": "hpa_cpu",
+    "min": 1,
+    "max": 4,
+    "target_cpu": 70,
+    "initial": 2,
+    "_uncapped_max": 6,
+    "_lane_cap": 4
+  },
+  "faults": [
+    {
+      "type": "memory_leak",
+      "start_s": 120,
+      "end_s": 630,
+      "target": "one-pod",
+      "pod_index": 0,
+      "params": {
+        "leak_kb_per_s": 560
+      }
+    }
+  ],
+  "app": {
+    "cpu_ms_per_req": 25,
+    "alloc_kb": 64
+  },
+  "_run": {
+    "run_id": "d-leak-medium-r2-1108-110336-3c8",
+    "namespace": "lab-d-leak-medium-r2-1108-110336-3c8",
+    "scenario_file": "/Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/scenarios/matrix_round2/d-leak-medium-r2.yaml",
+    "image": "loadlab:v1",
+    "k6_image": "grafana/k6:0.54.0",
+    "context": "kubeai-lab",
+    "t_created": 1794161016.910014,
+    "t0": 1794161065.342777,
+    "t_end": 1794161789.414807,
+    "status": "succeeded",
+    "export_window": [
+      1794161035.342777,
+      1794161799.414807
+    ],
+    "step_s": 5
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "id": "e-spike-dep-latency",
+  "group": "E",
+  "heavy": true,
+  "duration_s": 660,
+  "traffic": {
+    "shape": "spike",
+    "base_load_pods": 0.8,
+    "params": {
+      "spike_at_s": 240,
+      "spike_mult": 4,
+      "spike_s": 120,
+      "ramp_s": 10
+    },
+    "base_rps": 14.4,
+    "_capacity_ref_rps_per_pod": 18
+  },
+  "scaling": {
+    "policy": "hpa_cpu",
+    "min": 1,
+    "max": 4,
+    "target_cpu": 70,
+    "initial": 1,
+    "_uncapped_max": 6,
+    "_lane_cap": 4
+  },
+  "faults": [
+    {
+      "type": "dep_latency",
+      "start_s": 180,
+      "end_s": 450,
+      "target": "all",
+      "params": {
+        "dep_latency_ms": 400,
+        "dep_fraction": 0.5
+      }
+    }
+  ],
+  "app": {
+    "cpu_ms_per_req": 25,
+    "alloc_kb": 64
+  },
+  "_run": {
+    "run_id": "e-spike-dep-latency-1108-085933-36c",
+    "namespace": "lab-e-spike-dep-latency-1108-085933-36c",
+    "scenario_file": "/Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/scenarios/matrix/e-spike-dep-latency.yaml",
+    "image": "loadlab:v1",
+    "k6_image": "grafana/k6:0.54.0",
+    "context": "kubeai-lab",
+    "t_created": 1794153573.094605,
+    "t0": 1794153633.162045,
+    "t_end": 1794154296.575626,
+    "status": "succeeded",
+    "export_window": [
+      1794153603.162045,
+      1794154306.575626
+    ],
+    "step_s": 5
+  }
+}

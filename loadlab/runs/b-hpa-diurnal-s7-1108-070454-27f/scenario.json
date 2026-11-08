@@ -1,0 +1,49 @@
+{
+  "id": "b-hpa-diurnal-s7",
+  "group": "B",
+  "heavy": false,
+  "duration_s": 780,
+  "traffic": {
+    "shape": "diurnal",
+    "base_load_pods": 1.5,
+    "params": {
+      "period_s": 520,
+      "amplitude": 0.6,
+      "noise": 0.08,
+      "seed": 7
+    },
+    "base_rps": 27.0,
+    "_capacity_ref_rps_per_pod": 18
+  },
+  "scaling": {
+    "policy": "hpa_cpu",
+    "min": 1,
+    "max": 4,
+    "target_cpu": 70,
+    "initial": 1,
+    "_uncapped_max": 6,
+    "_lane_cap": 4
+  },
+  "faults": [],
+  "app": {
+    "cpu_ms_per_req": 25,
+    "alloc_kb": 64
+  },
+  "_run": {
+    "run_id": "b-hpa-diurnal-s7-1108-070454-27f",
+    "namespace": "lab-b-hpa-diurnal-s7-1108-070454-27f",
+    "scenario_file": "/Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/scenarios/matrix/b-hpa-diurnal-s7.yaml",
+    "image": "loadlab:v1",
+    "k6_image": "grafana/k6:0.54.0",
+    "context": "kubeai-lab",
+    "t_created": 1794146694.641333,
+    "t0": 1794146739.0816681,
+    "t_end": 1794147522.5226629,
+    "status": "succeeded",
+    "export_window": [
+      1794146709.0816681,
+      1794147532.5226629
+    ],
+    "step_s": 5
+  }
+}

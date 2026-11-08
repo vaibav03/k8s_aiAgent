@@ -1,0 +1,7 @@
+07:04:34 [a-cap-fixed1-1108-070434-095] scenario a-cap-fixed1 -> namespace lab-a-cap-fixed1-1108-070434-095
+07:04:36 [a-cap-fixed1-1108-070434-095] app ready: 1 replica(s), policy fixed
+07:04:56 [a-cap-fixed1-1108-070434-095] k6 started: step_ramp base_rps 6 pod k6-zwjfm
+07:11:51 [a-cap-fixed1-1108-070434-095] load finished: succeeded
+07:12:13 [a-cap-fixed1-1108-070434-095] exported deploy.csv (85 rows) pods.csv (85 rows) -> /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/a-cap-fixed1-1108-070434-095
+07:12:13 [a-cap-fixed1-1108-070434-095] namespace deleted
+/Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/a-cap-fixed1-1108-070434-095

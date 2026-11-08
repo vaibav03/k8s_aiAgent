@@ -1,0 +1,10 @@
+08:25:54 [d-dep-latency-1108-082554-5cd] scenario d-dep-latency -> namespace lab-d-dep-latency-1108-082554-5cd
+08:25:57 [d-dep-latency-1108-082554-5cd] app ready: 3 replica(s), policy hpa_cpu
+08:26:26 [d-dep-latency-1108-082554-5cd] HPA has metrics: {'averageUtilization': 0, 'averageValue': '1m'}
+08:26:37 [d-dep-latency-1108-082554-5cd] k6 started: steady base_rps 18.0 pod k6-9b6fr
+08:29:58 [d-dep-latency-1108-082554-5cd] FAULT START f0 dep_latency target=all pods=['loadlab-5965489b55-7v2pq', 'loadlab-5965489b55-rq9t5', 'loadlab-5965489b55-rspfq'] params={'dep_latency_ms': 400, 'dep_fraction': 0.5}
+08:33:37 [d-dep-latency-1108-082554-5cd] FAULT END   f0 dep_latency
+08:36:41 [d-dep-latency-1108-082554-5cd] load finished: succeeded
+08:37:01 [d-dep-latency-1108-082554-5cd] exported deploy.csv (122 rows) pods.csv (366 rows) -> /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/d-dep-latency-1108-082554-5cd
+08:37:01 [d-dep-latency-1108-082554-5cd] namespace deleted
+/Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/d-dep-latency-1108-082554-5cd

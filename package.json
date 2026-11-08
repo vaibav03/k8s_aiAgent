@@ -1,23 +1,24 @@
 {
   "name": "k8s_ai_agent",
-  "version": "1.0.0",
-  "description": "",
+  "version": "2.0.0",
+  "description": "Kubernetes SRE agent: per-pod OOM-ahead loop + per-Deployment decision loop (Prometheus -> ML service /v1/decide -> allowlisted scale/remediation)",
   "license": "ISC",
   "author": "",
   "type": "module",
   "main": "index.js",
+  "engines": {
+    "node": ">=18.17"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev" : "node index.js"
+    "start": "node index.js",
+    "dev": "node --watch index.js",
+    "check": "for f in index.js lib/*.js test/*.mjs; do node --check \"$f\" || exit 1; done",
+    "test": "node test/agent.smoke.mjs && node test/scaler.smoke.mjs"
   },
   "dependencies": {
-    "@langchain/anthropic": "^0.3.18",
-    "@langchain/community": "^0.3.41",
     "@langchain/core": "^0.3.45",
     "@langchain/google-genai": "^0.2.4",
-    "@langchain/langgraph": "^0.2.64",
-    "@langchain/openai": "^0.5.5",
-    "axios": "^1.8.4",
+    "dotenv": "^16.4.5",
     "express": "^5.1.0"
   }
 }

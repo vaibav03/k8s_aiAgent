@@ -1,0 +1,49 @@
+{
+  "id": "d-cpu-hog-fixed3-p0-r2",
+  "group": "D",
+  "heavy": false,
+  "duration_s": 540,
+  "traffic": {
+    "shape": "steady",
+    "base_rps": 13,
+    "params": {}
+  },
+  "scaling": {
+    "policy": "fixed",
+    "replicas": 3,
+    "_lane_cap": 4
+  },
+  "faults": [
+    {
+      "type": "cpu_hog",
+      "start_s": 180,
+      "end_s": 390,
+      "target": "one-pod",
+      "pod_index": 0,
+      "params": {
+        "cpu_hog_millicores": 350
+      }
+    }
+  ],
+  "app": {
+    "cpu_ms_per_req": 25,
+    "alloc_kb": 64
+  },
+  "_run": {
+    "run_id": "d-cpu-hog-fixed3-p0-r2-1108-102249-eeb",
+    "namespace": "lab-d-cpu-hog-fixed3-p0-r2-1108-102249-eeb",
+    "scenario_file": "/Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/scenarios/matrix_round2/d-cpu-hog-fixed3-p0-r2.yaml",
+    "image": "loadlab:v1",
+    "k6_image": "grafana/k6:0.54.0",
+    "context": "kubeai-lab",
+    "t_created": 1794158569.975957,
+    "t0": 1794158589.307046,
+    "t_end": 1794159132.914617,
+    "status": "succeeded",
+    "export_window": [
+      1794158559.307046,
+      1794159142.914617
+    ],
+    "step_s": 5
+  }
+}

@@ -1,0 +1,14 @@
+# Smoke test (5 min): steady load at ~50% of 2-pod SLO capacity, a memory leak on ONE pod that
+# grows until the kernel OOMKills it, and a 60s slow-dependency window on all pods.
+# Expected signature: mem frac -> 1.0 then restart+OOMKill on one pod (scaling would not help);
+# p95 jumps during dep_latency while CPU stays flat (scaling would not help either).
+id: smoke
+duration_s: 300
+traffic:
+  shape: steady
+  base_load_pods: 1.0          # = 1 pod worth of SLO capacity (calibration.json), spread over 2 pods
+scaling: {policy: fixed, replicas: 2}
+app: {cpu_ms_per_req: 25, alloc_kb: 64}
+faults:
+  - {type: memory_leak, start_s: 20, end_s: 290, target: one-pod, params: {leak_kb_per_s: 1536}}
+  - {type: dep_latency, start_s: 200, end_s: 260, target: all, params: {dep_latency_ms: 400, dep_fraction: 0.5}}

@@ -1,0 +1,11 @@
+# Capacity probe: ONE pod, open-loop step ramp until clear saturation.
+# Analyse with: python runner/calibrate.py runs/<run_id>   -> writes calibration.json
+id: capacity-probe
+duration_s: 480
+traffic:
+  shape: step_ramp
+  base_rps: 4
+  params: {start_rps: 4, step_rps: 2, step_s: 40, ramp_s: 3}
+scaling: {policy: fixed, replicas: 1}
+app: {cpu_ms_per_req: 25, alloc_kb: 64}
+faults: []

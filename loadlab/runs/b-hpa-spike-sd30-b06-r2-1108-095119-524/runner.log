@@ -1,0 +1,7 @@
+09:51:19 [b-hpa-spike-sd30-b06-r2-1108-095119-524] scenario b-hpa-spike-sd30-b06-r2 -> namespace lab-b-hpa-spike-sd30-b06-r2-1108-095119-524
+09:51:27 [b-hpa-spike-sd30-b06-r2-1108-095119-524] app ready: 1 replica(s), policy hpa_cpu
+09:51:51 [b-hpa-spike-sd30-b06-r2-1108-095119-524] HPA has metrics: {'averageUtilization': 2, 'averageValue': '6m'}
+09:52:03 [b-hpa-spike-sd30-b06-r2-1108-095119-524] k6 started: spike base_rps 10.8 pod k6-jnjfb
+10:02:09 [b-hpa-spike-sd30-b06-r2-1108-095119-524] load finished: succeeded
+10:02:30 [b-hpa-spike-sd30-b06-r2-1108-095119-524] exported deploy.csv (122 rows) pods.csv (322 rows) -> /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/b-hpa-spike-sd30-b06-r2-1108-095119-524
+10:02:30 [b-hpa-spike-sd30-b06-r2-1108-095119-524] namespace deleted

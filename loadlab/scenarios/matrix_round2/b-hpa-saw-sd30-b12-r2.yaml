@@ -1,0 +1,19 @@
+# generated from scenarios/matrix.yaml by runner/matrix.py - edit matrix.yaml instead
+id: b-hpa-saw-sd30-b12-r2
+group: B
+heavy: false
+duration_s: 720
+traffic:
+  shape: sawtooth
+  base_load_pods: 1.2
+  params:
+    period_s: 240
+    low_mult: 0.4
+    high_mult: 1.8
+scaling:
+  policy: hpa_cpu
+  min: 1
+  max: 6
+  target_cpu: 70
+  scale_down_window_s: 30
+faults: []

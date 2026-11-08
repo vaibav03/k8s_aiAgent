@@ -1,0 +1,312 @@
+{
+ "train_rounds": [
+  1
+ ],
+ "holdout_rounds": [
+  2
+ ],
+ "loro_models": [
+  {
+   "model": "util",
+   "logloss": 0.1254,
+   "brier": 0.035,
+   "auc": 0.9583,
+   "bad_deploy_mean_p": 0.148,
+   "bad_deploy_breach_rate": 0.9091
+  },
+  {
+   "model": "load_only",
+   "logloss": 0.215,
+   "brier": 0.0401,
+   "auc": 0.8244,
+   "bad_deploy_mean_p": 0.0012,
+   "bad_deploy_breach_rate": 0.9091
+  },
+  {
+   "model": "nowcast_throttle",
+   "logloss": 0.0868,
+   "brier": 0.0237,
+   "auc": 0.9804,
+   "bad_deploy_mean_p": 0.343,
+   "bad_deploy_breach_rate": 0.9091
+  },
+  {
+   "model": "lgbm_mono",
+   "logloss": 0.1506,
+   "brier": 0.039,
+   "auc": 0.9483,
+   "bad_deploy_mean_p": 0.071,
+   "bad_deploy_breach_rate": 0.9091
+  }
+ ],
+ "rules": [
+  {
+   "rule": "fixed 18 rps/pod",
+   "recall": 0.4467,
+   "precision": 0.916,
+   "false_alarm_rate": 0.005,
+   "bad_deploy_recall": 0.0
+  },
+  {
+   "rule": "HPA 70% CPU of request",
+   "recall": 0.9836,
+   "precision": 0.2326,
+   "false_alarm_rate": 0.399,
+   "bad_deploy_recall": 0.925
+  },
+  {
+   "rule": "learned, risk 0.1",
+   "recall": 0.9221,
+   "precision": 0.5528,
+   "false_alarm_rate": 0.0917,
+   "bad_deploy_recall": 0.8
+  }
+ ],
+ "holdout_models": [
+  {
+   "model": "util",
+   "logloss": 0.0988,
+   "brier": 0.0227,
+   "auc": 0.9458,
+   "bad_deploy_mean_p": 0.206,
+   "bad_deploy_breach_rate": 0.4545
+  },
+  {
+   "model": "load_only",
+   "logloss": 0.2122,
+   "brier": 0.0452,
+   "auc": 0.7509,
+   "bad_deploy_mean_p": 0.022,
+   "bad_deploy_breach_rate": 0.4545
+  },
+  {
+   "model": "nowcast_throttle",
+   "logloss": 0.0737,
+   "brier": 0.0156,
+   "auc": 0.9698,
+   "bad_deploy_mean_p": 0.3501,
+   "bad_deploy_breach_rate": 0.4545
+  },
+  {
+   "model": "lgbm_mono",
+   "logloss": 0.1016,
+   "brier": 0.0214,
+   "auc": 0.9423,
+   "bad_deploy_mean_p": 0.2776,
+   "bad_deploy_breach_rate": 0.4545
+  }
+ ],
+ "holdout_rules": [
+  {
+   "rule": "fixed 18 rps/pod",
+   "recall": 0.4754,
+   "precision": 1.0,
+   "false_alarm_rate": 0.0,
+   "bad_deploy_recall": 0.0
+  },
+  {
+   "rule": "HPA 70% CPU of request",
+   "recall": 0.959,
+   "precision": 0.2183,
+   "false_alarm_rate": 0.3679,
+   "bad_deploy_recall": 0.875
+  },
+  {
+   "rule": "learned, risk 0.1",
+   "recall": 0.8852,
+   "precision": 0.8438,
+   "false_alarm_rate": 0.0176,
+   "bad_deploy_recall": 0.85
+  }
+ ],
+ "safe_table": [
+  {
+   "replicas": 1,
+   "safe_rps_per_pod@26ms": 15.345,
+   "safe_rps_per_pod@50ms": 8.133,
+   "safe_rps_per_pod@78ms": 5.213,
+   "safe_u": 0.813
+  },
+  {
+   "replicas": 2,
+   "safe_rps_per_pod@26ms": 13.323,
+   "safe_rps_per_pod@50ms": 7.061,
+   "safe_rps_per_pod@78ms": 4.526,
+   "safe_u": 0.706
+  },
+  {
+   "replicas": 3,
+   "safe_rps_per_pod@26ms": 12.004,
+   "safe_rps_per_pod@50ms": 6.362,
+   "safe_rps_per_pod@78ms": 4.078,
+   "safe_u": 0.636
+  },
+  {
+   "replicas": 4,
+   "safe_rps_per_pod@26ms": 10.985,
+   "safe_rps_per_pod@50ms": 5.822,
+   "safe_rps_per_pod@78ms": 3.732,
+   "safe_u": 0.582
+  },
+  {
+   "replicas": 5,
+   "safe_rps_per_pod@26ms": 10.985,
+   "safe_rps_per_pod@50ms": 5.822,
+   "safe_rps_per_pod@78ms": 3.732,
+   "safe_u": 0.582
+  },
+  {
+   "replicas": 6,
+   "safe_rps_per_pod@26ms": 10.985,
+   "safe_rps_per_pod@50ms": 5.822,
+   "safe_rps_per_pod@78ms": 3.732,
+   "safe_u": 0.582
+  }
+ ],
+ "replay_cost": [
+  {
+   "scenario": "b-hpa-diurnal-s23",
+   "mean_demand_rps": 17.957,
+   "actual_replicas": 3.671,
+   "learned": 1.81,
+   "fixed18": 1.519,
+   "hpa70": 3.43
+  },
+  {
+   "scenario": "b-hpa-diurnal-s7",
+   "mean_demand_rps": 26.489,
+   "actual_replicas": 3.654,
+   "learned": 2.73,
+   "fixed18": 1.994,
+   "hpa70": 4.654
+  },
+  {
+   "scenario": "b-hpa-diurnal-sd30-s41-r2",
+   "mean_demand_rps": 20.142,
+   "actual_replicas": 3.195,
+   "learned": 2.094,
+   "fixed18": 1.572,
+   "hpa70": 3.78
+  },
+  {
+   "scenario": "b-hpa-diurnal-sd30-s59-r2",
+   "mean_demand_rps": 16.026,
+   "actual_replicas": 2.906,
+   "learned": 1.704,
+   "fixed18": 1.421,
+   "hpa70": 3.151
+  },
+  {
+   "scenario": "b-hpa-flash-b06",
+   "mean_demand_rps": 25.513,
+   "actual_replicas": 3.297,
+   "learned": 2.387,
+   "fixed18": 1.703,
+   "hpa70": 4.234
+  },
+  {
+   "scenario": "b-hpa-flash-b09",
+   "mean_demand_rps": 36.447,
+   "actual_replicas": 3.505,
+   "learned": 3.838,
+   "fixed18": 2.297,
+   "hpa70": 6.135
+  },
+  {
+   "scenario": "b-hpa-saw-b10",
+   "mean_demand_rps": 21.323,
+   "actual_replicas": 3.673,
+   "learned": 2.091,
+   "fixed18": 1.664,
+   "hpa70": 3.736
+  },
+  {
+   "scenario": "b-hpa-saw-b14",
+   "mean_demand_rps": 30.758,
+   "actual_replicas": 3.773,
+   "learned": 3.0,
+   "fixed18": 2.227,
+   "hpa70": 5.127
+  },
+  {
+   "scenario": "b-hpa-saw-sd30-b12-r2",
+   "mean_demand_rps": 23.356,
+   "actual_replicas": 3.527,
+   "learned": 2.507,
+   "fixed18": 1.753,
+   "hpa70": 4.411
+  },
+  {
+   "scenario": "b-hpa-spike-b05",
+   "mean_demand_rps": 14.712,
+   "actual_replicas": 3.373,
+   "learned": 1.618,
+   "fixed18": 1.327,
+   "hpa70": 2.855
+  },
+  {
+   "scenario": "b-hpa-spike-b08",
+   "mean_demand_rps": 23.997,
+   "actual_replicas": 3.486,
+   "learned": 2.541,
+   "fixed18": 1.703,
+   "hpa70": 4.396
+  },
+  {
+   "scenario": "b-hpa-spike-sd30-b06-r2",
+   "mean_demand_rps": 18.908,
+   "actual_replicas": 2.508,
+   "learned": 2.016,
+   "fixed18": 1.5,
+   "hpa70": 3.672
+  },
+  {
+   "scenario": "c-over-fixed4-diurnal-r2",
+   "mean_demand_rps": 6.951,
+   "actual_replicas": 4.0,
+   "learned": 1.0,
+   "fixed18": 1.0,
+   "hpa70": 1.631
+  },
+  {
+   "scenario": "c-over-fixed4-steady",
+   "mean_demand_rps": 8.716,
+   "actual_replicas": 4.0,
+   "learned": 1.0,
+   "fixed18": 1.0,
+   "hpa70": 1.959
+  },
+  {
+   "scenario": "c-under-fixed1-diurnal",
+   "mean_demand_rps": 13.776,
+   "actual_replicas": 1.0,
+   "learned": 1.463,
+   "fixed18": 1.383,
+   "hpa70": 2.477
+  },
+  {
+   "scenario": "c-under-fixed1-flash-r2",
+   "mean_demand_rps": 20.812,
+   "actual_replicas": 1.0,
+   "learned": 2.27,
+   "fixed18": 1.62,
+   "hpa70": 3.88
+  },
+  {
+   "scenario": "c-under-fixed2-spike",
+   "mean_demand_rps": 23.797,
+   "actual_replicas": 2.0,
+   "learned": 2.261,
+   "fixed18": 1.685,
+   "hpa70": 4.315
+  },
+  {
+   "scenario": "MEAN",
+   "mean_demand_rps": NaN,
+   "actual_replicas": 3.092,
+   "learned": 2.137,
+   "fixed18": 1.61,
+   "hpa70": 3.756
+  }
+ ]
+}

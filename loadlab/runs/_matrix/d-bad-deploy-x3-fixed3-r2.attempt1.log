@@ -1,0 +1,9 @@
+10:34:41 [d-bad-deploy-x3-fixed3-r2-1108-103441-b62] scenario d-bad-deploy-x3-fixed3-r2 -> namespace lab-d-bad-deploy-x3-fixed3-r2-1108-103441-b62
+10:34:44 [d-bad-deploy-x3-fixed3-r2-1108-103441-b62] app ready: 3 replica(s), policy fixed
+10:35:01 [d-bad-deploy-x3-fixed3-r2-1108-103441-b62] k6 started: steady base_rps 15 pod k6-k64j9
+10:38:02 [d-bad-deploy-x3-fixed3-r2-1108-103441-b62] FAULT START f0 bad_deploy target=one-pod pods=rollout params={'cpu_ms_per_req': 75, 'version': 'v3-bad'}
+10:41:42 [d-bad-deploy-x3-fixed3-r2-1108-103441-b62] FAULT END   f0 bad_deploy
+10:45:05 [d-bad-deploy-x3-fixed3-r2-1108-103441-b62] load finished: succeeded
+10:45:25 [d-bad-deploy-x3-fixed3-r2-1108-103441-b62] exported deploy.csv (123 rows) pods.csv (399 rows) -> /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/d-bad-deploy-x3-fixed3-r2-1108-103441-b62
+10:45:25 [d-bad-deploy-x3-fixed3-r2-1108-103441-b62] namespace deleted
+/Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/d-bad-deploy-x3-fixed3-r2-1108-103441-b62

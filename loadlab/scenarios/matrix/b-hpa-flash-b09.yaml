@@ -1,0 +1,18 @@
+# generated from scenarios/matrix.yaml by runner/matrix.py - edit matrix.yaml instead
+id: b-hpa-flash-b09
+group: B
+heavy: true
+duration_s: 540
+traffic:
+  shape: flash_crowd
+  base_load_pods: 0.9
+  params:
+    at_s: 180
+    mult: 3
+    ramp_s: 3
+scaling:
+  policy: hpa_cpu
+  min: 1
+  max: 6
+  target_cpu: 70
+faults: []

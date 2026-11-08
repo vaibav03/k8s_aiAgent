@@ -1,0 +1,7 @@
+14:36:48 [ab-a-load-hpa300-1108-143648-fdd] scenario ab-a-load-hpa300 -> namespace lab-ab-a-load-hpa300-1108-143648-fdd
+14:36:50 [ab-a-load-hpa300-1108-143648-fdd] app ready: 1 replica(s), policy hpa_cpu
+14:37:37 [ab-a-load-hpa300-1108-143648-fdd] HPA has metrics: {'averageUtilization': 1, 'averageValue': '4m'}
+14:37:48 [ab-a-load-hpa300-1108-143648-fdd] k6 started: diurnal_spike base_rps 14.4 pod k6-lmjfd
+14:49:53 [ab-a-load-hpa300-1108-143648-fdd] load finished: succeeded
+14:50:13 [ab-a-load-hpa300-1108-143648-fdd] exported deploy.csv (147 rows) pods.csv (423 rows) -> /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/ab-a-load-hpa300-1108-143648-fdd
+14:50:13 [ab-a-load-hpa300-1108-143648-fdd] namespace deleted

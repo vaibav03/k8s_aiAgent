@@ -1,0 +1,7 @@
+15:03:24 [ab-a2-load-s7-agent-1108-150324-e2d] scenario ab-a2-load-s7-agent -> namespace lab-ab-a2-load-s7-agent-1108-150324-e2d
+15:03:26 [ab-a2-load-s7-agent-1108-150324-e2d] app ready: 1 replica(s), policy fixed
+15:03:29 [ab-a2-load-s7-agent-1108-150324-e2d] agent pointed at lab-ab-a2-load-s7-agent-1108-150324-e2d {"ACT_MODE": "act", "ALLOW_EXEC": "true", "OOM_LOOP": "false", "DEPLOY_SELECTOR": "", "DEPLOYMENTS": "loadlab", "SCALE_MIN": "1", "SCALE_MAX": "4", "DECIDE_INTERVAL_S": "15", "HISTORY_S": "900", "NAMESPACE": "lab-ab-a2-load-s7-agent-1108-150324-e2d"}
+15:03:40 [ab-a2-load-s7-agent-1108-150324-e2d] k6 started: diurnal_spike base_rps 14.4 pod k6-q7ksh
+15:15:40 [ab-a2-load-s7-agent-1108-150324-e2d] RUN FAILED: RuntimeError('kubectl --context kubeai-lab -n lab-ab-a2-load-s7-agent-1108-150324-e2d get job k6 -o json failed: Unable to connect to the server: net/http: TLS handshake timeout')
+15:15:54 [ab-a2-load-s7-agent-1108-150324-e2d] agent decision log: 48 lines
+15:16:05 [ab-a2-load-s7-agent-1108-150324-e2d] agent decision log: 49 lines

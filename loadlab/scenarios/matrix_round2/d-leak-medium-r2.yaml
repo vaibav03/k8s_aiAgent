@@ -1,0 +1,27 @@
+# generated from scenarios/matrix.yaml by runner/matrix.py - edit matrix.yaml instead
+id: d-leak-medium-r2
+group: D
+heavy: false
+duration_s: 720
+traffic:
+  shape: diurnal
+  base_load_pods: 0.8
+  params:
+    period_s: 360
+    amplitude: 0.3
+    noise: 0.06
+    seed: 29
+scaling:
+  policy: hpa_cpu
+  min: 1
+  max: 6
+  target_cpu: 70
+  initial: 2
+faults:
+- type: memory_leak
+  start_s: 120
+  end_s: 630
+  target: one-pod
+  pod_index: 0
+  params:
+    leak_kb_per_s: 560

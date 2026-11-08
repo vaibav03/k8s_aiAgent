@@ -1,0 +1,121 @@
+# KubeAI agent. Build the image straight into the minikube node first:
+#   minikube -p kubeai-lab image build -t kubeai-agent:latest .
+# (or: docker build -t kubeai-agent:latest . && minikube image load kubeai-agent:latest)
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kubeai-agent-config
+  namespace: kubeai
+data:
+  # loadlab Prometheus (loadlab/monitoring); kube-prometheus-stack: prometheus-operated.monitoring.svc
+  PROMETHEUS_URL: "http://prometheus.monitoring.svc:9090"
+  KUBE_API: "https://kubernetes.default.svc"
+  NAMESPACE: "default"
+  POD_SELECTOR: "app=server"
+  ML_URL: "http://kubeai-ml.kubeai.svc:8000"
+  ML_BATCH_MAX: "500"
+  POLL_MS: "15000"
+  WINDOW: "40"
+  ALERT_K: "2"
+  ALERT_N: "3"
+  COOLDOWN_MS: "300000"
+  GEMINI_MODEL: "gemini-2.5-flash"
+  ALLOW_EXEC: "false"
+  MAX_MEMORY_LIMIT: "4Gi"
+  MAX_REPLICAS: "10"
+  PORT: "3001"
+  # ---- per-pod OOM loop (lib/agent.js). Empty = on only when the deployment loop is off
+  # (DEPLOYMENTS / DEPLOY_SELECTOR empty). It obeys ACT_MODE like the deployment loop, cannot
+  # scale, and shares one per-Deployment remediation cooldown with it when both are on.
+  OOM_LOOP: ""
+  # ---- deployment-level decision loop (lib/scaler.js -> POST /v1/decide)
+  # Targets in NAMESPACE: a comma list, or a label selector on Deployments. Both empty = loop off.
+  # Default: opt-in per Deployment with `kubectl label deploy <d> kubeai.io/managed=true`.
+  DEPLOYMENTS: ""
+  DEPLOY_SELECTOR: "kubeai.io/managed=true"
+  # observe = log decisions only | dryrun = kubectl --dry-run=server | act = real (needs ALLOW_EXEC=true)
+  ACT_MODE: "observe"
+  DECIDE_INTERVAL_S: "15"
+  HISTORY_S: "900"
+  SCALE_MIN: "1"
+  SCALE_MAX: "10"
+  SCALE_UP_COOLDOWN_S: "15"
+  SCALE_DOWN_COOLDOWN_S: "60"
+  REMEDIATION_COOLDOWN_S: "300"
+  HPA_OVERRIDE: "false"
+  # every decision is also appended here as one JSON line (emptyDir; read with kubectl exec / cp)
+  DECISION_LOG: "/tmp/decisions.jsonl"
+  APP_CONTAINER: "app"
+  APP_JOB: "annotated-pods"
+  # per-Deployment template for the app-level metrics, e.g. 'app="{deployment}"'. Empty =
+  # namespace-wide; the loop then refuses to decide in a namespace with several Deployments.
+  APP_METRIC_MATCHER: ""
+---
+# The LLM key Secret is NOT part of this directory, so re-running
+# `kubectl apply -f k8s/` can never reset it. Create it once, out of band:
+#   kubectl -n kubeai create secret generic kubeai-agent-secrets \
+#     --from-literal=GOOGLE_API_KEY=...
+# The secretRef below is optional: without the Secret the agent starts with the
+# LLM step disabled (recommendation "none").
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kubeai-agent
+  namespace: kubeai
+  labels: {app.kubernetes.io/name: kubeai-agent, app.kubernetes.io/part-of: kubeai}
+spec:
+  replicas: 1 # single writer: alert/cooldown state is in memory
+  strategy: {type: Recreate}
+  selector:
+    matchLabels: {app.kubernetes.io/name: kubeai-agent}
+  template:
+    metadata:
+      labels: {app.kubernetes.io/name: kubeai-agent, app.kubernetes.io/part-of: kubeai}
+    spec:
+      serviceAccountName: kubeai-agent
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+      containers:
+        - name: agent
+          image: kubeai-agent:latest
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef: {name: kubeai-agent-config}
+            - secretRef: {name: kubeai-agent-secrets, optional: true}
+          env:
+            # trust the cluster CA for https://kubernetes.default.svc (fetch + kubectl)
+            - {name: NODE_EXTRA_CA_CERTS, value: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt}
+          ports:
+            - {name: http, containerPort: 3001}
+          readinessProbe:
+            httpGet: {path: /healthz, port: http}
+            periodSeconds: 10
+          livenessProbe:
+            httpGet: {path: /healthz, port: http}
+            initialDelaySeconds: 10
+            periodSeconds: 20
+          resources:
+            requests: {cpu: 50m, memory: 96Mi}
+            limits: {cpu: 500m, memory: 256Mi}
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: {drop: ["ALL"]}
+          volumeMounts:
+            - {name: tmp, mountPath: /tmp}
+            - {name: kube-cache, mountPath: /home/node/.kube}
+      volumes:
+        - {name: tmp, emptyDir: {}}
+        - {name: kube-cache, emptyDir: {}}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kubeai-agent
+  namespace: kubeai
+  labels: {app.kubernetes.io/name: kubeai-agent, app.kubernetes.io/part-of: kubeai}
+spec:
+  selector: {app.kubernetes.io/name: kubeai-agent}
+  ports:
+    - {name: http, port: 3001, targetPort: http}

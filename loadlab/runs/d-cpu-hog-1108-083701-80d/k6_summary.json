@@ -1,0 +1,225 @@
+{
+ "root_group": {
+  "path": "",
+  "id": "d41d8cd98f00b204e9800998ecf8427e",
+  "groups": [],
+  "checks": [],
+  "name": ""
+ },
+ "options": {
+  "noColor": true,
+  "summaryTrendStats": [
+   "avg",
+   "min",
+   "med",
+   "p(90)",
+   "p(95)",
+   "p(99)",
+   "max"
+  ],
+  "summaryTimeUnit": ""
+ },
+ "state": {
+  "isStdOutTTY": false,
+  "isStdErrTTY": false,
+  "testRunDurationMs": 600059.608042
+ },
+ "metrics": {
+  "data_received": {
+   "type": "counter",
+   "contains": "data",
+   "values": {
+    "count": 2177581,
+    "rate": 3628.9411432065335
+   }
+  },
+  "http_req_duration": {
+   "type": "trend",
+   "contains": "time",
+   "values": {
+    "avg": 41.34267253286103,
+    "min": 25.105944,
+    "med": 25.630208,
+    "p(90)": 89.926017,
+    "p(95)": 131.7885082,
+    "p(99)": 221.99614841999994,
+    "max": 447.570083
+   }
+  },
+  "http_req_receiving": {
+   "contains": "time",
+   "values": {
+    "p(90)": 0.082833,
+    "p(95)": 0.1030837,
+    "p(99)": 0.16358625999999982,
+    "max": 0.642583,
+    "avg": 0.05239569199216941,
+    "min": 0.017292,
+    "med": 0.044167
+   },
+   "type": "trend"
+  },
+  "http_req_failed": {
+   "type": "rate",
+   "contains": "default",
+   "values": {
+    "rate": 0,
+    "passes": 0,
+    "fails": 10727
+   }
+  },
+  "http_req_duration{expected_response:true}": {
+   "type": "trend",
+   "contains": "time",
+   "values": {
+    "p(90)": 89.926017,
+    "p(95)": 131.7885082,
+    "p(99)": 221.99614841999994,
+    "max": 447.570083,
+    "avg": 41.34267253286103,
+    "min": 25.105944,
+    "med": 25.630208
+   }
+  },
+  "iterations": {
+   "type": "counter",
+   "contains": "default",
+   "values": {
+    "count": 10727,
+    "rate": 17.87655735569721
+   }
+  },
+  "vus_max": {
+   "type": "gauge",
+   "contains": "default",
+   "values": {
+    "min": 154,
+    "max": 154,
+    "value": 154
+   }
+  },
+  "http_req_connecting": {
+   "type": "trend",
+   "contains": "time",
+   "values": {
+    "max": 13.2385,
+    "avg": 0.1170313613312201,
+    "min": 0.034917,
+    "med": 0.104041,
+    "p(90)": 0.168375,
+    "p(95)": 0.19790009999999986,
+    "p(99)": 0.2890925
+   }
+  },
+  "http_req_blocked": {
+   "type": "trend",
+   "contains": "time",
+   "values": {
+    "avg": 0.1613430314160531,
+    "min": 0.051958,
+    "med": 0.14575,
+    "p(90)": 0.22558340000000002,
+    "p(95)": 0.2582957999999999,
+    "p(99)": 0.3931873399999999,
+    "max": 13.405625
+   }
+  },
+  "data_sent": {
+   "type": "counter",
+   "contains": "data",
+   "values": {
+    "count": 1394510,
+    "rate": 2323.9524562406373
+   }
+  },
+  "iteration_duration": {
+   "type": "trend",
+   "contains": "time",
+   "values": {
+    "med": 25.851,
+    "p(90)": 90.15075,
+    "p(95)": 131.9866082,
+    "p(99)": 222.27518983999994,
+    "max": 447.791625,
+    "avg": 41.5656029498462,
+    "min": 25.366541
+   }
+  },
+  "vus": {
+   "values": {
+    "value": 2,
+    "min": 0,
+    "max": 3
+   },
+   "type": "gauge",
+   "contains": "default"
+  },
+  "http_reqs": {
+   "type": "counter",
+   "contains": "default",
+   "values": {
+    "count": 10727,
+    "rate": 17.87655735569721
+   }
+  },
+  "http_req_tls_handshaking": {
+   "values": {
+    "med": 0,
+    "p(90)": 0,
+    "p(95)": 0,
+    "p(99)": 0,
+    "max": 0,
+    "avg": 0,
+    "min": 0
+   },
+   "type": "trend",
+   "contains": "time"
+  },
+  "http_req_waiting": {
+   "contains": "time",
+   "values": {
+    "p(99)": 221.84935623999993,
+    "max": 447.504958,
+    "avg": 41.25417813899503,
+    "min": 25.001153,
+    "med": 25.542458,
+    "p(90)": 89.818342,
+    "p(95)": 131.71283289999997
+   },
+   "type": "trend"
+  },
+  "http_req_sending": {
+   "contains": "time",
+   "values": {
+    "max": 2.85775,
+    "avg": 0.036098701873776354,
+    "min": 0.006625,
+    "med": 0.030958,
+    "p(90)": 0.058,
+    "p(95)": 0.06807069999999998,
+    "p(99)": 0.10893641999999999
+   },
+   "type": "trend"
+  }
+ },
+ "loadlab": {
+  "shape": "steady",
+  "base_rps": 18,
+  "duration_s": 600,
+  "params": {},
+  "points": [
+   [
+    0,
+    3.6
+   ],
+   [
+    10,
+    18
+   ],
+   [
+    600,
+    18
+   ]
+  ]
+ }
+}

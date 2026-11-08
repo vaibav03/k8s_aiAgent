@@ -1,0 +1,468 @@
+13:57:01 slot 1: [('a-load', 'agent'), ('a-load', 'hpa30')]
+13:57:01 [ab-a-load-hpa30-1108-135701-aa1] scenario ab-a-load-hpa30 -> namespace lab-ab-a-load-hpa30-1108-135701-aa1
+13:57:01 [ab-a-load-agent-1108-135701-42a] scenario ab-a-load-agent -> namespace lab-ab-a-load-agent-1108-135701-42a
+13:57:07 [ab-a-load-hpa30-1108-135701-aa1] app ready: 1 replica(s), policy hpa_cpu
+13:57:07 [ab-a-load-agent-1108-135701-42a] app ready: 1 replica(s), policy fixed
+13:57:09 [ab-a-load-agent-1108-135701-42a] agent pointed at lab-ab-a-load-agent-1108-135701-42a {"ACT_MODE": "act", "ALLOW_EXEC": "true", "OOM_LOOP": "false", "DEPLOY_SELECTOR": "", "DEPLOYMENTS": "loadlab", "SCALE_MIN": "1", "SCALE_MAX": "4", "DECIDE_INTERVAL_S": "15", "HISTORY_S": "900", "NAMESPACE": "lab-ab-a-load-agent-1108-135701-42a"}
+13:57:25 [ab-a-load-agent-1108-135701-42a] k6 started: diurnal_spike base_rps 14.4 pod k6-pk4vb
+13:57:48 [ab-a-load-hpa30-1108-135701-aa1] HPA has metrics: {'averageUtilization': 1, 'averageValue': '3m'}
+13:58:01 [ab-a-load-hpa30-1108-135701-aa1] k6 started: diurnal_spike base_rps 14.4 pod k6-fwknx
+14:09:29 [ab-a-load-agent-1108-135701-42a] load finished: succeeded
+14:09:29 [ab-a-load-agent-1108-135701-42a] agent decision log: 50 lines
+14:09:49 [ab-a-load-agent-1108-135701-42a] exported deploy.csv (146 rows) pods.csv (447 rows) -> /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/ab-a-load-agent-1108-135701-42a
+14:09:49 [ab-a-load-agent-1108-135701-42a] namespace deleted
+moved /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/ab-a-load-agent-1108-135701-42a -> /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/ab/runs/a-load/agent
+14:09:49 slot 1 ('a-load', 'agent') rc=0
+14:10:06 [ab-a-load-hpa30-1108-135701-aa1] load finished: succeeded
+14:10:26 [ab-a-load-hpa30-1108-135701-aa1] exported deploy.csv (147 rows) pods.csv (426 rows) -> /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/ab-a-load-hpa30-1108-135701-aa1
+14:10:26 [ab-a-load-hpa30-1108-135701-aa1] namespace deleted
+moved /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/ab-a-load-hpa30-1108-135701-aa1 -> /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/ab/runs/a-load/hpa30
+14:10:26 slot 1 ('a-load', 'hpa30') rc=0
+14:10:26 slot 2: [('b-dep', 'agent'), ('b-dep', 'hpa30')]
+14:10:26 [ab-b-dep-agent-1108-141026-283] scenario ab-b-dep-agent -> namespace lab-ab-b-dep-agent-1108-141026-283
+14:10:26 [ab-b-dep-hpa30-1108-141026-79e] scenario ab-b-dep-hpa30 -> namespace lab-ab-b-dep-hpa30-1108-141026-79e
+14:10:29 [ab-b-dep-agent-1108-141026-283] app ready: 1 replica(s), policy fixed
+14:10:29 [ab-b-dep-hpa30-1108-141026-79e] app ready: 1 replica(s), policy hpa_cpu
+14:10:31 [ab-b-dep-agent-1108-141026-283] agent pointed at lab-ab-b-dep-agent-1108-141026-283 {"ACT_MODE": "act", "ALLOW_EXEC": "true", "OOM_LOOP": "false", "DEPLOY_SELECTOR": "", "DEPLOYMENTS": "loadlab", "SCALE_MIN": "1", "SCALE_MAX": "4", "DECIDE_INTERVAL_S": "15", "HISTORY_S": "900", "NAMESPACE": "lab-ab-b-dep-agent-1108-141026-283"}
+14:10:45 [ab-b-dep-agent-1108-141026-283] k6 started: diurnal_spike base_rps 14.4 pod k6-cxvvx
+14:11:00 [ab-b-dep-hpa30-1108-141026-79e] HPA has metrics: {'averageUtilization': 1, 'averageValue': '3m'}
+14:11:12 [ab-b-dep-hpa30-1108-141026-79e] k6 started: diurnal_spike base_rps 14.4 pod k6-qpd8f
+14:13:45 [ab-b-dep-agent-1108-141026-283] FAULT START f0 dep_latency target=all pods=['loadlab-5965489b55-6cbbq', 'loadlab-5965489b55-s7wcs'] params={'dep_latency_ms': 400, 'dep_fraction': 0.5}
+14:13:48 [ab-b-dep-agent-1108-141026-283] FAULT REAPPLY f0 dep_latency -> loadlab-5965489b55-krhjj (restartCount=0)
+14:14:12 [ab-b-dep-hpa30-1108-141026-79e] FAULT START f0 dep_latency target=all pods=['loadlab-5965489b55-lwrcj', 'loadlab-5965489b55-q459r'] params={'dep_latency_ms': 400, 'dep_fraction': 0.5}
+14:14:16 [ab-b-dep-hpa30-1108-141026-79e] FAULT REAPPLY f0 dep_latency -> loadlab-5965489b55-j8db8 (restartCount=0)
+14:16:04 [ab-b-dep-hpa30-1108-141026-79e] FAULT REAPPLY f0 dep_latency -> loadlab-5965489b55-w2zrt (restartCount=0)
+14:16:45 [ab-b-dep-agent-1108-141026-283] FAULT END   f0 dep_latency
+14:17:12 [ab-b-dep-hpa30-1108-141026-79e] FAULT END   f0 dep_latency
+14:22:48 [ab-b-dep-agent-1108-141026-283] load finished: succeeded
+14:22:48 [ab-b-dep-agent-1108-141026-283] agent decision log: 50 lines
+14:23:08 [ab-b-dep-agent-1108-141026-283] exported deploy.csv (146 rows) pods.csv (414 rows) -> /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/ab-b-dep-agent-1108-141026-283
+14:23:08 [ab-b-dep-agent-1108-141026-283] namespace deleted
+moved /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/ab-b-dep-agent-1108-141026-283 -> /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/ab/runs/b-dep/agent
+14:23:08 slot 2 ('b-dep', 'agent') rc=0
+14:23:16 [ab-b-dep-hpa30-1108-141026-79e] load finished: succeeded
+14:23:36 [ab-b-dep-hpa30-1108-141026-79e] exported deploy.csv (147 rows) pods.csv (439 rows) -> /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/ab-b-dep-hpa30-1108-141026-79e
+14:23:36 [ab-b-dep-hpa30-1108-141026-79e] namespace deleted
+moved /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/ab-b-dep-hpa30-1108-141026-79e -> /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/ab/runs/b-dep/hpa30
+14:23:36 slot 2 ('b-dep', 'hpa30') rc=0
+14:23:36 slot 3: [('c-leak', 'agent'), ('c-leak', 'hpa30')]
+14:23:36 [ab-c-leak-hpa30-1108-142336-c12] scenario ab-c-leak-hpa30 -> namespace lab-ab-c-leak-hpa30-1108-142336-c12
+14:23:36 [ab-c-leak-agent-1108-142336-d2d] scenario ab-c-leak-agent -> namespace lab-ab-c-leak-agent-1108-142336-d2d
+14:23:38 [ab-c-leak-hpa30-1108-142336-c12] app ready: 1 replica(s), policy hpa_cpu
+14:23:38 [ab-c-leak-agent-1108-142336-d2d] app ready: 1 replica(s), policy fixed
+14:23:40 [ab-c-leak-agent-1108-142336-d2d] agent pointed at lab-ab-c-leak-agent-1108-142336-d2d {"ACT_MODE": "act", "ALLOW_EXEC": "true", "OOM_LOOP": "false", "DEPLOY_SELECTOR": "", "DEPLOYMENTS": "loadlab", "SCALE_MIN": "1", "SCALE_MAX": "4", "DECIDE_INTERVAL_S": "15", "HISTORY_S": "900", "NAMESPACE": "lab-ab-c-leak-agent-1108-142336-d2d"}
+14:23:54 [ab-c-leak-agent-1108-142336-d2d] k6 started: diurnal_spike base_rps 14.4 pod k6-m7q69
+14:24:10 [ab-c-leak-hpa30-1108-142336-c12] HPA has metrics: {'averageUtilization': 0, 'averageValue': '2m'}
+14:24:22 [ab-c-leak-hpa30-1108-142336-c12] k6 started: diurnal_spike base_rps 14.4 pod k6-rxl82
+14:25:55 [ab-c-leak-agent-1108-142336-d2d] FAULT START f0 memory_leak target=one-pod pods=['loadlab-5965489b55-bcndf'] params={'leak_kb_per_s': 1024}
+14:26:22 [ab-c-leak-hpa30-1108-142336-c12] FAULT START f0 memory_leak target=one-pod pods=['loadlab-5965489b55-2lzgp'] params={'leak_kb_per_s': 1024}
+14:30:10 [ab-c-leak-hpa30-1108-142336-c12] FAULT CLEARED f0 memory_leak on loadlab-5965489b55-2lzgp by container restart (no re-apply)
+14:35:25 [ab-c-leak-agent-1108-142336-d2d] FAULT END   f0 memory_leak
+14:35:52 [ab-c-leak-hpa30-1108-142336-c12] FAULT END   f0 memory_leak
+14:35:59 [ab-c-leak-agent-1108-142336-d2d] load finished: succeeded
+14:35:59 [ab-c-leak-agent-1108-142336-d2d] agent decision log: 50 lines
+14:36:20 [ab-c-leak-agent-1108-142336-d2d] exported deploy.csv (146 rows) pods.csv (408 rows) -> /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/ab-c-leak-agent-1108-142336-d2d
+14:36:20 [ab-c-leak-agent-1108-142336-d2d] namespace deleted
+moved /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/ab-c-leak-agent-1108-142336-d2d -> /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/ab/runs/c-leak/agent
+14:36:20 slot 3 ('c-leak', 'agent') rc=0
+14:36:27 [ab-c-leak-hpa30-1108-142336-c12] load finished: succeeded
+14:36:47 [ab-c-leak-hpa30-1108-142336-c12] exported deploy.csv (147 rows) pods.csv (428 rows) -> /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/ab-c-leak-hpa30-1108-142336-c12
+14:36:47 [ab-c-leak-hpa30-1108-142336-c12] namespace deleted
+moved /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/ab-c-leak-hpa30-1108-142336-c12 -> /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/ab/runs/c-leak/hpa30
+14:36:47 slot 3 ('c-leak', 'hpa30') rc=0
+14:36:47 slot 4: [('a-load', 'hpa300'), ('b-dep', 'hpa300')]
+14:36:48 [ab-b-dep-hpa300-1108-143648-c83] scenario ab-b-dep-hpa300 -> namespace lab-ab-b-dep-hpa300-1108-143648-c83
+14:36:48 [ab-a-load-hpa300-1108-143648-fdd] scenario ab-a-load-hpa300 -> namespace lab-ab-a-load-hpa300-1108-143648-fdd
+14:36:50 [ab-b-dep-hpa300-1108-143648-c83] app ready: 1 replica(s), policy hpa_cpu
+14:36:50 [ab-a-load-hpa300-1108-143648-fdd] app ready: 1 replica(s), policy hpa_cpu
+14:37:34 [ab-b-dep-hpa300-1108-143648-c83] HPA has metrics: {'averageUtilization': 2, 'averageValue': '5m'}
+14:37:37 [ab-a-load-hpa300-1108-143648-fdd] HPA has metrics: {'averageUtilization': 1, 'averageValue': '4m'}
+14:37:45 [ab-b-dep-hpa300-1108-143648-c83] k6 started: diurnal_spike base_rps 14.4 pod k6-5b7nf
+14:37:48 [ab-a-load-hpa300-1108-143648-fdd] k6 started: diurnal_spike base_rps 14.4 pod k6-lmjfd
+14:40:45 [ab-b-dep-hpa300-1108-143648-c83] FAULT START f0 dep_latency target=all pods=['loadlab-5965489b55-cbnc9', 'loadlab-5965489b55-g27mg'] params={'dep_latency_ms': 400, 'dep_fraction': 0.5}
+14:40:51 [ab-b-dep-hpa300-1108-143648-c83] FAULT REAPPLY f0 dep_latency -> loadlab-5965489b55-t22m2 (restartCount=0)
+14:43:45 [ab-b-dep-hpa300-1108-143648-c83] FAULT END   f0 dep_latency
+14:49:50 [ab-b-dep-hpa300-1108-143648-c83] load finished: succeeded
+14:49:53 [ab-a-load-hpa300-1108-143648-fdd] load finished: succeeded
+14:50:10 [ab-b-dep-hpa300-1108-143648-c83] exported deploy.csv (147 rows) pods.csv (426 rows) -> /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/ab-b-dep-hpa300-1108-143648-c83
+14:50:10 [ab-b-dep-hpa300-1108-143648-c83] namespace deleted
+moved /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/ab-b-dep-hpa300-1108-143648-c83 -> /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/ab/runs/b-dep/hpa300
+14:50:11 slot 4 ('b-dep', 'hpa300') rc=0
+14:50:13 [ab-a-load-hpa300-1108-143648-fdd] exported deploy.csv (147 rows) pods.csv (423 rows) -> /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/ab-a-load-hpa300-1108-143648-fdd
+14:50:13 [ab-a-load-hpa300-1108-143648-fdd] namespace deleted
+moved /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/ab-a-load-hpa300-1108-143648-fdd -> /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/ab/runs/a-load/hpa300
+14:50:13 slot 4 ('a-load', 'hpa300') rc=0
+14:50:13 slot 5: [('c-leak', 'hpa300'), ('a2-load-s7', 'hpa300')]
+14:50:14 [ab-a2-load-s7-hpa300-1108-145014-9a0] scenario ab-a2-load-s7-hpa300 -> namespace lab-ab-a2-load-s7-hpa300-1108-145014-9a0
+14:50:14 [ab-c-leak-hpa300-1108-145014-590] scenario ab-c-leak-hpa300 -> namespace lab-ab-c-leak-hpa300-1108-145014-590
+14:50:16 [ab-c-leak-hpa300-1108-145014-590] app ready: 1 replica(s), policy hpa_cpu
+14:50:16 [ab-a2-load-s7-hpa300-1108-145014-9a0] app ready: 1 replica(s), policy hpa_cpu
+14:50:44 [ab-c-leak-hpa300-1108-145014-590] HPA has metrics: {'averageUtilization': 1, 'averageValue': '4m'}
+14:50:47 [ab-a2-load-s7-hpa300-1108-145014-9a0] HPA has metrics: {'averageUtilization': 2, 'averageValue': '5m'}
+14:50:55 [ab-c-leak-hpa300-1108-145014-590] k6 started: diurnal_spike base_rps 14.4 pod k6-rqkqx
+14:50:59 [ab-a2-load-s7-hpa300-1108-145014-9a0] k6 started: diurnal_spike base_rps 14.4 pod k6-jb9v9
+14:52:55 [ab-c-leak-hpa300-1108-145014-590] FAULT START f0 memory_leak target=one-pod pods=['loadlab-5965489b55-5jnmg'] params={'leak_kb_per_s': 1024}
+14:56:48 [ab-c-leak-hpa300-1108-145014-590] FAULT CLEARED f0 memory_leak on loadlab-5965489b55-5jnmg by container restart (no re-apply)
+15:02:25 [ab-c-leak-hpa300-1108-145014-590] FAULT END   f0 memory_leak
+15:03:00 [ab-c-leak-hpa300-1108-145014-590] load finished: succeeded
+15:03:03 [ab-a2-load-s7-hpa300-1108-145014-9a0] load finished: succeeded
+15:03:21 [ab-c-leak-hpa300-1108-145014-590] exported deploy.csv (147 rows) pods.csv (471 rows) -> /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/ab-c-leak-hpa300-1108-145014-590
+15:03:21 [ab-c-leak-hpa300-1108-145014-590] namespace deleted
+moved /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/ab-c-leak-hpa300-1108-145014-590 -> /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/ab/runs/c-leak/hpa300
+15:03:21 slot 5 ('c-leak', 'hpa300') rc=0
+15:03:24 [ab-a2-load-s7-hpa300-1108-145014-9a0] exported deploy.csv (147 rows) pods.csv (468 rows) -> /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/ab-a2-load-s7-hpa300-1108-145014-9a0
+15:03:24 [ab-a2-load-s7-hpa300-1108-145014-9a0] namespace deleted
+moved /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/ab-a2-load-s7-hpa300-1108-145014-9a0 -> /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/ab/runs/a2-load-s7/hpa300
+15:03:24 slot 5 ('a2-load-s7', 'hpa300') rc=0
+15:03:24 slot 6: [('a2-load-s7', 'agent'), ('a2-load-s7', 'hpa30')]
+15:03:24 [ab-a2-load-s7-agent-1108-150324-e2d] scenario ab-a2-load-s7-agent -> namespace lab-ab-a2-load-s7-agent-1108-150324-e2d
+15:03:24 [ab-a2-load-s7-hpa30-1108-150324-315] scenario ab-a2-load-s7-hpa30 -> namespace lab-ab-a2-load-s7-hpa30-1108-150324-315
+15:03:26 [ab-a2-load-s7-agent-1108-150324-e2d] app ready: 1 replica(s), policy fixed
+15:03:26 [ab-a2-load-s7-hpa30-1108-150324-315] app ready: 1 replica(s), policy hpa_cpu
+15:03:29 [ab-a2-load-s7-agent-1108-150324-e2d] agent pointed at lab-ab-a2-load-s7-agent-1108-150324-e2d {"ACT_MODE": "act", "ALLOW_EXEC": "true", "OOM_LOOP": "false", "DEPLOY_SELECTOR": "", "DEPLOYMENTS": "loadlab", "SCALE_MIN": "1", "SCALE_MAX": "4", "DECIDE_INTERVAL_S": "15", "HISTORY_S": "900", "NAMESPACE": "lab-ab-a2-load-s7-agent-1108-150324-e2d"}
+15:03:40 [ab-a2-load-s7-agent-1108-150324-e2d] k6 started: diurnal_spike base_rps 14.4 pod k6-q7ksh
+15:03:58 [ab-a2-load-s7-hpa30-1108-150324-315] HPA has metrics: {'averageUtilization': 1, 'averageValue': '3m'}
+15:04:09 [ab-a2-load-s7-hpa30-1108-150324-315] k6 started: diurnal_spike base_rps 14.4 pod k6-md5h7
+15:15:40 [ab-a2-load-s7-hpa30-1108-150324-315] RUN FAILED: RuntimeError('kubectl --context kubeai-lab -n lab-ab-a2-load-s7-hpa30-1108-150324-315 get job k6 -o json failed: Unable to connect to the server: net/http: TLS handshake timeout')
+15:15:40 [ab-a2-load-s7-agent-1108-150324-e2d] RUN FAILED: RuntimeError('kubectl --context kubeai-lab -n lab-ab-a2-load-s7-agent-1108-150324-e2d get job k6 -o json failed: Unable to connect to the server: net/http: TLS handshake timeout')
+15:15:52 [ab-a2-load-s7-hpa30-1108-150324-315] WARN: no k6 summary found in logs
+15:15:53 [ab-a2-load-s7-hpa30-1108-150324-315] WARN: no k6 summary found in logs
+Traceback (most recent call last):
+  File "/Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/ab/ab.py", line 427, in <module>
+    main()
+  File "/Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/ab/ab.py", line 418, in main
+    run_one(a.path)
+  File "/Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/ab/ab.py", line 144, in run_one
+    out = ABRun(Path(path)).execute()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runner/lab.py", line 527, in execute
+    status = self.wait_load_done()
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runner/lab.py", line 492, in wait_load_done
+    st = kjson("get", "job", "k6", ns=self.ns)["status"]
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runner/lab.py", line 76, in kjson
+    return json.loads(kubectl(*args, "-o", "json", ns=ns).stdout)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runner/lab.py", line 71, in kubectl
+    raise RuntimeError(f"{' '.join(cmd)} failed: {p.stderr.strip()}")
+RuntimeError: kubectl --context kubeai-lab -n lab-ab-a2-load-s7-hpa30-1108-150324-315 get job k6 -o json failed: Unable to connect to the server: net/http: TLS handshake timeout
+15:15:54 [ab-a2-load-s7-agent-1108-150324-e2d] agent decision log: 48 lines
+15:15:54 slot 6 ('a2-load-s7', 'hpa30') rc=1
+15:16:05 [ab-a2-load-s7-agent-1108-150324-e2d] agent decision log: 49 lines
+Traceback (most recent call last):
+  File "/Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/ab/ab.py", line 427, in <module>
+    main()
+  File "/Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/ab/ab.py", line 418, in main
+    run_one(a.path)
+  File "/Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/ab/ab.py", line 144, in run_one
+    out = ABRun(Path(path)).execute()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runner/lab.py", line 527, in execute
+    status = self.wait_load_done()
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runner/lab.py", line 492, in wait_load_done
+    st = kjson("get", "job", "k6", ns=self.ns)["status"]
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runner/lab.py", line 76, in kjson
+    return json.loads(kubectl(*args, "-o", "json", ns=ns).stdout)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runner/lab.py", line 71, in kubectl
+    raise RuntimeError(f"{' '.join(cmd)} failed: {p.stderr.strip()}")
+RuntimeError: kubectl --context kubeai-lab -n lab-ab-a2-load-s7-agent-1108-150324-e2d get job k6 -o json failed: Unable to connect to the server: net/http: TLS handshake timeout
+15:16:06 slot 6 ('a2-load-s7', 'agent') rc=1
+agent restored to observe mode in namespace default
+[
+ {
+  "trial": "a-load",
+  "arm": "agent",
+  "run_id": "ab-a-load-agent-1108-135701-42a",
+  "status": "succeeded",
+  "viol_min": 1.0,
+  "viol_events": 3,
+  "grid_missing": 0,
+  "pod_min": 35.8,
+  "ready_pod_min": 35.4,
+  "scale_ups": 4,
+  "scale_downs": 2,
+  "max_replicas": 4,
+  "restarts": 0,
+  "oomkills": 0,
+  "k6_reqs": 13368,
+  "k6_failed_rate": 0.0002992220227408737,
+  "k6_p95_ms": 1068.316537949997,
+  "k6_dropped": 0,
+  "spike_viol_min": 0.5,
+  "agent_decisions": 50,
+  "agent_decision_errors": 0,
+  "agent_states": "{\"dependency_latency\": 1, \"healthy\": 36, \"scale_down\": 11, \"scale_up\": 2}",
+  "agent_executed": "[\"scale:1->2\", \"scale:2->3\", \"scale:3->4\", \"scale:4->3\", \"scale:3->2\", \"scale:2->4\", \"scale:4->2\"]",
+  "agent_ml_ms_median": 53.0,
+  "agent_cycle_ms_median": 178.5
+ },
+ {
+  "trial": "a-load",
+  "arm": "hpa30",
+  "run_id": "ab-a-load-hpa30-1108-135701-aa1",
+  "status": "succeeded",
+  "viol_min": 1.25,
+  "viol_events": 3,
+  "grid_missing": 0,
+  "pod_min": 33.7,
+  "ready_pod_min": 33.3,
+  "scale_ups": 4,
+  "scale_downs": 3,
+  "max_replicas": 4,
+  "restarts": 0,
+  "oomkills": 0,
+  "k6_reqs": 13368,
+  "k6_failed_rate": 0,
+  "k6_p95_ms": 2055.7447049499983,
+  "k6_dropped": 0,
+  "spike_viol_min": 0.75,
+  "hpa_rescale_events": 5
+ },
+ {
+  "trial": "a-load",
+  "arm": "hpa300",
+  "run_id": "ab-a-load-hpa300-1108-143648-fdd",
+  "status": "succeeded",
+  "viol_min": 1.5,
+  "viol_events": 1,
+  "grid_missing": 0,
+  "pod_min": 34.0,
+  "ready_pod_min": 33.8,
+  "scale_ups": 3,
+  "scale_downs": 0,
+  "max_replicas": 4,
+  "restarts": 0,
+  "oomkills": 0,
+  "k6_reqs": 13368,
+  "k6_failed_rate": 0,
+  "k6_p95_ms": 2370.5935247999996,
+  "k6_dropped": 0,
+  "spike_viol_min": 1.5,
+  "hpa_rescale_events": 3
+ },
+ {
+  "trial": "b-dep",
+  "arm": "agent",
+  "run_id": "ab-b-dep-agent-1108-141026-283",
+  "status": "succeeded",
+  "viol_min": 3.75,
+  "viol_events": 2,
+  "grid_missing": 0,
+  "pod_min": 33.5,
+  "ready_pod_min": 33.2,
+  "scale_ups": 3,
+  "scale_downs": 1,
+  "max_replicas": 4,
+  "restarts": 0,
+  "oomkills": 0,
+  "k6_reqs": 13368,
+  "k6_failed_rate": 0,
+  "k6_p95_ms": 1281.3203442999998,
+  "k6_dropped": 0,
+  "spike_viol_min": 0.5,
+  "fault": "dep_latency",
+  "fault_viol_min": 3.0,
+  "fault_scale_ups": 0,
+  "fault_scale_downs": 0,
+  "fault_pod_min": 9.0,
+  "fault_replicas_at_start": 2,
+  "fault_max_replicas": 3,
+  "agent_decisions": 50,
+  "agent_decision_errors": 0,
+  "agent_states": "{\"dependency_latency\": 12, \"healthy\": 31, \"scale_down\": 6, \"scale_up\": 1}",
+  "agent_executed": "[\"scale:1->2\", \"scale:2->3\", \"scale:3->2\", \"scale:2->4\", \"scale:4->2\"]",
+  "agent_ml_ms_median": 56.0,
+  "agent_cycle_ms_median": 175.0
+ },
+ {
+  "trial": "b-dep",
+  "arm": "hpa30",
+  "run_id": "ab-b-dep-hpa30-1108-141026-79e",
+  "status": "succeeded",
+  "viol_min": 4.0,
+  "viol_events": 2,
+  "grid_missing": 0,
+  "pod_min": 34.3,
+  "ready_pod_min": 34.0,
+  "scale_ups": 4,
+  "scale_downs": 3,
+  "max_replicas": 4,
+  "restarts": 0,
+  "oomkills": 0,
+  "k6_reqs": 13367,
+  "k6_failed_rate": 0.00022443330590259594,
+  "k6_p95_ms": 2234.1849633999977,
+  "k6_dropped": 0,
+  "spike_viol_min": 0.75,
+  "fault": "dep_latency",
+  "fault_viol_min": 3.0,
+  "fault_scale_ups": 1,
+  "fault_scale_downs": 0,
+  "fault_pod_min": 10.2,
+  "fault_replicas_at_start": 2,
+  "fault_max_replicas": 4,
+  "hpa_rescale_events": 5
+ },
+ {
+  "trial": "b-dep",
+  "arm": "hpa300",
+  "run_id": "ab-b-dep-hpa300-1108-143648-c83",
+  "status": "succeeded",
+  "viol_min": 4.75,
+  "viol_events": 3,
+  "grid_missing": 0,
+  "pod_min": 34.2,
+  "ready_pod_min": 34.2,
+  "scale_ups": 3,
+  "scale_downs": 0,
+  "max_replicas": 4,
+  "restarts": 0,
+  "oomkills": 0,
+  "k6_reqs": 13368,
+  "k6_failed_rate": 0,
+  "k6_p95_ms": 2443.1231758999966,
+  "k6_dropped": 0,
+  "spike_viol_min": 1.5,
+  "fault": "dep_latency",
+  "fault_viol_min": 3.0,
+  "fault_scale_ups": 1,
+  "fault_scale_downs": 0,
+  "fault_pod_min": 8.9,
+  "fault_replicas_at_start": 2,
+  "fault_max_replicas": 3,
+  "hpa_rescale_events": 3
+ },
+ {
+  "trial": "c-leak",
+  "arm": "agent",
+  "run_id": "ab-c-leak-agent-1108-142336-d2d",
+  "status": "succeeded",
+  "viol_min": 1.5,
+  "viol_events": 3,
+  "grid_missing": 0,
+  "pod_min": 32.2,
+  "ready_pod_min": 31.8,
+  "scale_ups": 3,
+  "scale_downs": 1,
+  "max_replicas": 4,
+  "restarts": 0,
+  "oomkills": 0,
+  "k6_reqs": 13368,
+  "k6_failed_rate": 0,
+  "k6_p95_ms": 2537.921508599998,
+  "k6_dropped": 0,
+  "spike_viol_min": 1.25,
+  "fault": "memory_leak",
+  "fault_viol_min": 0.0,
+  "fault_scale_ups": 1,
+  "fault_scale_downs": 0,
+  "fault_pod_min": 13.0,
+  "fault_replicas_at_start": 2,
+  "fault_max_replicas": 3,
+  "leak_pod": "loadlab-5965489b55-bcndf",
+  "leak_detect_s": 44.7,
+  "leak_mitigation_s": 44.7,
+  "leak_mitigated_by": "agent restart_pod (kubectl delete pod)",
+  "leak_peak_mem_frac": 0.23,
+  "agent_decisions": 50,
+  "agent_decision_errors": 0,
+  "agent_states": "{\"healthy\": 34, \"memory_leak\": 5, \"scale_down\": 6, \"scale_up\": 5}",
+  "agent_executed": "[\"scale:1->2\", \"restart_pod:->loadlab-5965489b55-bcndf\", \"scale:2->3\", \"scale:3->2\", \"scale:2->4\", \"scale:4->3\"]",
+  "agent_ml_ms_median": 50.0,
+  "agent_cycle_ms_median": 168.0
+ },
+ {
+  "trial": "c-leak",
+  "arm": "hpa30",
+  "run_id": "ab-c-leak-hpa30-1108-142336-c12",
+  "status": "succeeded",
+  "viol_min": 1.25,
+  "viol_events": 2,
+  "grid_missing": 0,
+  "pod_min": 33.8,
+  "ready_pod_min": 33.2,
+  "scale_ups": 4,
+  "scale_downs": 3,
+  "max_replicas": 4,
+  "restarts": 1,
+  "oomkills": 1,
+  "k6_reqs": 13368,
+  "k6_failed_rate": 0.00014961101137043686,
+  "k6_p95_ms": 2761.162940699997,
+  "k6_dropped": 0,
+  "spike_viol_min": 1.0,
+  "fault": "memory_leak",
+  "fault_viol_min": 0.0,
+  "fault_scale_ups": 2,
+  "fault_scale_downs": 1,
+  "fault_pod_min": 14.5,
+  "fault_replicas_at_start": 2,
+  "fault_max_replicas": 4,
+  "leak_pod": "loadlab-5965489b55-2lzgp",
+  "leak_detect_s": null,
+  "leak_mitigation_s": 237.4,
+  "leak_mitigated_by": "container restart (OOMKill)",
+  "leak_peak_mem_frac": 0.989,
+  "hpa_rescale_events": 5
+ },
+ {
+  "trial": "c-leak",
+  "arm": "hpa300",
+  "run_id": "ab-c-leak-hpa300-1108-145014-590",
+  "status": "succeeded",
+  "viol_min": 1.25,
+  "viol_events": 3,
+  "grid_missing": 0,
+  "pod_min": 38.0,
+  "ready_pod_min": 37.7,
+  "scale_ups": 3,
+  "scale_downs": 0,
+  "max_replicas": 4,
+  "restarts": 1,
+  "oomkills": 1,
+  "k6_reqs": 13368,
+  "k6_failed_rate": 0.0002992220227408737,
+  "k6_p95_ms": 279.70749539999986,
+  "k6_dropped": 0,
+  "spike_viol_min": 1.0,
+  "fault": "memory_leak",
+  "fault_viol_min": 0.0,
+  "fault_scale_ups": 2,
+  "fault_scale_downs": 0,
+  "fault_pod_min": 14.8,
+  "fault_replicas_at_start": 2,
+  "fault_max_replicas": 4,
+  "leak_pod": "loadlab-5965489b55-5jnmg",
+  "leak_detect_s": null,
+  "leak_mitigation_s": 229.1,
+  "leak_mitigated_by": "container restart (OOMKill)",
+  "leak_peak_mem_frac": 0.974,
+  "hpa_rescale_events": 3
+ },
+ {
+  "trial": "a2-load-s7",
+  "arm": "hpa300",
+  "run_id": "ab-a2-load-s7-hpa300-1108-145014-9a0",
+  "status": "succeeded",
+  "viol_min": 1.25,
+  "viol_events": 3,
+  "grid_missing": 0,
+  "pod_min": 37.8,
+  "ready_pod_min": 37.6,
+  "scale_ups": 3,
+  "scale_downs": 0,
+  "max_replicas": 4,
+  "restarts": 0,
+  "oomkills": 0,
+  "k6_reqs": 13556,
+  "k6_failed_rate": 0,
+  "k6_p95_ms": 326.75878124999934,
+  "k6_dropped": 0,
+  "spike_viol_min": 1.0,
+  "hpa_rescale_events": 3
+ }
+]

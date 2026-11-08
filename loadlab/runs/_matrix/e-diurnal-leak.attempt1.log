@@ -1,0 +1,11 @@
+09:08:19 [e-diurnal-leak-1108-090819-f65] scenario e-diurnal-leak -> namespace lab-e-diurnal-leak-1108-090819-f65
+09:08:21 [e-diurnal-leak-1108-090819-f65] app ready: 1 replica(s), policy hpa_cpu
+09:08:49 [e-diurnal-leak-1108-090819-f65] HPA has metrics: {'averageUtilization': 0, 'averageValue': '1m'}
+09:09:00 [e-diurnal-leak-1108-090819-f65] k6 started: diurnal base_rps 21.6 pod k6-vzmqv
+09:11:01 [e-diurnal-leak-1108-090819-f65] FAULT START f0 memory_leak target=one-pod pods=['loadlab-5965489b55-b9wvm'] params={'leak_kb_per_s': 640, 'free_on_end': True}
+09:17:01 [e-diurnal-leak-1108-090819-f65] FAULT REAPPLY f0 memory_leak -> loadlab-5965489b55-b9wvm (restartCount=1)
+09:20:31 [e-diurnal-leak-1108-090819-f65] FAULT END   f0 memory_leak
+09:22:06 [e-diurnal-leak-1108-090819-f65] load finished: succeeded
+09:22:26 [e-diurnal-leak-1108-090819-f65] exported deploy.csv (159 rows) pods.csv (588 rows) -> /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/e-diurnal-leak-1108-090819-f65
+09:22:26 [e-diurnal-leak-1108-090819-f65] namespace deleted
+/Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/e-diurnal-leak-1108-090819-f65

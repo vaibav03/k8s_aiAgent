@@ -1,0 +1,37 @@
+{
+  "deploy": {
+    "rps": "sum(rate(http_requests_total{namespace=\"lab-d-dep-latency-75p600-r2-1108-105325-7af\"}[20s]))",
+    "inflight": "sum(http_inflight_requests{namespace=\"lab-d-dep-latency-75p600-r2-1108-105325-7af\"})",
+    "p50": "histogram_quantile(0.50, sum by (le)(rate(http_request_duration_seconds_bucket{namespace=\"lab-d-dep-latency-75p600-r2-1108-105325-7af\"}[20s])))",
+    "p95": "histogram_quantile(0.95, sum by (le)(rate(http_request_duration_seconds_bucket{namespace=\"lab-d-dep-latency-75p600-r2-1108-105325-7af\"}[20s])))",
+    "p99": "histogram_quantile(0.99, sum by (le)(rate(http_request_duration_seconds_bucket{namespace=\"lab-d-dep-latency-75p600-r2-1108-105325-7af\"}[20s])))",
+    "error_rate": "sum(rate(http_requests_total{namespace=\"lab-d-dep-latency-75p600-r2-1108-105325-7af\",code=~\"5..\"}[20s])) / sum(rate(http_requests_total{namespace=\"lab-d-dep-latency-75p600-r2-1108-105325-7af\"}[20s]))",
+    "cpu_cores_used": "sum(max by (pod)(label_replace(sum by (pod)(rate(container_cpu_usage_seconds_total{namespace=\"lab-d-dep-latency-75p600-r2-1108-105325-7af\",pod=~\"loadlab-.*\",scope=\"pod\"}[45s])), \"src\", \"cadvisor\", \"\", \"\") or label_replace(sum by (pod)(rate(process_cpu_seconds_total{namespace=\"lab-d-dep-latency-75p600-r2-1108-105325-7af\",job=\"annotated-pods\"}[20s])), \"src\", \"process\", \"\", \"\")) and on(pod) group by (pod)(up{namespace=\"lab-d-dep-latency-75p600-r2-1108-105325-7af\",job=\"annotated-pods\"}))",
+    "cpu_util_vs_request": "sum(max by (pod)(label_replace(sum by (pod)(rate(container_cpu_usage_seconds_total{namespace=\"lab-d-dep-latency-75p600-r2-1108-105325-7af\",pod=~\"loadlab-.*\",scope=\"pod\"}[45s])), \"src\", \"cadvisor\", \"\", \"\") or label_replace(sum by (pod)(rate(process_cpu_seconds_total{namespace=\"lab-d-dep-latency-75p600-r2-1108-105325-7af\",job=\"annotated-pods\"}[20s])), \"src\", \"process\", \"\", \"\")) and on(pod) group by (pod)(up{namespace=\"lab-d-dep-latency-75p600-r2-1108-105325-7af\",job=\"annotated-pods\"})) / sum(kube_pod_container_resource_requests{namespace=\"lab-d-dep-latency-75p600-r2-1108-105325-7af\",container=\"app\",resource=\"cpu\"} * on(namespace,pod) group_left() (kube_pod_status_phase{namespace=\"lab-d-dep-latency-75p600-r2-1108-105325-7af\",phase=\"Running\"} == bool 1))",
+    "throttle_ratio": "sum(rate(container_cpu_cfs_throttled_periods_total{namespace=\"lab-d-dep-latency-75p600-r2-1108-105325-7af\",pod=~\"loadlab-.*\",scope=\"pod\"}[45s])) / sum(rate(container_cpu_cfs_periods_total{namespace=\"lab-d-dep-latency-75p600-r2-1108-105325-7af\",pod=~\"loadlab-.*\",scope=\"pod\"}[45s]))",
+    "mem_ws_bytes_total": "sum(container_memory_working_set_bytes{namespace=\"lab-d-dep-latency-75p600-r2-1108-105325-7af\",pod=~\"loadlab-.*\",scope=\"pod\"})",
+    "mem_ws_max_pod_frac_of_limit": "max(max by (pod)(container_memory_working_set_bytes{namespace=\"lab-d-dep-latency-75p600-r2-1108-105325-7af\",pod=~\"loadlab-.*\",scope=\"pod\"}) / on(pod) group_left() max by (pod)(kube_pod_container_resource_limits{namespace=\"lab-d-dep-latency-75p600-r2-1108-105325-7af\",container=\"app\",resource=\"memory\"}))",
+    "mem_growth_bytes_per_s": "max(deriv(container_memory_working_set_bytes{namespace=\"lab-d-dep-latency-75p600-r2-1108-105325-7af\",pod=~\"loadlab-.*\",scope=\"pod\"}[60s]) and on(pod) (container_memory_working_set_bytes{namespace=\"lab-d-dep-latency-75p600-r2-1108-105325-7af\",pod=~\"loadlab-.*\",scope=\"pod\"} offset 90s))",
+    "replicas_desired": "max(kube_deployment_spec_replicas{namespace=\"lab-d-dep-latency-75p600-r2-1108-105325-7af\",deployment=\"loadlab\"})",
+    "replicas_ready": "max(kube_deployment_status_replicas_ready{namespace=\"lab-d-dep-latency-75p600-r2-1108-105325-7af\",deployment=\"loadlab\"})",
+    "restarts_total": "sum(kube_pod_container_status_restarts_total{namespace=\"lab-d-dep-latency-75p600-r2-1108-105325-7af\",container=\"app\"})",
+    "crashloop_pods": "count(kube_pod_container_status_waiting_reason{namespace=\"lab-d-dep-latency-75p600-r2-1108-105325-7af\",container=\"app\",reason=\"CrashLoopBackOff\"} == 1)",
+    "hpa_desired": "max(kube_horizontalpodautoscaler_status_desired_replicas{namespace=\"lab-d-dep-latency-75p600-r2-1108-105325-7af\"})",
+    "cpu_cores_proc": "sum(rate(process_cpu_seconds_total{namespace=\"lab-d-dep-latency-75p600-r2-1108-105325-7af\",job=\"annotated-pods\"}[20s]))",
+    "cpu_fallback_pods": "count(sum by (pod)(rate(process_cpu_seconds_total{namespace=\"lab-d-dep-latency-75p600-r2-1108-105325-7af\",job=\"annotated-pods\"}[20s])) unless on(pod) sum by (pod)(rate(container_cpu_usage_seconds_total{namespace=\"lab-d-dep-latency-75p600-r2-1108-105325-7af\",pod=~\"loadlab-.*\",scope=\"pod\"}[45s])))"
+  },
+  "pods": {
+    "cpu": "max by (pod)(label_replace(sum by (pod)(rate(container_cpu_usage_seconds_total{namespace=\"lab-d-dep-latency-75p600-r2-1108-105325-7af\",pod=~\"loadlab-.*\",scope=\"pod\"}[45s])), \"src\", \"cadvisor\", \"\", \"\") or label_replace(sum by (pod)(rate(process_cpu_seconds_total{namespace=\"lab-d-dep-latency-75p600-r2-1108-105325-7af\",job=\"annotated-pods\"}[20s])), \"src\", \"process\", \"\", \"\")) and on(pod) group by (pod)(up{namespace=\"lab-d-dep-latency-75p600-r2-1108-105325-7af\",job=\"annotated-pods\"})",
+    "throttle": "sum by (pod)(rate(container_cpu_cfs_throttled_periods_total{namespace=\"lab-d-dep-latency-75p600-r2-1108-105325-7af\",pod=~\"loadlab-.*\",scope=\"pod\"}[45s])) / sum by (pod)(rate(container_cpu_cfs_periods_total{namespace=\"lab-d-dep-latency-75p600-r2-1108-105325-7af\",pod=~\"loadlab-.*\",scope=\"pod\"}[45s]))",
+    "mem_ws": "max by (pod)(container_memory_working_set_bytes{namespace=\"lab-d-dep-latency-75p600-r2-1108-105325-7af\",pod=~\"loadlab-.*\",scope=\"pod\"})",
+    "mem_frac_limit": "max by (pod)(container_memory_working_set_bytes{namespace=\"lab-d-dep-latency-75p600-r2-1108-105325-7af\",pod=~\"loadlab-.*\",scope=\"pod\"}) / on(pod) group_left() max by (pod)(kube_pod_container_resource_limits{namespace=\"lab-d-dep-latency-75p600-r2-1108-105325-7af\",container=\"app\",resource=\"memory\"})",
+    "restarts": "max by (pod)(kube_pod_container_status_restarts_total{namespace=\"lab-d-dep-latency-75p600-r2-1108-105325-7af\",container=\"app\"})",
+    "rps": "sum by (pod)(rate(http_requests_total{namespace=\"lab-d-dep-latency-75p600-r2-1108-105325-7af\"}[20s]))",
+    "p95": "histogram_quantile(0.95, sum by (pod, le)(rate(http_request_duration_seconds_bucket{namespace=\"lab-d-dep-latency-75p600-r2-1108-105325-7af\"}[20s])))",
+    "errors": "sum by (pod)(rate(http_requests_total{namespace=\"lab-d-dep-latency-75p600-r2-1108-105325-7af\",code=~\"5..\"}[20s]))",
+    "ready": "max by (pod)(kube_pod_status_ready{namespace=\"lab-d-dep-latency-75p600-r2-1108-105325-7af\",condition=\"true\",pod=~\"loadlab-.*\"})",
+    "cpu_proc": "sum by (pod)(rate(process_cpu_seconds_total{namespace=\"lab-d-dep-latency-75p600-r2-1108-105325-7af\",job=\"annotated-pods\"}[20s]))",
+    "_oom_last": "max by (pod)(kube_pod_container_status_last_terminated_reason{namespace=\"lab-d-dep-latency-75p600-r2-1108-105325-7af\",container=\"app\",reason=\"OOMKilled\"})"
+  },
+  "step_s": 5
+}

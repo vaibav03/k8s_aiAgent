@@ -1,151 +1,89 @@
-import express from "express";
-import axios from "axios";
-import { spawn, exec } from 'node:child_process';
-import { Worker } from 'node:worker_threads'
-import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
-
-
-
-async function sendToLLM(prompt) {
-    const chat = new ChatGoogleGenerativeAI({
-        model: "gemini-1.5-pro",
-        temperature: 0,
-        maxRetries: 2,
-    });
-
-    const res = await chat.invoke([
-        { role: "system", content: "You're a Kubernetes DevOps assistant. Given a problem, respond ONLY with a shell command to fix it." },
-        { role: "user", content: prompt }
-    ]);
-    console.log(res.content);
-    return res.content;
-}
-
-function runShellCommand(cmd) {
-    exec(cmd, (err, stdout, stderr) => {
-        if (err) {
-            console.error(`Shell error: ${stderr}`);
-        } else {
-            console.log(`Shell output:\n${stdout}`);
-        }
-    });
-}
-
-async function isPodCrashLooping(podName) {
-    const res = await axios.get(`http://localhost:8001/api/v1/namespaces/default/pods/${podName}`);
-    const podData = res.data;
-    const status = podData?.status?.containerStatuses?.[0]?.state;
-    return status?.waiting?.reason === 'CrashLoopBackOff';
-}
-
-
-const PROMETHEUS_URL = "http://localhost:9090/api/v1/query";
-const app = express();
-const PORT = 3001;
-
-async function queryPrometheus(query, timestamp = null) {
-    try {
-        const timeParam = timestamp ? `&time=${timestamp}` : "";
-        const response = await axios.get(`${PROMETHEUS_URL}?query=${encodeURIComponent(query)}${timeParam}`);
-        return response.data.data.result.length > 0 ? response.data.data.result[0].value[1] : null;
-    } catch (error) {
-        return null;
-    }
-}
-
-const podName = "finalpod-77c649c5fc-tzvnb"
-let isRunning = false;
-let memoryUsage = [];
-// for(let i=0;i<=10;i++){
-//     memoryUsage.push(1e6);
-// }
+// KubeAI agent. Two loops:
+//  1. per pod (lib/agent.js, OOM_LOOP; default on only when the deployment loop is off):
+//     watches pods' memory working set, asks the ML service for P(OOM within horizon),
+//     applies k-of-n hysteresis, and (optionally) asks Gemini for an allowlisted
+//     remediation (memory limit / rollout restart; never scale), gated by ACT_MODE
+//     exactly like the deployment loop (observe: no kubectl; dryrun; act);
+//  2. per Deployment (lib/scaler.js, DEPLOYMENTS / DEPLOY_SELECTOR): the
+//     promexport.py PromQL window -> POST /v1/decide -> state, replicas,
+//     remediation, acted on per ACT_MODE (observe | dryrun | act).
+// See README.md.
 //
+// Run: npm start   (.env is loaded by dotenv if present)
 
-async function getMaxLimit() {
-    const result = await axios.get(`http://localhost:8001/api/v1/namespaces/default/pods/${podName}`);
-    const podData = result.data;
-    const limit = podData?.spec?.containers?.[0].resources?.limits?.memory;
-    return parseInt(limit.split("M")[0])
+import "dotenv/config";
+import express from "express";
+import { loadConfig, publicConfig } from "./lib/config.js";
+import { createAgent } from "./lib/agent.js";
+import { createScaler } from "./lib/scaler.js";
+import { createRemediationLedger } from "./lib/remediation.js";
+
+const cfg = loadConfig();
+// one per-Deployment remediation cooldown shared by both loops
+const ledger = createRemediationLedger();
+const agent = cfg.oomLoop ? createAgent(cfg, { ledger }) : null;
+const scaler = cfg.scalerEnabled ? createScaler(cfg, { ledger }) : null;
+
+const app = express();
+
+app.get("/healthz", (_req, res) => res.json({ status: "ok" }));
+
+app.get("/status", (_req, res) =>
+  res.json({
+    config: publicConfig(cfg),
+    ...(agent ? agent.status() : { pods: [], oomLoop: "disabled" }),
+    scaler: scaler ? scaler.status() : { enabled: false },
+  }),
+);
+
+// The most recent deployment decisions (same records as the JSON log lines).
+app.get("/decisions", (req, res) => {
+  if (!scaler) return res.status(404).json({ error: "deployment loop disabled (set DEPLOYMENTS or DEPLOY_SELECTOR)" });
+  const n = Math.min(Math.max(Number.parseInt(req.query.n, 10) || 50, 1), 200);
+  res.json({ decisions: scaler.recent(n) });
+});
+
+app.get("/pods/:name", (req, res) => {
+  if (!agent) return res.status(404).json({ error: "OOM loop disabled (OOM_LOOP=false)" });
+  const p = agent.pod(req.params.name);
+  if (!p) return res.status(404).json({ error: `pod ${req.params.name} not watched` });
+  res.json(p);
+});
+
+const server = app.listen(cfg.port, () => {
+  console.log(
+    JSON.stringify({
+      t: new Date().toISOString(),
+      level: "INFO",
+      msg: "agent listening",
+      port: server.address().port,
+      namespace: cfg.namespace,
+      selector: cfg.podSelector || "(all pods)",
+      ml: cfg.mlUrl,
+      llm: Boolean(cfg.googleApiKey),
+      allowExec: cfg.allowExec,
+      oomLoop: Boolean(agent),
+      scaler: scaler
+        ? { deployments: cfg.deployments.length ? cfg.deployments : `selector:${cfg.deploySelector}`, actMode: cfg.actMode, effectiveActMode: cfg.effectiveActMode, intervalS: cfg.decideIntervalS, historyS: cfg.historyS, hpaOverride: cfg.hpaOverride, decisionLog: cfg.decisionLog || null }
+        : false,
+    }),
+  );
+  if (cfg.actMode === "act" && !cfg.allowExec) {
+    console.log(JSON.stringify({ t: new Date().toISOString(), level: "WARN", msg: "ACT_MODE=act without ALLOW_EXEC=true: running as dryrun" }));
+  }
+  if (agent && scaler) {
+    console.log(JSON.stringify({ t: new Date().toISOString(), level: "WARN", msg: "OOM_LOOP=true and the deployment loop both enabled: they share one per-Deployment remediation cooldown; the OOM loop cannot scale" }));
+  }
+  agent?.start();
+  scaler?.start();
+});
+
+function shutdown(sig) {
+  console.log(JSON.stringify({ t: new Date().toISOString(), level: "INFO", msg: `received ${sig}, shutting down` }));
+  agent?.stop();
+  scaler?.stop();
+  server.close(() => process.exit(0));
+  setTimeout(() => process.exit(0), 3000).unref();
 }
-
-let maxLimit = await getMaxLimit()
-
-const firstInterval = setInterval(async () => {
-    if (isRunning) return;
-    isRunning = true;
-    if (memoryUsage.length < 10) {
-        // const pod_status = await queryPrometheus(`kube_pod_status_phase(pod="${podName}")`);
-        const memory = await queryPrometheus(`container_memory_usage_bytes{pod="${podName}"}`) || 0;
-        memoryUsage.push(memory);
-    }
-
-    if (memoryUsage.length === 10) {
-        clearInterval(firstInterval);
-        console.log("cleared");
-        memoryUsage = memoryUsage.map((mem)=>{
-            mem/=(1024*1024);
-            mem/=(maxLimit);
-            return mem;
-        })
-        console.log(memoryUsage)
-    }
-    isRunning = false;
-}, 1000);
-
-
-setTimeout(() => {
-    const python = spawn('python', ['-u', 'hybrid_predict.py']);
-    console.log("Python process spawned");
-
-    // Attach listeners ONCE
-    python.stdout.on('data', async (data) => {
-        const lines = data.toString().split('\n');
-        console.log(data)
-        for (const line of lines) {
-            if (line.trim()) {
-                const [predictedMemory, isAnomaly] = line.trim().split(',');
-                console.log(`Predicted Memory js: ${predictedMemory}`);
-                console.log(`Is Anomaly js: ${isAnomaly}`);
-
-                if ( typeof isAnamoly!=="undefined" && isAnamoly == 1 ) {
-                    const critical = await isPodCrashLooping(podName);
-
-                    if (critical) {
-                        console.log(`⚠️ CRITICAL: Pod ${podName} is leaking memory. Notify cluster administrator.`);
-                    } else {
-                        const prompt = `The pod ${podName} is leaking memory, and here is the predicted memory usage: ${predictedMemory}. Suggest a shell command to rectify the issue. Here is the maximum alloted memory usage limit ${maxLimit}`;
-                        const shellCommand = await sendToLLM(prompt);
-                        console.log(`🧠 LLM suggests: ${shellCommand}`);
-                        /// runShellCommand(shellCommand);
-                        maxLimit = await getMaxLimit();
-                        
-                    }
-                } else {
-                    console.log(`✅ Healthy. Predicted Memory: ${predictedMemory}`);
-                }
-            }
-        }
-    }
-    );
-
-    // python.stderr.on('data', (data) => {
-    //     console.error("Python STDERR:", data.toString());
-    // });
-
-    // python.stderr.on('error', (error) => {
-    //     console.error("Python error:", error);
-    // });
-
-    setInterval(async () => {
-        let memory = await queryPrometheus(`container_memory_usage_bytes{pod="${podName}"}`) || 0;
-        memory/= (1024*1024);
-        memory/=maxLimit;
-        memoryUsage.shift();
-       // console.log(memoryUsage,"shifted")
-        memoryUsage.push(memory);
-        console.log(memoryUsage,"updated mem")
-
-        python.stdin.write(JSON.stringify({ podName: podName, memoryUsage: memoryUsage }) + '\n');
-    }, 1000);
-
-}, 11000);
+process.on("SIGTERM", () => shutdown("SIGTERM"));
+process.on("SIGINT", () => shutdown("SIGINT"));

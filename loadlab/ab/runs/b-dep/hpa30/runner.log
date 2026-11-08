@@ -1,0 +1,11 @@
+14:10:26 [ab-b-dep-hpa30-1108-141026-79e] scenario ab-b-dep-hpa30 -> namespace lab-ab-b-dep-hpa30-1108-141026-79e
+14:10:29 [ab-b-dep-hpa30-1108-141026-79e] app ready: 1 replica(s), policy hpa_cpu
+14:11:00 [ab-b-dep-hpa30-1108-141026-79e] HPA has metrics: {'averageUtilization': 1, 'averageValue': '3m'}
+14:11:12 [ab-b-dep-hpa30-1108-141026-79e] k6 started: diurnal_spike base_rps 14.4 pod k6-qpd8f
+14:14:12 [ab-b-dep-hpa30-1108-141026-79e] FAULT START f0 dep_latency target=all pods=['loadlab-5965489b55-lwrcj', 'loadlab-5965489b55-q459r'] params={'dep_latency_ms': 400, 'dep_fraction': 0.5}
+14:14:16 [ab-b-dep-hpa30-1108-141026-79e] FAULT REAPPLY f0 dep_latency -> loadlab-5965489b55-j8db8 (restartCount=0)
+14:16:04 [ab-b-dep-hpa30-1108-141026-79e] FAULT REAPPLY f0 dep_latency -> loadlab-5965489b55-w2zrt (restartCount=0)
+14:17:12 [ab-b-dep-hpa30-1108-141026-79e] FAULT END   f0 dep_latency
+14:23:16 [ab-b-dep-hpa30-1108-141026-79e] load finished: succeeded
+14:23:36 [ab-b-dep-hpa30-1108-141026-79e] exported deploy.csv (147 rows) pods.csv (439 rows) -> /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/ab-b-dep-hpa30-1108-141026-79e
+14:23:36 [ab-b-dep-hpa30-1108-141026-79e] namespace deleted

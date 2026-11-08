@@ -1,0 +1,18 @@
+# generated from scenarios/matrix.yaml by runner/matrix.py - edit matrix.yaml instead
+id: d-error30-fixed3-r2
+group: D
+heavy: false
+duration_s: 540
+traffic:
+  shape: steady
+  base_rps: 15
+scaling:
+  policy: fixed
+  replicas: 3
+faults:
+- type: error_rate
+  start_s: 180
+  end_s: 360
+  target: all
+  params:
+    error_rate: 0.3

@@ -1,0 +1,4 @@
+11:25:52 matrix start: 1 runs, lanes=1, lane cap=4, est lane-s=680
+11:25:52 lane0 START a-cap-fixed2-solo-r2 (attempt 1, 600s, heavy=True)
+11:36:44 lane0 END   a-cap-fixed2-solo-r2 -> a-cap-fixed2-solo-r2-1108-112553-1f0 OK (652s)
+11:36:44 matrix done: {"b-hpa-diurnal-sd30-s41-r2": "ok", "b-hpa-diurnal-sd30-s59-r2": "ok", "b-hpa-spike-sd30-b06-r2": "ok", "b-hpa-saw-sd30-b12-r2": "ok", "c-under-fixed1-flash-r2": "ok", "c-over-fixed4-diurnal-r2": "ok", "d-error10-hpa-diurnal-r2": "ok", "d-error30-fixed3-r2": "ok", "d-cpu-hog-fixed3-p0-r2": "ok", "d-cpu-hog-fixed3-p2-r2": "ok", "d-bad-deploy-x2-hpa-r2": "ok", "d-bad-deploy-x3-fixed3-r2": "ok", "d-crashloop-fixed3-r2": "ok", "d-dep-latency-25p300-r2": "ok", "d-dep-latency-75p600-r2": "ok", "d-leak-fast-oom-r2": "ok", "d-pod-kill-fixed2-r2": "ok", "d-leak-medium-r2": "ok", "d-pod-kill-hpa-r2": "ok", "a-cap-fixed2-solo-r2": "ok"}

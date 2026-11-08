@@ -1,0 +1,24 @@
+# generated from scenarios/matrix.yaml by runner/matrix.py - edit matrix.yaml instead
+id: d-pod-kill-hpa-r2
+group: D
+heavy: false
+duration_s: 600
+traffic:
+  shape: steady
+  base_load_pods: 0.9
+scaling:
+  policy: hpa_cpu
+  min: 1
+  max: 6
+  target_cpu: 70
+  initial: 3
+faults:
+- type: pod_kill
+  start_s: 140
+  pod_index: 2
+- type: pod_kill
+  start_s: 290
+  pod_index: 0
+- type: pod_kill
+  start_s: 440
+  pod_index: 1

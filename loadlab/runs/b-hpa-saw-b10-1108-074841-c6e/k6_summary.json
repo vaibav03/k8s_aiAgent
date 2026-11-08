@@ -1,0 +1,257 @@
+{
+ "root_group": {
+  "path": "",
+  "id": "d41d8cd98f00b204e9800998ecf8427e",
+  "groups": [],
+  "checks": [],
+  "name": ""
+ },
+ "options": {
+  "noColor": true,
+  "summaryTrendStats": [
+   "avg",
+   "min",
+   "med",
+   "p(90)",
+   "p(95)",
+   "p(99)",
+   "max"
+  ],
+  "summaryTimeUnit": ""
+ },
+ "state": {
+  "isStdErrTTY": false,
+  "testRunDurationMs": 539990.714125,
+  "isStdOutTTY": false
+ },
+ "metrics": {
+  "vus": {
+   "type": "gauge",
+   "contains": "default",
+   "values": {
+    "value": 0,
+    "min": 0,
+    "max": 136
+   }
+  },
+  "http_req_duration{expected_response:true}": {
+   "contains": "time",
+   "values": {
+    "p(95)": 67.98616419999993,
+    "p(99)": 1571.8629152499996,
+    "max": 5232.043919,
+    "avg": 64.89550034920003,
+    "min": 25.236375,
+    "med": 25.710271,
+    "p(90)": 46.64816230000001
+   },
+   "type": "trend"
+  },
+  "iterations": {
+   "type": "counter",
+   "contains": "default",
+   "values": {
+    "count": 11744,
+    "rate": 21.748522137144448
+   }
+  },
+  "http_reqs": {
+   "type": "counter",
+   "contains": "default",
+   "values": {
+    "count": 11744,
+    "rate": 21.748522137144448
+   }
+  },
+  "http_req_duration": {
+   "type": "trend",
+   "contains": "time",
+   "values": {
+    "p(99)": 1571.8629152499996,
+    "max": 5232.043919,
+    "avg": 64.89550034920003,
+    "min": 25.236375,
+    "med": 25.710271,
+    "p(90)": 46.64816230000001,
+    "p(95)": 67.98616419999993
+   }
+  },
+  "data_sent": {
+   "type": "counter",
+   "contains": "data",
+   "values": {
+    "rate": 2914.3019663773557,
+    "count": 1573696
+   }
+  },
+  "http_req_connecting": {
+   "values": {
+    "p(90)": 0.17900450000000004,
+    "p(95)": 0.2128687,
+    "p(99)": 0.45827736999999935,
+    "max": 2800.983043,
+    "avg": 0.5800369489952301,
+    "min": 0.032125,
+    "med": 0.114875
+   },
+   "type": "trend",
+   "contains": "time"
+  },
+  "http_req_receiving": {
+   "type": "trend",
+   "contains": "time",
+   "values": {
+    "med": 0.054667,
+    "p(90)": 0.10029620000000004,
+    "p(95)": 0.12607685,
+    "p(99)": 0.21835624999999995,
+    "max": 56.632334,
+    "avg": 0.07432225774863765,
+    "min": 0.01675
+   }
+  },
+  "http_req_sending": {
+   "type": "trend",
+   "contains": "time",
+   "values": {
+    "min": 0.007666,
+    "med": 0.0361455,
+    "p(90)": 0.06582070000000001,
+    "p(95)": 0.07966685,
+    "p(99)": 0.13666586999999997,
+    "max": 4132.42196,
+    "avg": 0.3942548879427795
+   }
+  },
+  "data_received": {
+   "type": "counter",
+   "contains": "data",
+   "values": {
+    "count": 2384032,
+    "rate": 4414.949993840322
+   }
+  },
+  "vus_max": {
+   "contains": "default",
+   "values": {
+    "max": 298,
+    "value": 298,
+    "min": 298
+   },
+   "type": "gauge"
+  },
+  "http_req_tls_handshaking": {
+   "type": "trend",
+   "contains": "time",
+   "values": {
+    "med": 0,
+    "p(90)": 0,
+    "p(95)": 0,
+    "p(99)": 0,
+    "max": 0,
+    "avg": 0,
+    "min": 0
+   }
+  },
+  "http_req_waiting": {
+   "type": "trend",
+   "contains": "time",
+   "values": {
+    "med": 25.6090205,
+    "p(90)": 46.565308000000016,
+    "p(95)": 67.84355179999994,
+    "p(99)": 1551.6141461899956,
+    "max": 3005.86871,
+    "avg": 64.42692320350812,
+    "min": 25.14532
+   }
+  },
+  "http_req_blocked": {
+   "type": "trend",
+   "contains": "time",
+   "values": {
+    "p(95)": 0.29169639999999997,
+    "p(99)": 0.5954329999999994,
+    "max": 2801.05771,
+    "avg": 0.6334401038828333,
+    "min": 0.054709,
+    "med": 0.164458,
+    "p(90)": 0.2471537
+   }
+  },
+  "http_req_failed": {
+   "type": "rate",
+   "contains": "default",
+   "values": {
+    "fails": 11744,
+    "rate": 0,
+    "passes": 0
+   }
+  },
+  "iteration_duration": {
+   "type": "trend",
+   "contains": "time",
+   "values": {
+    "p(99)": 1596.945672249999,
+    "max": 5320.411669,
+    "avg": 66.28960965267386,
+    "min": 25.319334,
+    "med": 25.961146,
+    "p(90)": 46.9529421,
+    "p(95)": 68.37338304999997
+   }
+  }
+ },
+ "loadlab": {
+  "shape": "sawtooth",
+  "base_rps": 18,
+  "duration_s": 540,
+  "params": {
+   "period_s": 120,
+   "low_mult": 0.5,
+   "high_mult": 2
+  },
+  "points": [
+   [
+    0,
+    9
+   ],
+   [
+    119,
+    36
+   ],
+   [
+    120,
+    9
+   ],
+   [
+    239,
+    36
+   ],
+   [
+    240,
+    9
+   ],
+   [
+    359,
+    36
+   ],
+   [
+    360,
+    9
+   ],
+   [
+    479,
+    36
+   ],
+   [
+    480,
+    9
+   ],
+   [
+    540,
+    22.5
+   ]
+  ]
+ }
+}

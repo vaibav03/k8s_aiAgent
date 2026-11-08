@@ -1,0 +1,50 @@
+{
+  "id": "d-leak-fast-oom-r2",
+  "group": "D",
+  "heavy": false,
+  "duration_s": 540,
+  "traffic": {
+    "shape": "steady",
+    "base_rps": 15,
+    "params": {}
+  },
+  "scaling": {
+    "policy": "fixed",
+    "replicas": 3,
+    "_lane_cap": 4
+  },
+  "faults": [
+    {
+      "type": "memory_leak",
+      "start_s": 120,
+      "end_s": 450,
+      "target": "one-pod",
+      "pod_index": 1,
+      "params": {
+        "leak_kb_per_s": 2048,
+        "free_on_end": true
+      }
+    }
+  ],
+  "app": {
+    "cpu_ms_per_req": 25,
+    "alloc_kb": 64
+  },
+  "_run": {
+    "run_id": "d-leak-fast-oom-r2-1108-105515-0e5",
+    "namespace": "lab-d-leak-fast-oom-r2-1108-105515-0e5",
+    "scenario_file": "/Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/scenarios/matrix_round2/d-leak-fast-oom-r2.yaml",
+    "image": "loadlab:v1",
+    "k6_image": "grafana/k6:0.54.0",
+    "context": "kubeai-lab",
+    "t_created": 1794160515.072356,
+    "t0": 1794160540.809356,
+    "t_end": 1794161083.871176,
+    "status": "succeeded",
+    "export_window": [
+      1794160510.809356,
+      1794161093.871176
+    ],
+    "step_s": 5
+  }
+}

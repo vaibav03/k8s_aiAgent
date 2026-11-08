@@ -1,0 +1,10 @@
+14:50:14 [ab-c-leak-hpa300-1108-145014-590] scenario ab-c-leak-hpa300 -> namespace lab-ab-c-leak-hpa300-1108-145014-590
+14:50:16 [ab-c-leak-hpa300-1108-145014-590] app ready: 1 replica(s), policy hpa_cpu
+14:50:44 [ab-c-leak-hpa300-1108-145014-590] HPA has metrics: {'averageUtilization': 1, 'averageValue': '4m'}
+14:50:55 [ab-c-leak-hpa300-1108-145014-590] k6 started: diurnal_spike base_rps 14.4 pod k6-rqkqx
+14:52:55 [ab-c-leak-hpa300-1108-145014-590] FAULT START f0 memory_leak target=one-pod pods=['loadlab-5965489b55-5jnmg'] params={'leak_kb_per_s': 1024}
+14:56:48 [ab-c-leak-hpa300-1108-145014-590] FAULT CLEARED f0 memory_leak on loadlab-5965489b55-5jnmg by container restart (no re-apply)
+15:02:25 [ab-c-leak-hpa300-1108-145014-590] FAULT END   f0 memory_leak
+15:03:00 [ab-c-leak-hpa300-1108-145014-590] load finished: succeeded
+15:03:21 [ab-c-leak-hpa300-1108-145014-590] exported deploy.csv (147 rows) pods.csv (471 rows) -> /Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/runs/ab-c-leak-hpa300-1108-145014-590
+15:03:21 [ab-c-leak-hpa300-1108-145014-590] namespace deleted

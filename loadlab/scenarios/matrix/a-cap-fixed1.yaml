@@ -1,0 +1,17 @@
+# generated from scenarios/matrix.yaml by runner/matrix.py - edit matrix.yaml instead
+id: a-cap-fixed1
+group: A
+heavy: true
+duration_s: 400
+traffic:
+  shape: step_ramp
+  base_rps: 6
+  params:
+    start_rps: 6
+    step_rps: 2
+    step_s: 40
+    ramp_s: 3
+scaling:
+  policy: fixed
+  replicas: 1
+faults: []

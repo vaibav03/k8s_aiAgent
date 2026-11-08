@@ -1,0 +1,7 @@
+15:16:36 [ab-a2-load-s7-hpa30-1108-151636-fc8] scenario ab-a2-load-s7-hpa30 -> namespace lab-ab-a2-load-s7-hpa30-1108-151636-fc8
+15:17:02 [ab-a2-load-s7-hpa30-1108-151636-fc8] app ready: 1 replica(s), policy hpa_cpu
+15:17:33 [ab-a2-load-s7-hpa30-1108-151636-fc8] HPA has metrics: {'averageUtilization': 1, 'averageValue': '3m'}
+15:17:44 [ab-a2-load-s7-hpa30-1108-151636-fc8] k6 started: diurnal_spike base_rps 14.4 pod k6-kkqmh
+15:21:40 [ab-a2-load-s7-hpa30-1108-151636-fc8] RUN FAILED: RuntimeError('kubectl --context kubeai-lab -n lab-ab-a2-load-s7-hpa30-1108-151636-fc8 get job k6 -o json failed: Unable to connect to the server: net/http: TLS handshake timeout')
+15:21:41 [ab-a2-load-s7-hpa30-1108-151636-fc8] WARN: no k6 summary found in logs
+15:21:42 [ab-a2-load-s7-hpa30-1108-151636-fc8] WARN: no k6 summary found in logs

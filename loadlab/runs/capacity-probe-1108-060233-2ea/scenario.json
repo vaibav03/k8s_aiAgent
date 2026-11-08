@@ -1,0 +1,40 @@
+{
+  "id": "capacity-probe",
+  "duration_s": 480,
+  "traffic": {
+    "shape": "step_ramp",
+    "base_rps": 4,
+    "params": {
+      "start_rps": 4,
+      "step_rps": 2,
+      "step_s": 40,
+      "ramp_s": 3
+    }
+  },
+  "scaling": {
+    "policy": "fixed",
+    "replicas": 1
+  },
+  "app": {
+    "cpu_ms_per_req": 25,
+    "alloc_kb": 64
+  },
+  "faults": [],
+  "_run": {
+    "run_id": "capacity-probe-1108-060233-2ea",
+    "namespace": "lab-capacity-probe-1108-060233-2ea",
+    "scenario_file": "scenarios/capacity_probe.yaml",
+    "image": "loadlab:v1",
+    "k6_image": "grafana/k6:0.54.0",
+    "context": "kubeai-lab",
+    "t_created": 1794142953.306575,
+    "t0": 1794142969.41035,
+    "t_end": 1794143464.1220748,
+    "status": "succeeded",
+    "export_window": [
+      1794142939.41035,
+      1794143474.1220748
+    ],
+    "step_s": 5
+  }
+}

@@ -1,0 +1,6 @@
+# Agent + ML service run in their own namespace; they watch pods in the
+# target namespace configured in agent.yaml (NAMESPACE, default "default").
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: kubeai

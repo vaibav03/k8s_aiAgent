@@ -1,0 +1,9 @@
+# Under-provisioned spike: fixed 2 replicas, 4x spike for 2 min -> saturation (needs replicas).
+id: fixed-spike
+duration_s: 600
+traffic:
+  shape: spike
+  base_load_pods: 0.8
+  params: {spike_at_s: 200, spike_mult: 4, spike_s: 120, ramp_s: 10}
+scaling: {policy: fixed, replicas: 2}
+faults: []

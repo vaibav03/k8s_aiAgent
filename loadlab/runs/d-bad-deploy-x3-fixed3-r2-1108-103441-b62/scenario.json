@@ -1,0 +1,49 @@
+{
+  "id": "d-bad-deploy-x3-fixed3-r2",
+  "group": "D",
+  "heavy": true,
+  "duration_s": 600,
+  "traffic": {
+    "shape": "steady",
+    "base_rps": 15,
+    "params": {}
+  },
+  "scaling": {
+    "policy": "fixed",
+    "replicas": 3,
+    "_lane_cap": 4
+  },
+  "faults": [
+    {
+      "type": "bad_deploy",
+      "start_s": 180,
+      "end_s": 400,
+      "params": {
+        "cpu_ms_per_req": 75,
+        "version": "v3-bad"
+      },
+      "target": "one-pod"
+    }
+  ],
+  "app": {
+    "cpu_ms_per_req": 25,
+    "alloc_kb": 64
+  },
+  "_run": {
+    "run_id": "d-bad-deploy-x3-fixed3-r2-1108-103441-b62",
+    "namespace": "lab-d-bad-deploy-x3-fixed3-r2-1108-103441-b62",
+    "scenario_file": "/Users/vaibav/kubeai-work/k8s_aiAgent/loadlab/scenarios/matrix_round2/d-bad-deploy-x3-fixed3-r2.yaml",
+    "image": "loadlab:v1",
+    "k6_image": "grafana/k6:0.54.0",
+    "context": "kubeai-lab",
+    "t_created": 1794159281.996608,
+    "t0": 1794159301.9677298,
+    "t_end": 1794159905.1736488,
+    "status": "succeeded",
+    "export_window": [
+      1794159271.9677298,
+      1794159915.1736488
+    ],
+    "step_s": 5
+  }
+}

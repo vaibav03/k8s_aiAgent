@@ -1,0 +1,228 @@
+{
+  "source_run": "capacity-probe-1108-054625-4fe",
+  "slo": {
+    "p95_s": 0.3,
+    "error_ratio": 0.01
+  },
+  "app": {
+    "cpu_ms_per_req": 25,
+    "alloc_kb": 64
+  },
+  "pod_resources": {
+    "cpu_request": "250m",
+    "cpu_limit": "500m",
+    "mem_request": "128Mi",
+    "mem_limit": "256Mi"
+  },
+  "per_pod_rps_at_slo": 18,
+  "per_pod_max_rps": 19.65,
+  "cpu_core_seconds_per_req": 0.02608,
+  "hpa_70pct_cpu_equiv_rps_per_pod": 6.71,
+  "steps": [
+    {
+      "step": 0,
+      "offered_rps": 4,
+      "window": [
+        1794142022,
+        1794142047
+      ],
+      "achieved_rps": 4.0,
+      "p50_s": 0.027531645569620254,
+      "p95_s": 0.02981012658227848,
+      "p99_s": 0.08,
+      "error_ratio": 0.0,
+      "cpu_cores": 0.11381074432365944,
+      "throttle_ratio": 0.011111111111111112,
+      "inflight_avg": 0.0,
+      "meets_slo": true
+    },
+    {
+      "step": 1,
+      "offered_rps": 6,
+      "window": [
+        1794142062,
+        1794142087
+      ],
+      "achieved_rps": 6.0,
+      "p50_s": 0.0275,
+      "p95_s": 0.02975,
+      "p99_s": 0.029949999999999997,
+      "error_ratio": 0.0,
+      "cpu_cores": 0.16082214402675682,
+      "throttle_ratio": 0.0,
+      "inflight_avg": 0.0,
+      "meets_slo": true
+    },
+    {
+      "step": 2,
+      "offered_rps": 8,
+      "window": [
+        1794142102,
+        1794142127
+      ],
+      "achieved_rps": 8.0,
+      "p50_s": 0.0275,
+      "p95_s": 0.02975,
+      "p99_s": 0.029949999999999997,
+      "error_ratio": 0.0,
+      "cpu_cores": 0.20748260729267495,
+      "throttle_ratio": 0.0,
+      "inflight_avg": 0.0,
+      "meets_slo": true
+    },
+    {
+      "step": 3,
+      "offered_rps": 10,
+      "window": [
+        1794142142,
+        1794142167
+      ],
+      "achieved_rps": 10.00050002500125,
+      "p50_s": 0.0275,
+      "p95_s": 0.02975,
+      "p99_s": 0.02995,
+      "error_ratio": 0.0,
+      "cpu_cores": 0.25587207765230197,
+      "throttle_ratio": 0.0,
+      "inflight_avg": 1.0,
+      "meets_slo": true
+    },
+    {
+      "step": 4,
+      "offered_rps": 12,
+      "window": [
+        1794142182,
+        1794142207
+      ],
+      "achieved_rps": 11.998200269959508,
+      "p50_s": 0.0275,
+      "p95_s": 0.02975,
+      "p99_s": 0.029949999999999997,
+      "error_ratio": 0.0,
+      "cpu_cores": 0.3063254705549722,
+      "throttle_ratio": 0.0,
+      "inflight_avg": 0.0,
+      "meets_slo": true
+    },
+    {
+      "step": 5,
+      "offered_rps": 14,
+      "window": [
+        1794142222,
+        1794142247
+      ],
+      "achieved_rps": 13.997900314952759,
+      "p50_s": 0.02762172284644195,
+      "p95_s": 0.029981273408239698,
+      "p99_s": 0.03784615384615383,
+      "error_ratio": 0.0,
+      "cpu_cores": 0.35662736046999577,
+      "throttle_ratio": 0.0,
+      "inflight_avg": 0.0,
+      "meets_slo": true
+    },
+    {
+      "step": 6,
+      "offered_rps": 16,
+      "window": [
+        1794142262,
+        1794142287
+      ],
+      "achieved_rps": 15.999200039997998,
+      "p50_s": 0.027787456445993033,
+      "p95_s": 0.037083333333333336,
+      "p99_s": 0.04644444444444446,
+      "error_ratio": 0.0,
+      "cpu_cores": 0.4065796150982299,
+      "throttle_ratio": 0.16045845272206305,
+      "inflight_avg": 1.0,
+      "meets_slo": true
+    },
+    {
+      "step": 7,
+      "offered_rps": 18,
+      "window": [
+        1794142302,
+        1794142327
+      ],
+      "achieved_rps": 18.002700405060757,
+      "p50_s": 0.027931596091205213,
+      "p95_s": 0.04199999999999998,
+      "p99_s": 0.049200000000000015,
+      "error_ratio": 0.0,
+      "cpu_cores": 0.45731182224112293,
+      "throttle_ratio": 0.3085106382978723,
+      "inflight_avg": 0.0,
+      "meets_slo": true
+    },
+    {
+      "step": 8,
+      "offered_rps": 20,
+      "window": [
+        1794142342,
+        1794142367
+      ],
+      "achieved_rps": 19.64901754912254,
+      "p50_s": 0.5143518518518518,
+      "p95_s": 0.7216586538461538,
+      "p99_s": 0.7443317307692308,
+      "error_ratio": 0.0,
+      "cpu_cores": 0.4999590306122445,
+      "throttle_ratio": 1.0,
+      "inflight_avg": 10.0,
+      "meets_slo": false
+    },
+    {
+      "step": 9,
+      "offered_rps": 22,
+      "window": [
+        1794142382,
+        1794142407
+      ],
+      "achieved_rps": 19.600980049002455,
+      "p50_s": 2.367741935483871,
+      "p95_s": 2.936774193548387,
+      "p99_s": 2.9873548387096776,
+      "error_ratio": 0.0,
+      "cpu_cores": 0.5001521231766612,
+      "throttle_ratio": 1.0,
+      "inflight_avg": 48.2,
+      "meets_slo": false
+    },
+    {
+      "step": 10,
+      "offered_rps": 24,
+      "window": [
+        1794142422,
+        1794142447
+      ],
+      "achieved_rps": 19.54804519548045,
+      "p50_s": 6.815960912052117,
+      "p95_s": 9.681596091205211,
+      "p99_s": 9.936319218241042,
+      "error_ratio": 0.0,
+      "cpu_cores": 0.4994772727272731,
+      "throttle_ratio": 1.0,
+      "inflight_avg": 121.6,
+      "meets_slo": false
+    },
+    {
+      "step": 11,
+      "offered_rps": 26,
+      "window": [
+        1794142462,
+        1794142487
+      ],
+      "achieved_rps": 19.4980501949805,
+      "p50_s": 10.0,
+      "p95_s": 10.0,
+      "p99_s": 10.0,
+      "error_ratio": 0.0,
+      "cpu_cores": 0.5006705634438806,
+      "throttle_ratio": 1.0,
+      "inflight_avg": 244.0,
+      "meets_slo": false
+    }
+  ],
+  "notes": "per_pod_rps_at_slo = highest offered step meeting p95<300ms, err<1%, achieved>=95% offered. Use traffic.base_load_pods in scenarios to express load in pods-worth of SLO capacity."
+}

@@ -1,0 +1,18 @@
+# generated from scenarios/matrix.yaml by runner/matrix.py - edit matrix.yaml instead
+id: d-pod-kill-fixed2-r2
+group: D
+heavy: false
+duration_s: 540
+traffic:
+  shape: steady
+  base_rps: 16
+scaling:
+  policy: fixed
+  replicas: 2
+faults:
+- type: pod_kill
+  start_s: 150
+  pod_index: 0
+- type: pod_kill
+  start_s: 330
+  pod_index: 1
